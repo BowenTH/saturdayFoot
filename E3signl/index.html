@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
    	<title>E3-demo</title>
    	<link rel="stylesheet" type="text/css" href="css/mui.min.css"/>
+   	<link rel="stylesheet" type="text/css" href="css/icons-extra.css"/>
    	<link rel="stylesheet" type="text/css" href="css/own.css"/>
    	<link rel="stylesheet" type="text/css" href="css/iconfont.css"/>
    	<style type="text/css">
@@ -12,44 +13,61 @@
 		.mui-active .mui-tab-label {
 			color: #41cea9;
 		}
+		.headIndex{
+			
+		}
    	</style>
 </head>
 <body class="own-gray-color">
-	<header class="mui-bar mui-bar-nav own-main-background-color headStyle">
-		<img class="logo" src="img/666.png"/>
-		
-		<h1 id="nav-title" class="mui-title" style="margin-left: 50px;">
-			<span style="font-size: 18px;" class="mui-icon mui-icon-location-filled">玉兰清苑13号...
-				<span class="mui-icon mui-icon-arrowdown"></span>
-				<a style="margin-left: 35px;" href="#"><span class="mui-icon mui-pull-right mui-icon-search"></span></a>
-			</span> 			
-		</h1>		
+	<header id="head1" class="headIndex mui-bar mui-bar-nav own-main-background-color headStyle">
+		<div class=""> 
+			<img class="logo" src="img/666.png"/>		
+			<h1 id="nav-title" class="mui-title" style="margin-left: 35px;">
+				<span style="font-size: 18px;" class="mui-icon mui-icon-location-filled">玉兰清苑13号...
+					<span class="mui-icon mui-icon-arrowdown"></span>
+					<!--<a style="margin-left: 35px;" href="#"><span class="mui-icon mui-pull-right mui-icon-search"></span></a>-->
+				</span> 			
+			</h1>
+		</div>
+	</header>
+		<div id="head2" style="margin: 20px;" class="headIndex own-header-hidden">
+			诗意远方
+			<span class="mui-icon-extra mui-icon-extra-share mui-pull-right"></span>
+		</div>
+		<div id="head3" style="margin: 20px;" class="headIndex own-header-hidden"> 
+			收藏
+		</div>
+	<header id="head4" class="headIndex own-header-hidden mui-bar mui-bar-nav own-main-background-color headStyle">
+		<div>
+			<span class="mui-icon mui-icon-settings mui-pull-right"></span>
+		</div>
 	</header>
 
 	<nav class="mui-bar mui-bar-tab">
-		<a class="mui-tab-item mui-active" href="barItem/home.html">
+		<a class="mui-tab-item mui-active" data-id='head1' href="barItem/home.html">
 			<span class="mui-icon iconfont icon-home"></span>
-			<span class="mui-tab-label">生活</span>
+			<span class="mui-tab-label">首页</span>
 		</a>
-		<a class="mui-tab-item" href="shopList/shopListMain.html">
+		<a class="mui-tab-item" data-id='head2' href="shopList/shopListMain.html">
 			<span class="mui-icon iconfont icon-fenlei"></span>
-			<span class="mui-tab-label">商家</span>
+			<span class="mui-tab-label">生活</span>
 		</a>
 		<!--<a class="mui-tab-item" href="barItem/wishList.html">
 			<span class="mui-icon iconfont icon-xinyuandan"></span>
 			<span class="mui-tab-label">心愿单</span>
 		</a>-->
-		<a class="mui-tab-item" href="barItem/cart.html">
+		<a class="mui-tab-item" data-id='head3' href="barItem/cart.html">
 			<span class="mui-icon iconfont icon-cart"></span>
 			<span class="mui-tab-label">购物车</span>
 		</a>
-		<a class="mui-tab-item" href="barItem/mine.html">
+		<a class="mui-tab-item" data-id='head4' href="barItem/mine.html">
 			<span class="mui-icon iconfont icon-wode"></span>
 			<span class="mui-tab-label">我的</span>
 		</a>
 	</nav>
 	
 	<script src="js/mui.min.js" charset="UTF-8"></script>
+	<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" charset="UTF-8">
 		mui.init({
 			swipeBack:false
@@ -63,7 +81,8 @@
 		var barItemArray = ['barItem/home.html','shopList/shopListMain.html','barItem/cart.html','barItem/mine.html'];
 		mui.plusReady(function(){
 			//获取当前title和当前webview
-			navTitle = document.querySelector('.mui-title');
+//			navTitle = document.querySelector('.headIndex');
+			navTitle = $('.headIndex');
 			mainWebview = plus.webview.currentWebview();
 			
 			plus.navigator.setStatusBarBackground( "#41cea9" );
@@ -122,14 +141,17 @@
 			mui('.mui-bar-tab').on('tap','.mui-tab-item',function(){
 				var baritem = this;
 				var baritemurl = baritem.getAttribute('href'); 
+				var headIndex = baritem.dataset.id;				
 //				indexof()如果为false返回－1所以前面加上~
 				if (!~curBarItemWebview.getURL().indexOf(baritemurl)) {
 					for (var i = 0; i < barItemArray.length; i++) {
 						if (barItemArray[i] == baritemurl) {
 							//更改头部名字
-							navTitle.innerText = baritem.children[baritem.children.length-1].innerText;
-							//切换baritemwebview							
-							barItemWebviewArray[i].show();
+//							navTitle.innerText = baritem.children[baritem.children.length-1].innerText;
+							navTitle.addClass('own-header-hidden');
+							$('#'+headIndex).removeClass('own-header-hidden');
+							//切换baritemwebview
+							mui.later(function(){barItemWebviewArray[i].show();},100);
 							if(baritemurl=='shopList/shopListMain.html'){
 								if(plus.webview.getWebviewById('movie.html'))
 								plus.webview.getWebviewById('movie.html').hide();

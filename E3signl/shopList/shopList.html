@@ -10,20 +10,24 @@
 		<link rel="stylesheet" href="../css/mui.min.css">
 		<link rel="stylesheet" type="text/css" href="../css/icons-extra.css"/>
 		<style type="text/css">
-			img{
+			.mui-table-view-cell img{
 				height: 80px;width: 100px;
 			}
 			#shopUl{
 				background: white!important;
 				margin: 10px;
+				border-bottom: 0px;
 			}
 			#shopUl li{
-				list-style: none;				
+				list-style: none;	
+				padding-top: 15px;
+				padding-bottom: 20px;	
+				border-bottom: 0px solid white;					
 			}
 			.shopSpan{				
 				float: left;
 				/*margin-bottom: 5px;*/
-				margin-left: 10px;
+				margin-left: 6px;
 			}
 			.shopSmall{
 				font-size: 12px;
@@ -57,7 +61,7 @@
 					<span class="shopSmall">
 						韩国菜 <span>|							
 						</span> 北新泾
-					</span><span class="shopSmall" style="background: lightgray;margin-left: 80px;">
+					</span><span class="shopSmall" style="background: lightgray;margin-left: 50px;">
 						1000m
 					</span><br />
 					<span class="shopSmall mui-icon-extra mui-icon-extra-heart-filled">
@@ -71,6 +75,9 @@
 				</div>	
 			</div>		
 			</div>	
+			<div style="margin-top: -15px;margin-left: -15px;border-bottom: 5px solid #efeff4;">
+				
+			</div>
 		</li>
 	</template>	
 	</head>
@@ -80,7 +87,7 @@
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
 				<!--数据列表-->
-				<ul id="shopUl" class="mui-table-view">
+				<ul id="shopUl" style="margin: 0;" class="mui-table-view">
 					
 				</ul>
 			</div>
@@ -92,8 +99,8 @@
 			var shopIndex = null;
 			mui.plusReady(function(){
 				detailHead = mui.preload({
-				id:'detailHead.html',
-				url:'detailHead.html',
+//				id:'detailHead.html',
+//				url:'detailHead.html',
 				styles:{
 					top:'0px',
 					bottom:'0px'

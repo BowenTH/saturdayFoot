@@ -65,18 +65,100 @@
 				margin-right: 7%;
 				text-decoration: line-through;
 			}
+	/*add later*/
+			.mui-table-view-cell img{
+				height: 80px;width: 100px;
+			}
+			#shopUl{
+				background: white!important;
+				margin: 10px;
+				border-bottom: 0px;
+			}
+			#shopUl li{
+				list-style: none;	
+				padding-top: 15px;
+				padding-bottom: 20px;	
+				border-bottom: 0px solid white;					
+			}
+			.shopSpan{				
+				float: left;
+				/*margin-bottom: 5px;*/
+				margin-left: 6px;
+			}
+			.shopSmall{
+				font-size: 12px;
+				color: grey;
+			}
+			.mui-icon{
+				color: red;
+				font-size:15px;
+				margin-left: -5px;
+			}
 		</style>
+		
+	<template id='shopTemp' style="background: white;">
+		<li  class="mui-table-view-cell" data-id = "00">
+			<div style="">
+			<div class="" style="float: left;">
+				<img src="../img/detail/3.jpg"/>
+			</div>
+			<div class="shopSpan">
+				<div class="">
+					<h5>火锅店(闵行店)</h5>
+					<span class="mui-icon mui-icon-star-filled"/>
+					<span class="mui-icon mui-icon-star-filled"/>
+					<span class="mui-icon mui-icon-star-filled"/>
+					<span class="mui-icon mui-icon-star-filled"/>
+					<span class="mui-icon mui-icon-starhalf"/>
+					<span  class="shopSmall">
+						20￥/人
+					</span>
+				</div>
+				<div class="" style="">
+					<span class="shopSmall">
+						韩国菜 <span>|							
+						</span> 北新泾
+					</span><span class="shopSmall" style="background: lightgray;margin-left: 50px;">
+						1000m
+					</span><br />
+					<span class="shopSmall mui-icon-extra mui-icon-extra-heart-filled">
+						1000人消费
+					</span>	
+					<div style="border-top: 1px solid lightgrey;">	
+						<span class="shopSmall mui-icon-extra mui-icon-extra-new">
+							商家优惠，满30立减8元
+						</span>
+					</div>
+				</div>	
+			</div>		
+			</div>	
+			<div style="margin-top: -15px;margin-left: -15px;border-bottom: 5px solid #efeff4;">
+				
+			</div>
+		</li>
+	</template>	
 	</head>
 
-	<body>		
+	<body>			 
 		<div class="mui-content">
 			<div id="homeDiv" class="mui-content own-content-padding">
 				<div id="productSlider" class="mui-slider">
 				</div>
 				<div class="">
-					<a href="../spring.html"><img style="width: 100%;" src="../img/mypng/1.PNG"/></a>
-					<a href="../spring.html"><img style="width: 100%;" src="../img/mypng/2.PNG"/></a>
+					<!--<a href="javascript:;"><img style="width: 100%;" src="../img/mypng/1.PNG"/></a>
+					<a href="javascript:;"><img style="width: 100%;" src="../img/mypng/2.PNG"/></a>-->
 				</div>
+	
+	<!--下拉刷新容器-->
+		<div id="pullrefresh" class="mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<!--数据列表-->
+				<ul id="shopUl" style="margin: 0;" class="mui-table-view">
+					
+				</ul>
+			</div>
+		</div>	
+		
 				<div id="recommend" class="mui-table-view mui-grid-view own-gray-color">
 
 				</div>
@@ -86,10 +168,24 @@
 
 	<script src="../js/mui.min.js" charset="UTF-8"></script>
 	<script src="../js/own.js" charset="UTF-8"></script>
+	<script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
+//		mui.init({
+//			swipeBack: false
+//		});
 		mui.init({
-			swipeBack: false
-		});
+				swipeBack: false,
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});	
 //		mui.plusReady(function(){
 //			var springWeb=plus.webview.create('../spring.html','spring.html');
 //			mui.toast(springWeb);
@@ -210,6 +306,72 @@
 				recommend.appendChild(li);
 			});
 		}
+		
+//add later
+			var detailHead = null;
+			var shopIndex = null;
+			mui.plusReady(function(){
+				detailHead = mui.preload({
+				id:'detailHead.html',
+				url:'../shopList/detailHead.html',
+				styles:{
+					top:'0px',
+					bottom:'0px'
+				}
+			});
+//			点击商铺列表进详情
+				mui("ul").on('tap','li',function(){
+					shopIndex=$(this).data('id');
+//					mui.toast(shopIndex);
+					mui.fire(detailHead,'initDetail',{shopIndex:shopIndex});
+					detailHead.show();					
+				});	
+			});
+					
+
+			//首次进入时加载第一个页面
+			document.addEventListener('scrollRefush',function(){
+				mui('#pullrefresh').pullRefresh().pulldownLoading();
+//				mui('#pullrefresh').pullRefresh().scrollTo(0,100,0);
+			})
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+//			var shopTemp = $("#shopTemp").clone(true);
+			var dialog=document.querySelector('#shopTemp');
+			var flag=1;
+			function pulldownRefresh() {
+				setTimeout(function() {					
+					var shopUl= document.body.querySelector('#shopUl');
+					var cloneLi = dialog.content.cloneNode(true);
+					shopUl.appendChild(cloneLi);
+					$('#shopUl li').last().data('id',flag);
+					flag++;
+//					$("#shopTemp li").data('id','2').clone(true).show().appendTo($("#shopUl"));
+					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+				}, 500);
+			}
+			var count = 0;
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				setTimeout(function() {
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //refresh completed
+				}, 500);
+			}
+			if (mui.os.plus) {
+				mui.plusReady(function() {
+					setTimeout(function() {
+//						mui('#pullrefresh').pullRefresh().pullupLoading();
+					}, 1000);
+
+				});
+			} else {
+				mui.ready(function() {
+					mui('#pullrefresh').pullRefresh().pullupLoading();
+				});
+			}
 	</script>
 
 </html>
