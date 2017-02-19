@@ -1,0 +1,10 @@
+ul,ol,li{list-style:none;}
+
+/*swipe*/
+.swipe{ padding-top:20px; width:100%; float:left;overflow: hidden; visibility: visible; position: relative; height:260px;}
+.box01_list{position:relative; -webkit-transition: left 600ms ease-out;  width:100%; left:0;}
+
+.page{text-align:left; background:#f3f3f3; height:38px; line-height:38px; display:-webkit-box;}
+.page li{-webkit-box-flex:1; font-size:15px; display:block; color:#000; height:38px; line-height:38px; text-align:center; }
+.page li a{ color:grey; display:block; height:38px;}
+.page a.active{color:#41cea9;border-bottom:2px solid #41cea9;}
