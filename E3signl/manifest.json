@@ -223,7 +223,8 @@
 					"template-main-third.html",
 					"barItem/shopList.html",
 					"shopList/shopListMain.html",
-					"shopList/shopList.html"
+					"shopList/shopList.html",
+					"barItem/life.html"
 				],
 				"priority": 0
 			},
@@ -453,6 +454,18 @@
 				],
 				"refer": [],
 				"priority": 0
+			},
+			"barItem/life.html": {
+				"resources": [
+					"png/u\u003d4283357259,4270108372\u0026fm\u003d21\u0026gp\u003d0.jpg",
+					"png/iconfont.js",
+					"png/iconfont.css",
+					"js/mui.js",
+					"png/2017-02-21_204233.png",
+					"css/mui.css"
+				],
+				"refer": [],
+				"priority": 0
 			}
 		},
 		"idle": {
@@ -465,7 +478,6 @@
 				"img/bg.png",
 				"category/category-detail-new-needtem.html",
 				"img/detail/7.jpg",
-				"css/mui.css",
 				"img/detail/9.jpg"
 			]
 		}

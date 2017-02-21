@@ -48,7 +48,7 @@
 			<span class="mui-icon iconfont icon-home"></span>
 			<span class="mui-tab-label">首页</span>
 		</a>
-		<a class="mui-tab-item" data-id='head2' href="shopList/shopList.html">
+		<a class="mui-tab-item" data-id='head2' href="barItem/life.html">
 			<span class="mui-icon iconfont icon-fenlei"></span>
 			<span class="mui-tab-label">生活</span>
 		</a>
@@ -74,7 +74,7 @@
 		var curBarItemWebview;
 		
 		var barItemWebviewArray = [];
-		var barItemArray = ['barItem/home.html','shopList/shopList.html','barItem/cart.html','barItem/mine.html'];
+		var barItemArray = ['barItem/home.html','barItem/life.html','barItem/cart.html','barItem/mine.html'];
 		mui.plusReady(function(){
 			//获取当前title和当前webview
 //			navTitle = document.querySelector('.headIndex');
@@ -148,13 +148,13 @@
 							$('#'+headIndex).removeClass('own-header-hidden');
 							//切换baritemwebview
 							mui.later(function(){barItemWebviewArray[i].show();},100);
-							if(baritemurl=='shopList/shopList.html'){
-								if(plus.webview.getWebviewById('movie.html'))
-								plus.webview.getWebviewById('movie.html').hide();
-//								plus.webview.getWebviewById('shopList.html').evalJS("mui('#pullrefresh').pullRefresh().scrollTo(0,100,0)");
-								mui.fire(plus.webview.getWebviewById('shopList.html'),'scrollRefush');
-								
-							}
+//							if(baritemurl=='barItem/life.html'){
+//								if(plus.webview.getWebviewById('movie.html'))
+//								plus.webview.getWebviewById('movie.html').hide();
+////								plus.webview.getWebviewById('shopList.html').evalJS("mui('#pullrefresh').pullRefresh().scrollTo(0,100,0)");
+//								mui.fire(plus.webview.getWebviewById('shopList.html'),'scrollRefush');
+//								
+//							}
 							curBarItemWebview = barItemWebviewArray[i];
 							break;
 						}

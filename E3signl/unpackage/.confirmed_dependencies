@@ -30,7 +30,8 @@
 			"template-main-third.html",
 			"barItem/shopList.html",
 			"shopList/shopListMain.html",
-			"shopList/shopList.html"
+			"shopList/shopList.html",
+			"barItem/life.html"
 		]
 	},
 	"barItem/home.html": {
@@ -228,6 +229,16 @@
 			"img/detail/1.jpg",
 			"img/detail/4.jpg",
 			"img/3.jpg"
+		]
+	},
+	"barItem/life.html": {
+		"resources": [
+			"png/u\u003d4283357259,4270108372\u0026fm\u003d21\u0026gp\u003d0.jpg",
+			"png/iconfont.js",
+			"png/iconfont.css",
+			"js/mui.js",
+			"png/2017-02-21_204233.png",
+			"css/mui.css"
 		]
 	}
 }
