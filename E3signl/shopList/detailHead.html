@@ -39,17 +39,17 @@
 	<body>	
 	<header class="mui-bar mui-bar-nav"style="display: block;">
 	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-	    <h1 class="mui-title">标题</h1>
+	    <h1 class="mui-title">旺铺</h1>
 	    
 	   	<a style="margin: 10px;"  class="mui-icon-extra mui-icon-extra-share mui-pull-right"></a>
 		<a  class="mui-icon mui-icon-search mui-pull-right"></a>  
 	</header>
 		<div style="margin-left: 0;padding-bottom: 70px;margin-top: 50px; border-bottom: 1px solid lightgray;">
 			<img class="" src="../img/2.jpg"/ style="width: 40px;float: left;">
-			<h4 style="float: left;margin-left: 20px;">浮生若茶(剑川路店)</h4>
-				<div style="margin-left: 40px;float: left;color: red;font-size: 70%;">
-					<span class="mui-icon mui-icon-chatbubble"></span>新入户商铺
-				</div>
+			<h4 class="li" style="float: left;margin-left: 20px;">浮生若茶(剑川路店)</h4>
+			<div style="margin-left: 50px;float: left;color: red;font-size: 70%;">
+				<span class="mui-icon mui-icon-chatbubble"></span>新入户商铺
+			</div>
 		</div>
 		
 		<!--加侧栏-->
@@ -76,10 +76,16 @@
 		mui.init({
 				swipeBack: true //启用右滑关闭功能
 			});
+			var leftMenu=null;
+			$.getJSON('../data/typeData.json',function(result){
+				leftMenu=result;
+				alert(JSON.stringify(result));
+			});  
+			 
 			var controls = document.getElementById("segmentedControls");
 			var contents = document.getElementById("segmentedControlContents");
-			var leftMenu= [{'name':'肉类','info':[{'name':'猪肉','img':'../img/3.jpg'},{'name':'鸡肉','img':'../img/3.jpg'}]},
-			{'name':'蔬菜','info':[{'name':'萝卜','img':'../img/3.jpg'},{'name':'黄瓜','img':'../img/3.jpg'}]}];
+			mui.later(doData,200);
+		function doData(){
 			var html = [];
 			var i = 1,
 				j = 1,
@@ -99,31 +105,32 @@
 //				html.push('</ul></div>');
 //			}
 			//测试代码
-			for (i=1; i < m; i++) {
-				if(i==1){
-					html.push('<a class="mui-control-item a-active" data-index="' + (i - 1) + '" href="#content' + i + '">' + leftMenu[0].name + '</a>');
-				}else
-				if(i==2){
-					html.push('<a class="mui-control-item" data-index="' + (i - 1) + '" href="#content' + i + '">' + leftMenu[1].name + '</a>');
-
-				}else{
-					html.push('<a class="mui-control-item" data-index="' + (i - 1) + '" href="#content' + i + '">选项' + i + '</a>');
-				}
+			for (i=1; i <= leftMenu.length; i++) {
+//				if(i==1){
+					html.push('<a class="mui-control-item a-active" data-index="' + (i - 1) + '" href="#content' + i + '">' + leftMenu[i-1].name + '</a>');
+//				}else
+//				if(i==2){
+//					html.push('<a class="mui-control-item" data-index="' + (i - 1) + '" href="#content' + i + '">' + leftMenu[1].name + '</a>');
+//
+//				}else{
+//					html.push('<a class="mui-control-item" data-index="' + (i - 1) + '" href="#content' + i + '">选项' + i + '</a>');
+//				}
 			}
 			controls.innerHTML = html.join('');
 			html = [];
-			for (i = 1; i < m; i++) {
+			for (i = 1; i <=leftMenu.length; i++) {
+//			for (i = 1; i < m; i++) {
 				html.push('<div id="content' + i + '" class="mui-control-content"><ul class="mui-table-view">');
-				for (j = 1; j < n; j++) {
-					if(i==1){
-						html.push('<li class="mui-table-view-cell">' + leftMenu[0].info[0].name+"<img style='width:50px' src="+ leftMenu[0].info[0].img +"/>"+
-						leftMenu[0].info[1].name+"<img style='width:50px' src="+ leftMenu[0].info[1].img +"/>"+ '</li>');
-					}else
-					if(i==2){
-						html.push('<li class="mui-table-view-cell">' + leftMenu[0].info[0].name + '</li>');
-					}else{
-						html.push('<li class="mui-table-view-cell ">第' + i + '个选项卡子项-' + j + '</li>');
-					}
+				for (j = 1; j <= leftMenu[i-1].info.length; j++) {
+//					if(j==1){
+//						html.push('<li class="mui-table-view-cell">' + leftMenu[0].info[0].name+"<img style='width:50px' src="+ leftMenu[0].info[0].img +"/>"+
+//						leftMenu[0].info[1].name+"<img style='width:50px' src="+ leftMenu[0].info[1].img +"/>"+ '</li>');
+//					}else
+//					if(j==2){
+//						html.push('<li class="mui-table-view-cell">' + leftMenu[0].info[0].name + '</li>');
+//					}else{
+						html.push('<li class="mui-table-view-cell ">第' + i + '个选项卡子项-' + j  + leftMenu[i-1].info[j-1].name  + '</li>');
+//					}
 //					html.push('<li class="mui-table-view-cell">第' + i + '个选项卡子项-' + j + '</li>');
 				}
 				html.push('</ul></div>');
@@ -228,5 +235,6 @@
 					mui.openWindow('detail/menuList.html','menuList.html');
 				})
 			})();
+		}
 	</script>
 </html>

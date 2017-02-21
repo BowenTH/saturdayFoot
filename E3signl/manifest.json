@@ -421,7 +421,8 @@
 					"img/2.jpg",
 					"shopList/detail/menuList.html",
 					"css/app.css",
-					"img/3.jpg/"
+					"img/3.jpg/",
+					"data/typeData.json"
 				],
 				"refer": [
 					"shopList/detail/comment.html"
@@ -462,7 +463,8 @@
 					"png/iconfont.css",
 					"js/mui.js",
 					"png/2017-02-21_204233.png",
-					"css/mui.css"
+					"css/mui.css",
+					"js/jquery.js"
 				],
 				"refer": [],
 				"priority": 0
