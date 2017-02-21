@@ -217,7 +217,8 @@
 			"css/mui.min.css",
 			"css/icons-extra.css",
 			"js/jquery.js",
-			"js/mui.js"
+			"js/mui.js",
+			"data/typeData.json"
 		]
 	},
 	"Home/product-detail-needtem.html": {

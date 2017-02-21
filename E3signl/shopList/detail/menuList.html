@@ -50,8 +50,13 @@
 			</div>
 		</div>
 		<!--end-->
+		<!--menu list关闭开启-->
+		<div id="menu-list"style="display: none;width: 60%;bottom: 45px;position: fixed;">
+			<ul class="mui-table-view">
+			</ul>
+		</div>
 		<div id="">		
-			<button id="menu" type="button" class="mui-btn-grey"style="height: 50px;border-radius: 0;;width: 60%;position: fixed;bottom: 0px;">
+			<button id="menu" type="button" data-id='1' class="mui-btn-grey"style="height: 50px;border-radius: 0;;width: 60%;position: fixed;bottom: 0px;">
 				<span>菜单<span id="count-list" style="margin: -10px;" class="mui-badge mui-badge-red mui-btn-red mui-pull-right ">0</span></span>
 			</button>
 		        <button id="go" style="height: 50px;width: 40%;right: 0;background:lightblue;bottom: 0px;position: fixed;">
@@ -66,24 +71,69 @@
 			mui.init({
 				swipeBack: true //启用右滑关闭功能
 			});
+			var leftMenu=null;
+			$.getJSON('../../data/typeData.json',function(result){
+				leftMenu=result;
+//				alert(JSON.stringify(result));
+			});  
+			 
 			var controls = document.getElementById("segmentedControls");
 			var contents = document.getElementById("segmentedControlContents");
+			mui.later(doData,200);
+		function doData(){
 			var html = [];
 			var i = 1,
 				j = 1,
 				m = 16, //左侧选项卡数量+1
 				n = 21; //每个选项卡列表数量+1
-			for (; i < m; i++) {
-				html.push('<a class="mui-control-item" data-index="' + (i - 1) + '" href="#content' + i + '">选项' + i + '</a>');
+//			添加实例
+//			for (; i < 3; i++) {
+//				html.push('<a class="mui-control-item" data-index="' + (i - 1) + '" href="#content' + i + '">选项' + i + '</a>');
+//			}
+//			controls.innerHTML = html.join('');
+//			html = [];
+//			for (i = 1; i < 3; i++) {
+//				html.push('<div id="content' + i + '" class="mui-control-content"><ul class="mui-table-view">');
+//				for (j = 1; j < n; j++) {
+//					html.push('<li class="mui-table-view-cell">第' + i + '个选项卡子项-' + j + '</li>');
+//				}
+//				html.push('</ul></div>');
+//			}
+			//测试代码
+			for (i=1; i <= leftMenu.length; i++) {
+//				if(i==1){
+					html.push('<a class="mui-control-item a-active" data-index="' + (i - 1) + '" href="#content' + i + '">' + leftMenu[i-1].name + '</a>');
+//				}else
+//				if(i==2){
+//					html.push('<a class="mui-control-item" data-index="' + (i - 1) + '" href="#content' + i + '">' + leftMenu[1].name + '</a>');
+//
+//				}else{
+//					html.push('<a class="mui-control-item" data-index="' + (i - 1) + '" href="#content' + i + '">选项' + i + '</a>');
+//				}
 			}
 			controls.innerHTML = html.join('');
 			html = [];
-			for (i = 1; i < m; i++) {
-				html.push('<div id="content' + i + '" class="mui-control-content"><ul class="mui-table-view">');
-				for (j = 1; j < n; j++) {
-					html.push('<li class="mui-table-view-cell">第' + i + '个选项卡子项-' + j + '</li>');
+			for (i = 1; i <=leftMenu.length; i++) {
+//			for (i = 1; i < m; i++) {
+				html.push('<div id="content' + i + '"  class="mui-control-content"><ul data-id="'+i+'" class="mui-table-view">');
+				for (j = 1; j <= leftMenu[i-1].info.length; j++) {
+//					if(j==1){
+//						html.push('<li class="mui-table-view-cell">' + leftMenu[0].info[0].name+"<img style='width:50px' src="+ leftMenu[0].info[0].img +"/>"+
+//						leftMenu[0].info[1].name+"<img style='width:50px' src="+ leftMenu[0].info[1].img +"/>"+ '</li>');
+//					}else
+//					if(j==2){
+//						html.push('<li class="mui-table-view-cell">' + leftMenu[0].info[0].name + '</li>');
+//					}else{
+						html.push('<li class="mui-table-view-cell" data-id="'+j+'">第' + i + '个选项卡子项-' + j  + leftMenu[i-1].info[j-1].name);
+						html.push("<div class='mui-numbox' style='float: right; display:none'>");
+						html.push("<button class='mui-btn mui-btn-numbox-minus'  type='button'>-</button>");
+						html.push("<input id='countInput' class='mui-input-numbox' type='number' value='1'>");
+						html.push("<button class='mui-btn mui-btn-numbox-plus' type='button'>+</button></div>");
+						html.push("<span class='mui-icon mui-icon-plus mui-icon-plus-filled' style='color: red;float: right;font-size: 35px;' ></span>");
+//					}
+//					html.push('<li class="mui-table-view-cell">第' + i + '个选项卡子项-' + j + '</li>');
 				}
-				html.push('</ul></div>');
+				html.push('</li></ul></div>');
 			}
 			contents.innerHTML = html.join('');
 			//默认选中第一个
@@ -153,8 +203,10 @@
 						lastIndex = index;
 						var lastActiveElem = controlsElem.querySelector('.mui-active');
 						lastActiveElem && (lastActiveElem.classList.remove('mui-active'));
+						lastActiveElem && (lastActiveElem.classList.remove('a-active'));
 						var currentElem = controlsElem.querySelector('.mui-control-item:nth-child(' + (index + 1) + ')');
 						currentElem.classList.add('mui-active');
+						currentElem.classList.add('a-active');
 						//简单处理左侧分类滚动，要么滚动到底，要么滚动到顶
 						var controlScrollTop = controlWrapperElem.scrollTop;
 						if (controlScrollTop + controlWrapperHeight < controlTops[index]) {
@@ -168,14 +220,190 @@
 				var scrollTo = function(index) {
 					contentsElem.scrollTop = contentTops[index];
 				};
+//				测试代码
 				mui(controlsElem).on('tap', '.mui-control-item', function(e) {
+					var aflag = this;
+					for (var i=0;i<$('a').length;i++) {
+						if($('a').eq(i).hasClass('a-active'))
+						$('a').eq(i).removeClass('a-active');
+						$(aflag).addClass('a-active');
+					}
 					scrollTo(this.getAttribute('data-index'));
 					return false;
 				});
-				mui($('#segmentedControlContents')).on('tap','li',function(){
+				
+//				mui($('#segmentedControlContents')).on('tap','li',function(){
 //					mui.openWindow('detail/menuList.html','menuList.html');
-				})
+//				})；
+
+	/*处理按钮操作事件*/
+			var listcount=0;
+			var foodsum=0;
+			mui('.mui-control-content').on('tap','.mui-btn-numbox-plus',function(){
+			var flag=$(this).siblings('.mui-input-numbox').val();
+			flag++;			
+			$(this).siblings('.mui-input-numbox').val(flag);
+			listcount++;//购买菜单种类加1; 
+//			var sigle=$(this).parent().siblings('.food-type').children().text();
+//			
+//			var data=parseInt(sigle);
+			foodsum+=10;//总额	 
+			$('#sum-finally').text(foodsum);
+			$('#count-list').text(listcount);			
+			//动态添加menulist的数目 1，2，3，4			
+//			var listname=$(this).parent().siblings('.food-type').text();
+			//获取到数据信息，猪肉
+			var ulId = $(this).parents("ul").data('id');
+			var liId = $(this).parents("li").data('id');
+			var listname=leftMenu[ulId-1].info[liId-1].name;
+			
+//			var span =$('#menu-list li');
+			var span= $("#menu-list ul li:contains("+listname+")");
+			$(span).children('span').last().text(flag);
+		});
+//3 -	
+		mui('.mui-control-content').on('tap','.mui-btn-numbox-minus',function(){
+			var flag=$(this).siblings('.mui-input-numbox').val();
+			flag--;
+			$(this).siblings('.mui-input-numbox').val(flag);
+			if ($(this).siblings('.mui-input-numbox').val()<0) {//numbox值不能小于0
+				$(this).siblings('.mui-input-numbox').val(0);
+				return; 
+			}
+			listcount--;//如果不买该种类水果，listcount--；
+//			var sigle=$(this).parent().siblings('.food-type').children().text();
+//			var data=parseInt(sigle);
+			foodsum-=10;//总额			
+			$('#sum-finally').text(foodsum);
+			$('#count-list').text(listcount);
+			//动态添加menulist的数目 1，2，3，4
+			var ulId = $(this).parents("ul").data('id');
+			var liId = $(this).parents("li").data('id');
+			var listname=leftMenu[ulId-1].info[liId-1].name;
+//			var listname=$(this).parent().siblings('.food-type').text();
+			var span= $("#menu-list li:contains("+listname+")");
+			$(span).children('span').last().text(flag);
+		});
+//3 0+
+		mui('.mui-control-content').on('tap','.mui-icon-plus-filled',function(){
+			this.style.display='none'; 
+//			input里显示购买量
+			$(this).siblings('.mui-numbox').css({'display':'inline'});
+//			var sigle=$(this).siblings('.food-type').children().text();
+//			var data=parseInt(sigle);
+			listcount++;//购买菜单种类加1;
+			foodsum+=10;
+			$('#sum-finally').text(foodsum);
+			$('#count-list').text(listcount);
+		//加入菜单主列表
+			var li = document.createElement('li');
+			$(li).addClass('mui-table-view-cell food-type');
+			var foodcount=$(this).siblings().children('.mui-input-numbox').val();//1
+			li.dataset.foodcount=foodcount;//1
+			var ulId = $(this).parents("ul").data('id');
+			var liId = $(this).parents("li").data('id');
+			var listname=leftMenu[ulId-1].info[liId-1].name;
+			li.dataset.listname = listname;
+//			li.dataset.listname = $(this).parent().find('.food-type').html();//粉木耳
+			//添加菜单列表具体内容 foodcount为一单个数
+			
+			li.innerHTML= li.dataset.listname+'<span class="mui-badge mui-badge-green mui-btn-green mui-pull-right ">'+li.dataset.foodcount+'</span>';
+			document.body.querySelector('#menu-list ul').appendChild(li);
+		});
+		
+			document.getElementById('menu').addEventListener('tap',function(){
+			if($(this).data('id')==1){
+				$('#menu-list').css("display","block");
+				$(this).data('id','0');
+			}else{
+				$('#menu-list').css("display","none");
+				$(this).data('id','1');
+			}
+		});
+		
+		/* 支付宝支付引用  */
+var channel =null;
+function plusReady(){
+	document.getElementById('go').addEventListener('tap',function(){
+	mui.toast('结算金额:'+foodsum);
+	//生成订单
+//	alert(shopName);	
+	var checklist=[];
+	$list=$('#menu-list ul li');
+
+//	alert($('#menu-list .sigle:eq(1)').text());
+//	alert($('#menu-list .mui-badge:eq(1)').text());
+	for (var i=0;i<$('#menu-list ul li').length;i++) {
+		var flag={'name': $('#menu-list .food-type:eq('+i+')').text(),
+			'price':$('#menu-list .sigle:eq('+i+')').text(),
+			'count':$('#menu-list .mui-badge:eq('+i+')').text()
+		}
+		checklist.push(flag);
+	}
+//	alert(JSON.stringify(checklist));
+	//订单导入数据库 
+	var db = openDatabase('testDB', '1.0', 'Test DB', 2 * 1024 * 1024);
+	db.transaction(function (context) {
+       	    context.executeSql('CREATE TABLE IF NOT EXISTS LshopData (shopname unique, checklist)');
+     		context.executeSql('INSERT INTO LshopData (shopname,checklist) values (?,?)',
+       		[shopName,JSON.stringify(checklist)]);  
+       });
+
+	plus.payment.getChannels(function(channels){
+	channel=channels[0];
+	},function(e){
+		alert('获取支付通道失败:'+e.message);
+	});
+	pay('alipay');
+//	pay('weixin');
+})
+}
+document.addEventListener('plusready',plusReady,false);
+var ALLPAYSERVER='http://demo.dcloud.net.cn/helloh5/payment/alipay.php?total=';
+//var ALLPAYSERVER='https://bowenth.github.io/';
+var WXPAYSERVER='http://demo.dcloud.net.cn/helloh5/payment/wxpay.php?total=';
+
+
+
+//2.发起支付请求
+function pay(id){
+ var PAYSERVER='';
+    if(id=='alipay'){
+        PAYSERVER=ALLPAYSERVER;
+//      alert('发起支付请求')
+    }else if(id=='weixin'){
+    	alert('微信支付哟');
+        PAYSERVER=WXPAYSERVER;
+    }else{
+        plus.nativeUI.alert("不支持此支付通道！",null,"捐赠");
+        return;
+    }
+    var xhr=new XMLHttpRequest();
+    xhr.onreadystatechange=function(){
+//  	alert('判断');
+        switch(xhr.readyState){
+            case 4:
+            if(xhr.status==200){
+                plus.payment.request(channel,xhr.responseText,function(result){
+                    plus.nativeUI.alert("支付成功！",function(){
+                        back();
+                    });
+                },function(error){
+                    plus.nativeUI.alert("支付失败：" + error.code);
+                });
+            }else{
+                alert("获取订单信息失败！");
+            }
+            break;
+            default:
+            break;
+        }
+    }
+    xhr.open('GET',PAYSERVER);
+    xhr.send();
+}
 			})();
+		}
 		</script>
 	</body>
 </html>

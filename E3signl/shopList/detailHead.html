@@ -68,7 +68,6 @@
 	<script type="text/javascript">		
 		mui.plusReady(function(){	
 			document.addEventListener('initDetail',function(e){
-				alert(e.detail.shopIndex);
 				var shopIndex=e.detail.shopIndex;
 				$('header h1').text(shopIndex+'号店');
 			});
@@ -79,7 +78,6 @@
 			var leftMenu=null;
 			$.getJSON('../data/typeData.json',function(result){
 				leftMenu=result;
-				alert(JSON.stringify(result));
 			});  
 			 
 			var controls = document.getElementById("segmentedControls");
