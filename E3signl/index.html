@@ -48,14 +48,10 @@
 			<span class="mui-icon iconfont icon-home"></span>
 			<span class="mui-tab-label">首页</span>
 		</a>
-		<a class="mui-tab-item" data-id='head2' href="shopList/shopListMain.html">
+		<a class="mui-tab-item" data-id='head2' href="shopList/shopList.html">
 			<span class="mui-icon iconfont icon-fenlei"></span>
 			<span class="mui-tab-label">生活</span>
 		</a>
-		<!--<a class="mui-tab-item" href="barItem/wishList.html">
-			<span class="mui-icon iconfont icon-xinyuandan"></span>
-			<span class="mui-tab-label">心愿单</span>
-		</a>-->
 		<a class="mui-tab-item" data-id='head3' href="barItem/cart.html">
 			<span class="mui-icon iconfont icon-cart"></span>
 			<span class="mui-tab-label">购物车</span>
@@ -78,7 +74,7 @@
 		var curBarItemWebview;
 		
 		var barItemWebviewArray = [];
-		var barItemArray = ['barItem/home.html','shopList/shopListMain.html','barItem/cart.html','barItem/mine.html'];
+		var barItemArray = ['barItem/home.html','shopList/shopList.html','barItem/cart.html','barItem/mine.html'];
 		mui.plusReady(function(){
 			//获取当前title和当前webview
 //			navTitle = document.querySelector('.headIndex');
@@ -107,7 +103,7 @@
 			//初始化所有bar页面
 			inittabitemWebviews();
 			//添加bar点击事件接受
-			tapBaritem();
+			tapBaritem();									
 		}
 		
 		
@@ -152,7 +148,7 @@
 							$('#'+headIndex).removeClass('own-header-hidden');
 							//切换baritemwebview
 							mui.later(function(){barItemWebviewArray[i].show();},100);
-							if(baritemurl=='shopList/shopListMain.html'){
+							if(baritemurl=='shopList/shopList.html'){
 								if(plus.webview.getWebviewById('movie.html'))
 								plus.webview.getWebviewById('movie.html').hide();
 //								plus.webview.getWebviewById('shopList.html').evalJS("mui('#pullrefresh').pullRefresh().scrollTo(0,100,0)");

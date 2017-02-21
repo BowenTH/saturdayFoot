@@ -29,7 +29,8 @@
 			"template-main-first.html",
 			"template-main-third.html",
 			"barItem/shopList.html",
-			"shopList/shopListMain.html"
+			"shopList/shopListMain.html",
+			"shopList/shopList.html"
 		]
 	},
 	"barItem/home.html": {
