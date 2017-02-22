@@ -202,7 +202,8 @@
 			"shopList/detail/menuList.html",
 			"css/app.css",
 			"img/3.jpg/",
-			"data/typeData.json"
+			"data/typeData.json",
+			"img/food/1111.png"
 		],
 		"refer": [
 			"shopList/detail/menuList.html",

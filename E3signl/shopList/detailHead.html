@@ -33,6 +33,15 @@
 				border-left: 5px solid green!important;
 				color: red;
 			}
+			li img{width: 50px;height: auto;}
+			li div{
+				width:50px;float:left; height:100px;
+				margin-left: 15px;
+			}
+			
+			#segmentedControlContents{
+				background: white; 
+			}
 			
 		</style>
 	</head>	
@@ -48,7 +57,7 @@
 			<img class="" src="../img/2.jpg"/ style="width: 40px;float: left;">
 			<h4 class="li" style="float: left;margin-left: 20px;">浮生若茶(剑川路店)</h4>
 			<div style="margin-left: 50px;float: left;color: red;font-size: 70%;">
-				<span class="mui-icon mui-icon-chatbubble"></span>新入户商铺
+				<span class="mui-icon mui-icon-chatbubble"></span>新入户商铺				
 			</div>
 		</div>
 		
@@ -127,7 +136,11 @@
 //					if(j==2){
 //						html.push('<li class="mui-table-view-cell">' + leftMenu[0].info[0].name + '</li>');
 //					}else{
-						html.push('<li class="mui-table-view-cell ">第' + i + '个选项卡子项-' + j  + leftMenu[i-1].info[j-1].name  + '</li>');
+						html.push('<li class="mui-table-view-cell "style="display:block">');
+						for(var k=0;k<3;k++){
+							html.push("<div><img  src='../img/food/1111.png'/>"+ "<span >"+leftMenu[i-1].info[j-1].name+"</span></div>" );
+						}
+						html.push('</li>');
 //					}
 //					html.push('<li class="mui-table-view-cell">第' + i + '个选项卡子项-' + j + '</li>');
 				}
@@ -229,7 +242,7 @@
 					scrollTo(this.getAttribute('data-index'));
 					return false;
 				});
-				mui($('#segmentedControlContents')).on('tap','li',function(){
+				mui($('#segmentedControlContents')).on('tap','img',function(){
 					mui.openWindow('detail/menuList.html','menuList.html');
 				})
 			})();
