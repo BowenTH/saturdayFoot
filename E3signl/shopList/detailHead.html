@@ -36,7 +36,7 @@
 			li img{width: 50px;height: auto;}
 			li div{
 				width:50px;float:left; height:100px;
-				margin-left: 15px;
+				margin-left: 25px;
 			}
 			
 			#segmentedControlContents{
@@ -99,50 +99,23 @@
 				m = 16, //左侧选项卡数量+1
 				n = 21; //每个选项卡列表数量+1
 //			添加实例
-//			for (; i < 3; i++) {
-//				html.push('<a class="mui-control-item" data-index="' + (i - 1) + '" href="#content' + i + '">选项' + i + '</a>');
-//			}
-//			controls.innerHTML = html.join('');
-//			html = [];
-//			for (i = 1; i < 3; i++) {
-//				html.push('<div id="content' + i + '" class="mui-control-content"><ul class="mui-table-view">');
-//				for (j = 1; j < n; j++) {
-//					html.push('<li class="mui-table-view-cell">第' + i + '个选项卡子项-' + j + '</li>');
-//				}
-//				html.push('</ul></div>');
-//			}
 			//测试代码
 			for (i=1; i <= leftMenu.length; i++) {
-//				if(i==1){
-					html.push('<a class="mui-control-item a-active" data-index="' + (i - 1) + '" href="#content' + i + '">' + leftMenu[i-1].name + '</a>');
-//				}else
-//				if(i==2){
-//					html.push('<a class="mui-control-item" data-index="' + (i - 1) + '" href="#content' + i + '">' + leftMenu[1].name + '</a>');
-//
-//				}else{
-//					html.push('<a class="mui-control-item" data-index="' + (i - 1) + '" href="#content' + i + '">选项' + i + '</a>');
-//				}
+				html.push('<a class="mui-control-item " data-index="' + (i - 1) + '" href="#content' + i + '">' + leftMenu[i-1].name + '</a>');
 			}
 			controls.innerHTML = html.join('');
+			//初始化，侧栏第一个选项加左侧颜色
+			$('#segmentedControls a').eq(0).addClass('a-active');
 			html = [];
 			for (i = 1; i <=leftMenu.length; i++) {
 //			for (i = 1; i < m; i++) {
 				html.push('<div id="content' + i + '" class="mui-control-content"><ul class="mui-table-view">');
 				for (j = 1; j <= leftMenu[i-1].info.length; j++) {
-//					if(j==1){
-//						html.push('<li class="mui-table-view-cell">' + leftMenu[0].info[0].name+"<img style='width:50px' src="+ leftMenu[0].info[0].img +"/>"+
-//						leftMenu[0].info[1].name+"<img style='width:50px' src="+ leftMenu[0].info[1].img +"/>"+ '</li>');
-//					}else
-//					if(j==2){
-//						html.push('<li class="mui-table-view-cell">' + leftMenu[0].info[0].name + '</li>');
-//					}else{
-						html.push('<li class="mui-table-view-cell "style="display:block">');
-						for(var k=0;k<3;k++){
-							html.push("<div><img  src='../img/food/1111.png'/>"+ "<span >"+leftMenu[i-1].info[j-1].name+"</span></div>" );
-						}
-						html.push('</li>');
-//					}
-//					html.push('<li class="mui-table-view-cell">第' + i + '个选项卡子项-' + j + '</li>');
+					html.push('<li class="mui-table-view-cell "style="display:block">');
+					for(var k=0;k<3;k++){
+						html.push("<div><img  src='../img/food/1111.png'/>"+ "<span >"+leftMenu[i-1].info[j-1].name+"</span></div>" );
+					}
+					html.push('</li>');
 				}
 				html.push('</ul></div>');
 			}

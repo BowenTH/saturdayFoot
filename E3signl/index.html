@@ -23,7 +23,7 @@
 		<div class=""> 
 			<img class="logo" src="img/666.png"/>		
 			<h1 id="nav-title" class="mui-title" style="margin-left: 35px;">
-				<span style="font-size: 18px;" class="mui-icon mui-icon-location-filled">玉兰清苑13号...
+				<span style="font-size: 18px;" class="mui-icon mui-icon-location">玉兰清苑13号...
 					<span class="mui-icon mui-icon-arrowdown"></span>
 					<!--<a style="margin-left: 35px;" href="#"><span class="mui-icon mui-pull-right mui-icon-search"></span></a>-->
 				</span> 			
@@ -103,7 +103,12 @@
 			//初始化所有bar页面
 			inittabitemWebviews();
 			//添加bar点击事件接受
-			tapBaritem();									
+			tapBaritem();		
+			mui.later(function(){
+				if(plus.webview.getWebviewById('barItem/home.html')){
+					mui.fire(plus.webview.getWebviewById('barItem/home.html'),'scrollRefush');
+				}
+			},2000);
 		}
 		
 		
