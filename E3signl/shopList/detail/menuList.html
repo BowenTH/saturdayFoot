@@ -89,17 +89,17 @@
 //			添加实例
 			//测试代码
 			for (i=1; i <= leftMenu.length; i++) {
-					html.push('<a class="mui-control-item a-active" data-index="' + (i - 1) + '" href="#content' + i + '">' + leftMenu[i-1].name + '</a>');
+					html.push('<a class="mui-control-item a-active" data-index="' + (i - 1) + '" href="#content' + i + '">' + leftMenu[i-1].type + '</a>');
 			}
 			controls.innerHTML = html.join('');
 			html = [];
 			for (i = 1; i <=leftMenu.length; i++) {
 				html.push('<div id="content' + i + '"  class="mui-control-content"><ul data-id="'+i+'" class="mui-table-view">');
 				for (j = 1; j <= leftMenu[i-1].info.length; j++) {
-						html.push('<li class="mui-table-view-cell" data-id="'+j+'">第' + i + '个选项卡子项-' + j  + leftMenu[i-1].info[j-1].name);
+						html.push('<li class="mui-table-view-cell" data-id="'+j+'">第' + i + '个选项卡子项-' + j  + leftMenu[i-1].info[j-1].type);
 						html.push("<div class='mui-numbox' style='float: right; display:none'>");
 						html.push("<button class='mui-btn mui-btn-numbox-minus'  type='button'>-</button>");
-						html.push("<input id='countInput' class='mui-input-numbox' type='number' value='1'>");
+						html.push("<input id='countInput' class='mui-input-numbox' type='number' value='0'>");
 						html.push("<button class='mui-btn mui-btn-numbox-plus' type='button'>+</button></div>");
 						html.push("<span class='mui-icon mui-icon-plus mui-icon-plus-filled' style='color: red;float: right;font-size: 35px;' ></span>");
 				}
@@ -206,77 +206,120 @@
 //				})；
 
 	/*处理按钮操作事件*/
+			var foodList = [];	//本地订单	
+//			foodList.list = []; //本地单个订单
+			var sumMoney = 0;
+			var listCount = 0;
+//			foodList.type='肉类';
+//			var sigleList = {"Index":[1,2],"count":'2','InputPrice':'10',"title":"冰糖苹果16颗","detail":"知名品牌，香甜可口","img":"0.png","price":"10"};
+//			foodList.list.push(sigleList);
+//			foodList.list.splice(0,1);
+			
+			
 			var listcount=0;
 			var foodsum=0;
 			mui('.mui-control-content').on('tap','.mui-btn-numbox-plus',function(){
 			var flag=$(this).siblings('.mui-input-numbox').val();
 			flag++;			
 			$(this).siblings('.mui-input-numbox').val(flag);
-			listcount++;//购买菜单种类加1; 
-//			var sigle=$(this).parent().siblings('.food-type').children().text();
-//			
-//			var data=parseInt(sigle);
-			foodsum+=10;//总额	 
-			$('#sum-finally').text(foodsum);
-			$('#count-list').text(listcount);			
-			//动态添加menulist的数目 1，2，3，4			
-//			var listname=$(this).parent().siblings('.food-type').text();
-			//获取到数据信息，猪肉
-			var ulId = $(this).parents("ul").data('id');
-			var liId = $(this).parents("li").data('id');
-			var listname=leftMenu[ulId-1].info[liId-1].name;
 			
-//			var span =$('#menu-list li');
-			var span= $("#menu-list ul li:contains("+listname+")");
-			$(span).children('span').last().text(flag);
+			var Index =[];
+			Index[1] = $(this).parents('li').data('id')-1;//左栏
+			Index[0] = $(this).parents('ul').data('id')-1;//右栏
+			var sigleList=null;
+			var i=0;
+			for(i in foodList){
+				if(foodList[i].Index[0] == Index[0]&&foodList[i].Index[1] == Index[1])
+				{
+					sigleList = foodList[i];break;
+				}				
+			}
+		 	listCount++;
+		 	foodList[i].info.count++;//订单列表里数量添加
+			sumMoney+= parseInt(foodList[i].info.price);
+ 
+			$('#sum-finally').text(sumMoney);
+			$('#count-list').text(listCount);			
+			//动态添加menulist的数目 1，2，3，4			
+			var span= $("#menu-list ul li:contains("+sigleList.info.title+")");
+			$(span).children('span').last().text(sigleList.info.count);
 		});
 //3 -	
 		mui('.mui-control-content').on('tap','.mui-btn-numbox-minus',function(){
 			var flag=$(this).siblings('.mui-input-numbox').val();
-			flag--;
+			flag--;			
 			$(this).siblings('.mui-input-numbox').val(flag);
 			if ($(this).siblings('.mui-input-numbox').val()<0) {//numbox值不能小于0
 				$(this).siblings('.mui-input-numbox').val(0);
 				return; 
 			}
-			listcount--;//如果不买该种类水果，listcount--；
-//			var sigle=$(this).parent().siblings('.food-type').children().text();
-//			var data=parseInt(sigle);
-			foodsum-=10;//总额			
-			$('#sum-finally').text(foodsum);
-			$('#count-list').text(listcount);
+			
+			var Index =[];
+			Index[1] = $(this).parents('li').data('id')-1;//左栏
+			Index[0] = $(this).parents('ul').data('id')-1;//右栏
+			var sigleList=null;
+			var i=0;
+			for(i in foodList){
+				if(foodList[i].Index[0] == Index[0]&&foodList[i].Index[1] == Index[1])
+				{
+					sigleList = foodList[i];break;
+				}				
+			}
+			
+			listCount--;//如果不买该种类水果，listcount--；			
+			foodList[i].info.count--;//订单列表里数量添加
+			sumMoney-= parseInt(foodList[i].info.price);
+ 
+			$('#sum-finally').text(sumMoney);
+			$('#count-list').text(listCount);
+
 			//动态添加menulist的数目 1，2，3，4
-			var ulId = $(this).parents("ul").data('id');
-			var liId = $(this).parents("li").data('id');
-			var listname=leftMenu[ulId-1].info[liId-1].name;
-//			var listname=$(this).parent().siblings('.food-type').text();
-			var span= $("#menu-list li:contains("+listname+")");
-			$(span).children('span').last().text(flag);
+			var span= $("#menu-list li:contains("+sigleList.info.title+")");
+			$(span).children('span').last().text(sigleList.info.count);
+			if(flag==0){
+				$(this).parent().css('display','none');
+				$(this).parent().next().css('display','inline');
+				var span= $("#menu-list li:contains("+sigleList.info.title+")");
+				span.remove(); 
+			}
 		});
 //3 0+
 		mui('.mui-control-content').on('tap','.mui-icon-plus-filled',function(){
 			this.style.display='none'; 
+			$(this).siblings('.mui-numbox').children('input').val(1);			
 //			input里显示购买量
 			$(this).siblings('.mui-numbox').css({'display':'inline'});
-//			var sigle=$(this).siblings('.food-type').children().text();
-//			var data=parseInt(sigle);
-			listcount++;//购买菜单种类加1;
-			foodsum+=10;
-			$('#sum-finally').text(foodsum);
-			$('#count-list').text(listcount);
+			
+			var sigleList = {};  //定义单个订单,要添加新的菜单
+			var info ={};
+			var Index=[],count,InputPrice,title,detail,img,price;
+			Index[1] = $(this).parents('li').data('id')-1;//左栏
+			Index[0] = $(this).parents('ul').data('id')-1;//右栏
+			
+			type = leftMenu[Index[0]].type;
+			info.count = 1;
+			info.InputPrice = 0;
+			info.title = leftMenu[Index[0]].info[Index[1]].type;
+			info.price = "5";
+			sigleList.type = type;
+			sigleList.Index = Index;
+			sigleList.info = info;
+			foodList.push(sigleList);
+			console.log("总菜单数目："+foodList.length);
+
+			sumMoney += sigleList.info.count*sigleList.info.price + sigleList.info.InputPrice;
+			listCount++;
+			$('#sum-finally').text(sumMoney);
+			$('#count-list').text(listCount);
 		//加入菜单主列表
 			var li = document.createElement('li');
 			$(li).addClass('mui-table-view-cell food-type');
-			var foodcount=$(this).siblings().children('.mui-input-numbox').val();//1
-			li.dataset.foodcount=foodcount;//1
-			var ulId = $(this).parents("ul").data('id');
-			var liId = $(this).parents("li").data('id');
-			var listname=leftMenu[ulId-1].info[liId-1].name;
-			li.dataset.listname = listname;
-//			li.dataset.listname = $(this).parent().find('.food-type').html();//粉木耳
-			//添加菜单列表具体内容 foodcount为一单个数
+			var foodCount = sigleList.info.count;
+			li.dataset.ulid = sigleList.Index[0];
+			li.dataset.liid = sigleList.Index[1];
 			
-			li.innerHTML= li.dataset.listname+'<span class="mui-badge mui-badge-green mui-btn-green mui-pull-right ">'+li.dataset.foodcount+'</span>';
+			//添加菜单列表具体内容 foodcount为一单个数			
+			li.innerHTML= sigleList.info.title+'<span class="mui-badge mui-badge-green mui-btn-green mui-pull-right ">'+sigleList.info.count+'</span>';
 			document.body.querySelector('#menu-list ul').appendChild(li);
 		});
 		
