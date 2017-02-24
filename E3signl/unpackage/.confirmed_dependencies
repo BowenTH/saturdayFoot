@@ -1,248 +1,262 @@
 {
-	"barItem/category.html": {
-		"resources": [
-			"img/category.png"
-		]
-	},
-	"index.html": {
-		"resources": [
-			"css/own.css",
-			"js/mui.min.js",
-			"css/iconfont.css",
-			"css/mui.min.css",
-			"barItem/home.html",
-			"fonts/iconfont.ttf",
-			"img/666.png",
-			"fonts/mui.ttf",
-			"css/icons-extra.css",
-			"js/jquery.js",
-			"fonts/mui-icons-extra.ttf"
-		],
-		"refer": [
-			"barItem/category.html",
-			"barItem/wishList.html",
-			"barItem/home.html",
-			"barItem/mine.html",
-			"template.html",
-			"barItem/cart.html",
-			"mine/login.html",
-			"template-main-first.html",
-			"template-main-third.html",
-			"barItem/shopList.html",
-			"shopList/shopListMain.html",
-			"shopList/shopList.html",
-			"barItem/life.html"
-		]
-	},
-	"barItem/home.html": {
-		"resources": [
-			"img/slider/slider2.jpg",
-			"js/own.js",
-			"img/1.jpg",
-			"img/slider/slider1.jpg",
-			"img/slider/slider3.jpg",
-			"img/slider/slider4.png",
-			"css/own.css",
-			"js/mui.min.js",
-			"css/iconfont.css",
-			"css/mui.min.css",
-			"img/mypng/2.PNG",
-			"img/mypng/1.PNG",
-			"spring.html",
-			"js/jquery.js",
-			"fonts/mui.ttf",
-			"img/detail/3.jpg"
-		],
-		"refer": [
-			"spring.html",
-			"shopList/detailHead.html"
-		]
-	},
-	"barItem/mine.html": {
-		"resources": [
-			"img/bg.jpeg",
-			"fonts/mui.ttf",
-			"fonts/iconfont.ttf",
-			"js/own.js"
-		]
-	},
-	"template.html": {
-		"refer": [
-			"template-main-third.html",
-			"template-main-second.html",
-			"template-main-first.html",
-			"mine/change-address-needtem.html",
-			"mine/address-needtem.html",
-			"mine/my-order-needtem.html",
-			"mine/change-psd-needtem.html",
-			"mine/register-needtem.html",
-			"mine/feedback-needtem.html",
-			"mine/change-email-needtem.html",
-			"Home/product-detail-needtem.html"
-		],
-		"resources": [
-			"js/own.js"
-		]
-	},
-	"barItem/cart.html": {
-		"resources": [
-			"img/50.jpg",
-			"js/own.js"
-		]
-	},
-	"mine/change-address-needtem.html": {
-		"resources": [
-			"css/own.css",
-			"js/own.js",
-			"js/mui.min.js",
-			"css/iconfont.css",
-			"css/mui.min.css",
-			"fonts/iconfont.ttf"
-		]
-	},
-	"mine/address-needtem.html": {
-		"resources": [
-			"js/mui.picker.min.js",
-			"css/mui.picker.min.css",
-			"js/city.data-3.js"
-		]
-	},
-	"template-main-third.html": {
-		"resources": [
-			"fonts/mui.ttf",
-			"css/own.css",
-			"js/mui.min.js",
-			"css/iconfont.css",
-			"css/mui.min.css"
-		]
-	},
-	"mine/login.html": {
-		"resources": [
-			"fonts/mui.ttf",
-			"fonts/iconfont.ttf",
-			"js/own.js"
-		]
-	},
-	"spring.html": {
-		"resources": [
-			"img/50.jpg"
-		]
-	},
-	"barItem/shopList.html": {
-		"resources": [
-			"css/style.css",
-			"css/tab.css"
-		]
-	},
-	"shopList/shopListMain.html": {
-		"resources": [
-			"shopList/shopList.html",
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"js/jquery.mobile.js",
-			"js/jquery.js"
-		],
-		"refer": [
-			"shopList/shopList.html",
-			"shopList/movie.html"
-		]
-	},
-	"shopList/shopList.html": {
-		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"js/jquery.js",
-			"css/own.css",
-			"css/iconfont.css",
-			"fonts/iconfont.ttf",
-			"img/detail/3.jpg",
-			"fonts/mui-icons-extra.ttf",
-			"css/icons-extra.css"
-		],
-		"refer": [
-			"shopList/detailHead.html"
-		]
-	},
-	"mine/feedback-needtem.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css"
-		]
-	},
-	"mine/change-psd-needtem.html": {
-		"resources": [
-			"css/own.css",
-			"js/own.js",
-			"fonts/mui.ttf",
-			"css/iconfont.css",
-			"fonts/iconfont.ttf"
-		]
-	},
-	"shopList/movie.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"css/icons-extra.css",
-			"js/jquery.js",
-			"fonts/mui-icons-extra.ttf",
-			"fonts/mui.ttf",
-			"img/detail/3.jpg"
-		]
-	},
-	"shopList/detailHead.html": {
-		"resources": [
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"css/icons-extra.css",
-			"fonts/mui-icons-extra.ttf",
-			"js/mui.min.js",
-			"js/jquery.js",
-			"img/2.jpg",
-			"shopList/detail/menuList.html",
-			"css/app.css",
-			"img/3.jpg/",
-			"data/typeData.json",
-			"img/food/1111.png"
-		],
-		"refer": [
-			"shopList/detail/menuList.html",
-			"shopList/detail/comment.html"
-		]
-	},
-	"shopList/detail/menuList.html": {
-		"resources": [
-			"fonts/mui-icons-extra.ttf",
-			"css/app.css",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"css/icons-extra.css",
-			"js/jquery.js",
-			"js/mui.js",
-			"data/typeData.json"
-		]
-	},
-	"Home/product-detail-needtem.html": {
-		"resources": [
-			"img/detail/2.jpg",
-			"img/detail/0.jpg",
-			"img/touxiang.jpg",
-			"fonts/mui.ttf",
-			"fonts/iconfont.ttf",
-			"img/detail/1.jpg",
-			"img/detail/4.jpg",
-			"img/3.jpg"
-		]
-	},
-	"barItem/life.html": {
-		"resources": [
-			"png/u\u003d4283357259,4270108372\u0026fm\u003d21\u0026gp\u003d0.jpg",
-			"png/iconfont.js",
-			"png/iconfont.css",
-			"js/mui.js",
-			"png/2017-02-21_204233.png",
-			"css/mui.css",
-			"js/jquery.js"
-		]
-	}
+  "barItem/category.html": {
+    "resources": [
+      "img/category.png"
+    ]
+  },
+  "index.html": {
+    "resources": [
+      "css/own.css",
+      "js/mui.min.js",
+      "css/iconfont.css",
+      "css/mui.min.css",
+      "barItem/home.html",
+      "fonts/iconfont.ttf",
+      "img/666.png",
+      "fonts/mui.ttf",
+      "css/icons-extra.css",
+      "js/jquery.js",
+      "fonts/mui-icons-extra.ttf"
+    ],
+    "refer": [
+      "barItem/category.html",
+      "barItem/wishList.html",
+      "barItem/home.html",
+      "barItem/mine.html",
+      "template.html",
+      "barItem/cart.html",
+      "mine/login.html",
+      "template-main-first.html",
+      "template-main-third.html",
+      "barItem/shopList.html",
+      "shopList/shopListMain.html",
+      "shopList/shopList.html",
+      "barItem/life.html"
+    ]
+  },
+  "barItem/home.html": {
+    "resources": [
+      "img/slider/slider2.jpg",
+      "js/own.js",
+      "img/1.jpg",
+      "img/slider/slider1.jpg",
+      "img/slider/slider3.jpg",
+      "img/slider/slider4.png",
+      "css/own.css",
+      "js/mui.min.js",
+      "css/iconfont.css",
+      "css/mui.min.css",
+      "img/mypng/2.PNG",
+      "img/mypng/1.PNG",
+      "spring.html",
+      "js/jquery.js",
+      "fonts/mui.ttf",
+      "img/detail/3.jpg"
+    ],
+    "refer": [
+      "spring.html",
+      "shopList/detailHead.html"
+    ]
+  },
+  "barItem/mine.html": {
+    "resources": [
+      "img/bg.jpeg",
+      "fonts/mui.ttf",
+      "fonts/iconfont.ttf",
+      "js/own.js"
+    ]
+  },
+  "template.html": {
+    "refer": [
+      "template-main-third.html",
+      "template-main-second.html",
+      "template-main-first.html",
+      "mine/change-address-needtem.html",
+      "mine/address-needtem.html",
+      "mine/my-order-needtem.html",
+      "mine/change-psd-needtem.html",
+      "mine/register-needtem.html",
+      "mine/feedback-needtem.html",
+      "mine/change-email-needtem.html",
+      "Home/product-detail-needtem.html"
+    ],
+    "resources": [
+      "js/own.js"
+    ]
+  },
+  "barItem/cart.html": {
+    "resources": [
+      "img/50.jpg",
+      "js/own.js"
+    ]
+  },
+  "mine/change-address-needtem.html": {
+    "resources": [
+      "css/own.css",
+      "js/own.js",
+      "js/mui.min.js",
+      "css/iconfont.css",
+      "css/mui.min.css",
+      "fonts/iconfont.ttf"
+    ]
+  },
+  "mine/address-needtem.html": {
+    "resources": [
+      "js/mui.picker.min.js",
+      "css/mui.picker.min.css",
+      "js/city.data-3.js"
+    ]
+  },
+  "template-main-third.html": {
+    "resources": [
+      "fonts/mui.ttf",
+      "css/own.css",
+      "js/mui.min.js",
+      "css/iconfont.css",
+      "css/mui.min.css"
+    ]
+  },
+  "mine/login.html": {
+    "resources": [
+      "fonts/mui.ttf",
+      "fonts/iconfont.ttf",
+      "js/own.js"
+    ]
+  },
+  "spring.html": {
+    "resources": [
+      "img/50.jpg"
+    ]
+  },
+  "barItem/shopList.html": {
+    "resources": [
+      "css/style.css",
+      "css/tab.css"
+    ]
+  },
+  "shopList/shopListMain.html": {
+    "resources": [
+      "shopList/shopList.html",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "js/jquery.mobile.js",
+      "js/jquery.js"
+    ],
+    "refer": [
+      "shopList/shopList.html",
+      "shopList/movie.html"
+    ]
+  },
+  "shopList/shopList.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/jquery.js",
+      "css/own.css",
+      "css/iconfont.css",
+      "fonts/iconfont.ttf",
+      "img/detail/3.jpg",
+      "fonts/mui-icons-extra.ttf",
+      "css/icons-extra.css"
+    ],
+    "refer": [
+      "shopList/detailHead.html"
+    ]
+  },
+  "mine/feedback-needtem.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ]
+  },
+  "mine/change-psd-needtem.html": {
+    "resources": [
+      "css/own.css",
+      "js/own.js",
+      "fonts/mui.ttf",
+      "css/iconfont.css",
+      "fonts/iconfont.ttf"
+    ]
+  },
+  "shopList/movie.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/icons-extra.css",
+      "js/jquery.js",
+      "fonts/mui-icons-extra.ttf",
+      "fonts/mui.ttf",
+      "img/detail/3.jpg"
+    ]
+  },
+  "shopList/detailHead.html": {
+    "resources": [
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/icons-extra.css",
+      "fonts/mui-icons-extra.ttf",
+      "js/mui.min.js",
+      "js/jquery.js",
+      "img/2.jpg",
+      "shopList/detail/menuList.html",
+      "css/app.css",
+      "img/3.jpg/",
+      "data/typeData.json",
+      "img/food/1111.png"
+    ],
+    "refer": [
+      "shopList/detail/menuList.html",
+      "shopList/detail/comment.html"
+    ]
+  },
+  "shopList/detail/menuList.html": {
+    "resources": [
+      "fonts/mui-icons-extra.ttf",
+      "css/app.css",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/icons-extra.css",
+      "js/jquery.js",
+      "js/mui.js",
+      "data/typeData.json"
+    ],
+    "refer": [
+      "shopList/detail/orderForm.html"
+    ]
+  },
+  "Home/product-detail-needtem.html": {
+    "resources": [
+      "img/detail/2.jpg",
+      "img/detail/0.jpg",
+      "img/touxiang.jpg",
+      "fonts/mui.ttf",
+      "fonts/iconfont.ttf",
+      "img/detail/1.jpg",
+      "img/detail/4.jpg",
+      "img/3.jpg"
+    ]
+  },
+  "barItem/life.html": {
+    "resources": [
+      "png/u\u003d4283357259,4270108372\u0026fm\u003d21\u0026gp\u003d0.jpg",
+      "png/iconfont.js",
+      "png/iconfont.css",
+      "js/mui.js",
+      "png/2017-02-21_204233.png",
+      "css/mui.css",
+      "js/jquery.js"
+    ]
+  },
+  "shopList/detail/orderForm.html": {
+    "resources": [
+      "fonts/mui-icons-extra.ttf",
+      "css/app.css",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/mui.js",
+      "css/icons-extra.css",
+      "js/jquery.js"
+    ]
+  }
 }

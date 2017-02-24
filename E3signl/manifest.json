@@ -99,6 +99,9 @@
         },
         "NativeObj":{
         	"description": "原生对象"
+        },
+        "Payment":{
+        	"description":"支付"
         }
 	},
 	"plus": {
@@ -441,7 +444,9 @@
 					"js/mui.js",
 					"data/typeData.json"
 				],
-				"refer": [],
+				"refer": [
+					"shopList/detail/orderForm.html"
+				],
 				"priority": 0
 			},
 			"Home/product-detail-needtem.html": {
@@ -466,6 +471,19 @@
 					"js/mui.js",
 					"png/2017-02-21_204233.png",
 					"css/mui.css",
+					"js/jquery.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"shopList/detail/orderForm.html": {
+				"resources": [
+					"fonts/mui-icons-extra.ttf",
+					"css/app.css",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"js/mui.js",
+					"css/icons-extra.css",
 					"js/jquery.js"
 				],
 				"refer": [],

@@ -59,9 +59,9 @@
 			<button id="menu" type="button" data-id='1' class="mui-btn-grey"style="height: 50px;border-radius: 0;;width: 60%;position: fixed;bottom: 0px;">
 				<span>菜单<span id="count-list" style="margin: -10px;" class="mui-badge mui-badge-red mui-btn-red mui-pull-right ">0</span></span>
 			</button>
-		        <button id="go" style="height: 50px;width: 40%;right: 0;background:lightblue;bottom: 0px;position: fixed;">
+		        <button id="listSubmit" style="height: 50px;width: 40%;right: 0;background:lightblue;bottom: 0px;position: fixed;">
 		         	<span id="" >
-						结账：<span id='sum-finally'>0</span>元
+						提交订单：<span id='sum-finally'>0</span>元
 					</span>					
 		        </button>			
 		</div>
@@ -331,89 +331,26 @@
 				$('#menu-list').css("display","none");
 				$(this).data('id','1');
 			}
+		});	
+
+		document.getElementById('listSubmit').addEventListener('tap',function(){			
+			mui.openWindow({url:'orderForm.html',
+			id:'orderForm.html',
+			extras:{foodList:foodList},
+			show:{
+				autoShow:false,
+				aniShow:'slide-in-left',duration:200
+			},waiting:{
+				autoShow:true,
+				title:'拼命加载...',
+				options:{
+//			        width:waiting-dialog-widht,//等待框背景区域宽度，默认根据内容自动计算合适宽度
+//			        height:waiting-dialog-height
+			       }
+			}			
+			});
 		});
 		
-		/* 支付宝支付引用  */
-var channel =null;
-function plusReady(){
-	document.getElementById('go').addEventListener('tap',function(){
-	mui.toast('结算金额:'+foodsum);
-	//生成订单
-//	alert(shopName);	
-	var checklist=[];
-	$list=$('#menu-list ul li');
-
-//	alert($('#menu-list .sigle:eq(1)').text());
-//	alert($('#menu-list .mui-badge:eq(1)').text());
-	for (var i=0;i<$('#menu-list ul li').length;i++) {
-		var flag={'name': $('#menu-list .food-type:eq('+i+')').text(),
-			'price':$('#menu-list .sigle:eq('+i+')').text(),
-			'count':$('#menu-list .mui-badge:eq('+i+')').text()
-		}
-		checklist.push(flag);
-	}
-//	alert(JSON.stringify(checklist));
-	//订单导入数据库 
-	var db = openDatabase('testDB', '1.0', 'Test DB', 2 * 1024 * 1024);
-	db.transaction(function (context) {
-       	    context.executeSql('CREATE TABLE IF NOT EXISTS LshopData (shopname unique, checklist)');
-     		context.executeSql('INSERT INTO LshopData (shopname,checklist) values (?,?)',
-       		[shopName,JSON.stringify(checklist)]);  
-       });
-
-	plus.payment.getChannels(function(channels){
-	channel=channels[0];
-	},function(e){
-		alert('获取支付通道失败:'+e.message);
-	});
-	pay('alipay');
-//	pay('weixin');
-})
-}
-document.addEventListener('plusready',plusReady,false);
-var ALLPAYSERVER='http://demo.dcloud.net.cn/helloh5/payment/alipay.php?total=';
-//var ALLPAYSERVER='https://bowenth.github.io/';
-var WXPAYSERVER='http://demo.dcloud.net.cn/helloh5/payment/wxpay.php?total=';
-
-
-
-//2.发起支付请求
-function pay(id){
- var PAYSERVER='';
-    if(id=='alipay'){
-        PAYSERVER=ALLPAYSERVER;
-//      alert('发起支付请求')
-    }else if(id=='weixin'){
-    	alert('微信支付哟');
-        PAYSERVER=WXPAYSERVER;
-    }else{
-        plus.nativeUI.alert("不支持此支付通道！",null,"捐赠");
-        return;
-    }
-    var xhr=new XMLHttpRequest();
-    xhr.onreadystatechange=function(){
-//  	alert('判断');
-        switch(xhr.readyState){
-            case 4:
-            if(xhr.status==200){
-                plus.payment.request(channel,xhr.responseText,function(result){
-                    plus.nativeUI.alert("支付成功！",function(){
-                        back();
-                    });
-                },function(error){
-                    plus.nativeUI.alert("支付失败：" + error.code);
-                });
-            }else{
-                alert("获取订单信息失败！");
-            }
-            break;
-            default:
-            break;
-        }
-    }
-    xhr.open('GET',PAYSERVER);
-    xhr.send();
-}
 			})();
 		}
 		</script>
