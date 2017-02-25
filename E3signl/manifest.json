@@ -99,9 +99,6 @@
         },
         "NativeObj":{
         	"description": "原生对象"
-        },
-        "Payment":{
-        	"description":"支付"
         }
 	},
 	"plus": {
@@ -213,7 +210,8 @@
 					"fonts/mui.ttf",
 					"css/icons-extra.css",
 					"js/jquery.js",
-					"fonts/mui-icons-extra.ttf"
+					"fonts/mui-icons-extra.ttf",
+					"js/location.js"
 				],
 				"refer": [
 					"barItem/category.html",
@@ -442,7 +440,11 @@
 					"css/icons-extra.css",
 					"js/jquery.js",
 					"js/mui.js",
-					"data/typeData.json"
+					"data/typeData.json",
+					"data/dataList.json",
+					"img/jump.gif",
+					"img/bg.png",
+					"img/1.jpg"
 				],
 				"refer": [
 					"shopList/detail/orderForm.html"
@@ -496,12 +498,20 @@
 				"img/detail/5.jpg",
 				"img/detail/6.jpg",
 				"img/detail/8.jpg",
-				"img/jump.gif",
-				"img/bg.png",
 				"category/category-detail-new-needtem.html",
 				"img/detail/7.jpg",
 				"img/detail/9.jpg"
 			]
 		}
-	}
+	},
+	"unpackage":[
+	  "category/category-detail-new-needtem.html",
+	  "img/detail/5.jpg",
+	  "img/detail/6.jpg",
+	  "img/detail/7.jpg",
+	  "img/detail/8.jpg",
+	  "img/detail/9.jpg",
+	  "img/bg.png",	  
+	  "mine/forget-psd-needtem.html"
+	]
 }

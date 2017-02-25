@@ -9,7 +9,7 @@
 		
 		<header class="mui-bar mui-bar-nav" style="display: block;">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title">肉类</h1>
+		    <h1 class="mui-title">徐泾东购物市场</h1>
 		    <a style="margin: 10px;z-index: 999;"  class="mui-icon-extra mui-icon-extra-share mui-pull-right"></a>
 			<a  class="mui-icon mui-icon-search mui-pull-right"></a>  	
 		</header>
@@ -36,9 +36,12 @@
 			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
 				background-color: #fff;
 			}
+			.ownHidden{
+				display: none;				
+			}
 		</style>
 	</head>
-	<body>
+	<body>		
 		<!--加侧栏-->
 		<div  class="mui-content mui-row mui-fullscreen" style="margin-top: 50px;">
 			<div class="mui-col-xs-3">
@@ -65,6 +68,10 @@
 					</span>					
 		        </button>			
 		</div>
+		
+		<div class="ownHidden" style="position: fixed;margin: 50%;">
+			<img src="../../img/jump.gif"/>
+		</div>
 		<script src="../../js/jquery.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/mui.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
@@ -72,7 +79,8 @@
 				swipeBack: true //启用右滑关闭功能
 			});
 			var leftMenu=null;
-			$.getJSON('../../data/typeData.json',function(result){
+			$.getJSON('../../data/dataList.json',function(result){
+//			$.getJSON('../../data/typeData.json',function(result){
 				leftMenu=result;
 //				alert(JSON.stringify(result));
 			});  
@@ -95,13 +103,16 @@
 			html = [];
 			for (i = 1; i <=leftMenu.length; i++) {
 				html.push('<div id="content' + i + '"  class="mui-control-content"><ul data-id="'+i+'" class="mui-table-view">');
-				for (j = 1; j <= leftMenu[i-1].info.length; j++) {
-						html.push('<li class="mui-table-view-cell" data-id="'+j+'">第' + i + '个选项卡子项-' + j  + leftMenu[i-1].info[j-1].type);
+				html.push('<strong style="color:#007aff">'+leftMenu[i-1].type+'</strong>');
+				for (j = 1; j <= leftMenu[i-1].info.length; j++) {						
+						html.push('<li class="mui-table-view-cell" data-id="'+j+'">'+ leftMenu[i-1].info[j-1].title);
+						html.push('<span id="siglePrice" style="margin-left:5%;font-size:13px">'+ leftMenu[i-1].info[j-1].price+"</span>");
+//						第' + i + '个选项卡子项-' + j  
 						html.push("<div class='mui-numbox' style='float: right; display:none'>");
 						html.push("<button class='mui-btn mui-btn-numbox-minus'  type='button'>-</button>");
 						html.push("<input id='countInput' class='mui-input-numbox' type='number' value='0'>");
 						html.push("<button class='mui-btn mui-btn-numbox-plus' type='button'>+</button></div>");
-						html.push("<span class='mui-icon mui-icon-plus mui-icon-plus-filled' style='color: red;float: right;font-size: 35px;' ></span>");
+						html.push("<span class='mui-icon mui-icon-plus mui-icon-plus-filled' style='color: green;float: right;font-size: 30px;' ></span>");
 				}
 				html.push('</li></ul></div>');
 			}
@@ -240,7 +251,7 @@
  
 			$('#sum-finally').text(sumMoney);
 			$('#count-list').text(listCount);			
-			//动态添加menulist的数目 1，2，3，4			
+			//动态添加menulist的数目 1，2，3，4				
 			var span= $("#menu-list ul li:contains("+sigleList.info.title+")");
 			$(span).children('span').last().text(sigleList.info.count);
 		});
@@ -299,8 +310,8 @@
 			type = leftMenu[Index[0]].type;
 			info.count = 1;
 			info.InputPrice = 0;
-			info.title = leftMenu[Index[0]].info[Index[1]].type;
-			info.price = "5";
+			info.title = leftMenu[Index[0]].info[Index[1]].title;
+			info.price = parseInt(leftMenu[Index[0]].info[Index[1]].price);
 			sigleList.type = type;
 			sigleList.Index = Index;
 			sigleList.info = info;
@@ -334,14 +345,18 @@
 		});	
 
 		document.getElementById('listSubmit').addEventListener('tap',function(){			
+			$("div").last().removeClass('ownHidden');
+//			mui.later(function(){
+//				$("div").last().addClass('ownHidden');		
+//			},2000);
 			mui.openWindow({url:'orderForm.html',
 			id:'orderForm.html',
 			extras:{foodList:foodList},
 			show:{
 				autoShow:false,
-				aniShow:'slide-in-left',duration:200
+//				aniShow:'slide-in-left',duration:200
 			},waiting:{
-				autoShow:true,
+				autoShow:false,
 				title:'拼命加载...',
 				options:{
 //			        width:waiting-dialog-widht,//等待框背景区域宽度，默认根据内容自动计算合适宽度
@@ -349,8 +364,8 @@
 			       }
 			}			
 			});
-		});
-		
+			
+		});		
 			})();
 		}
 		</script>

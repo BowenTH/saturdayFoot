@@ -23,7 +23,7 @@
 		<div class=""> 
 			<img class="logo" src="img/666.png"/>		
 			<h1 id="nav-title" class="mui-title" style="margin-left: 35px;">
-				<span style="font-size: 18px;" class="mui-icon mui-icon-location">玉兰清苑13号...
+				<span style="font-size: 15px;" class="mui-icon mui-icon-location">玉兰清苑13号...
 					<span class="mui-icon mui-icon-arrowdown"></span>
 					<!--<a style="margin-left: 35px;" href="#"><span class="mui-icon mui-pull-right mui-icon-search"></span></a>-->
 				</span> 			
@@ -64,6 +64,9 @@
 	
 	<script src="js/mui.min.js" charset="UTF-8"></script>
 	<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+	<!--<script src="http://api.map.baidu.com/api?v=2.0&amp;ak=HR3RRyTsXYdQ3QzzG5yUkg0q" type="text/javascript" charset="utf-8"></script>
+	<script src="http://developer.baidu.com/map/jsdemo/demo/convertor.js" type="text/javascript" charset="utf-8"></script>-->
+	<script src="js/location.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" charset="UTF-8">
 		mui.init({
 			swipeBack:false
@@ -76,6 +79,7 @@
 		var barItemWebviewArray = [];
 		var barItemArray = ['barItem/home.html','barItem/life.html','barItem/cart.html','barItem/mine.html'];
 		mui.plusReady(function(){
+			plus.geolocation.getCurrentPosition(displayLocation,displayError,option);
 			//获取当前title和当前webview
 //			navTitle = document.querySelector('.headIndex');
 			navTitle = $('.headIndex');
