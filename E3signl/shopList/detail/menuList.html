@@ -39,6 +39,9 @@
 			.ownHidden{
 				display: none;				
 			}
+			img{
+				width: 50px;
+			}
 		</style>
 	</head>
 	<body>		
@@ -74,17 +77,71 @@
 		</div>
 		<script src="../../js/jquery.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/mui.js" type="text/javascript" charset="utf-8"></script>
-		<script type="text/javascript">
+		<script src="../../js/av.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/require.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/menuList.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">  
 			mui.init({
 				swipeBack: true //启用右滑关闭功能
-			});
+			});	
 			var leftMenu=null;
+			upShopList();
+//			封装商户信息上传
+		function upShopList(){
 			$.getJSON('../../data/dataList.json',function(result){
-//			$.getJSON('../../data/typeData.json',function(result){
-				leftMenu=result;
-//				alert(JSON.stringify(result));
-			});  
-			 
+				leftMenu=result;				
+				alert(JSON.stringify(result));
+			});
+			var Product=AV.Object.extend('shopList');
+			var product = new Product();
+
+			mui.later(function(){
+				var Query=new AV.Query("shopList");
+				Query.equalTo('shopname','诚哥的店');	
+				var resultFind = Query.find({
+				success:function(resp){
+					mui.toast('正在查找商户...');
+					if(resp.length){
+						if(!confirm("该商户已存在，上传会覆盖原商户信息，是否继续")){
+							return;
+						}else{
+							resp[0].destroy().then(  
+								function(){},function(error){alert(JSON.stringify(error));}
+							); 
+						} 
+					}
+					product.save({
+						shopname:'诚哥的店',
+						product:{'data':leftMenu},
+						position:localStorage.getItem('shopPosition')
+						}
+					).then(function() {
+					    //  发布成功，跳转到商品 list 页面			    
+					    alert('上传成功'); 
+					}, function(error) {
+					    alert(JSON.stringify(error));
+					});
+				},
+				error:function(error){
+					alert(JSON.stringify(error));
+				}				
+				});				
+			},100);
+		}
+		
+		var shopDown= null;	
+		upDateFile();
+		function upDateFile(){								
+			console.log('go datalist');
+			var shopQuery=new AV.Query('shopList');
+			shopQuery.find().then(function(results){
+				shopDown = results;
+				console.log(JSON.stringify(shopDown)); 
+			},function(error){
+				console.log(error);
+			});
+		}
+		
 			var controls = document.getElementById("segmentedControls");
 			var contents = document.getElementById("segmentedControlContents");
 			mui.later(doData,200);
@@ -101,11 +158,12 @@
 			}
 			controls.innerHTML = html.join('');
 			html = [];
-			for (i = 1; i <=leftMenu.length; i++) {
+			for (i = 1; i <=leftMenu.length; i++) { 
 				html.push('<div id="content' + i + '"  class="mui-control-content"><ul data-id="'+i+'" class="mui-table-view">');
 				html.push('<strong style="color:#007aff">'+leftMenu[i-1].type+'</strong>');
 				for (j = 1; j <= leftMenu[i-1].info.length; j++) {						
 						html.push('<li class="mui-table-view-cell" data-id="'+j+'">'+ leftMenu[i-1].info[j-1].title);
+						html.push('<img src='+ leftMenu[i-1].info[j-1].img +'>');
 						html.push('<span id="siglePrice" style="margin-left:5%;font-size:13px">'+ leftMenu[i-1].info[j-1].price+"</span>");
 //						第' + i + '个选项卡子项-' + j  
 						html.push("<div class='mui-numbox' style='float: right; display:none'>");

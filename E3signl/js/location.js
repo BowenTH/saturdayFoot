@@ -13,6 +13,8 @@ function displayLocation(position){
 	 mui.later(function(){
 	 	if(position.address)
 	 	{
+	 		localStorage.setItem('shopPosition',position.addresses);
+	 		alert(JSON.stringify(position));
 	 		$(".mui-icon-location").text(position.addresses);
 			mui.confirm(position.addresses,'定位',['确认','重新定位']);
 	 	}

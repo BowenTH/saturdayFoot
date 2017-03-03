@@ -1,6 +1,6 @@
 [{"type":"肉类","info":[
-{"title":"五花肉","img":"foodImg/0.png","price":"10元/斤"},
-{"title":"多瘦肉","img":"foodImg/1.png","price":"10元/斤"},
+{"title":"五花肉","img":"http://oi7xjum3c.bkt.clouddn.com/roulei_paigu_paigu-1.jpg","price":"10元/斤"},
+{"title":"多瘦肉","img":"http://oi7xjum3c.bkt.clouddn.com/roulei_paigu_paigu-1.jpg","price":"10元/斤"},
 {"title":"多肥肉","price":"10元/斤"},
 {"title":"排骨","price":"10元/斤"},
 {"title":"猪蹄","price":"10元/斤"}
@@ -13,7 +13,7 @@
 {"title":"大白菜","detail":"每个约0.5斤1.0元","price":"5.0元/斤"},
 {"title":"娃娃菜","detail":"每个约0.5斤1.0元","price":"5.0元/斤"},
 {"title":"胡萝卜","detail":"每个约0.5斤1.0元","price":"5.0元/斤"},
-{"title":"白萝卜","detail":"每个约1.0元","price":"5.0元/1斤"},
+{"title":"白萝卜","img":"http://oi7xjum3c.bkt.clouddn.com/roulei_shourou_duoshourou-3.jpg","detail":"每个约1.0元","price":"5.0元/1斤"},
 {"title":"菠菜","price":"5.0元/1斤"},
 {"title":"韭菜","price":"5.0元/1斤"},
 {"title":"韭黄","price":"5.0元/1斤"},
