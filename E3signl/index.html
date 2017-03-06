@@ -30,18 +30,18 @@
 			</h1>
 		</div>
 	</header>
-		<div id="head2" style="margin: 20px;" class="headIndex own-header-hidden">
+		<!--<div id="head2" style="margin: 20px;" class="headIndex own-header-hidden">
 			诗意远方
 			<span class="mui-icon-extra mui-icon-extra-share mui-pull-right"></span>
-		</div>
+		</div>-->
 		<div id="head3" style="margin: 20px;" class="headIndex own-header-hidden"> 
 			收藏
 		</div>
-	<header id="head4" class="headIndex own-header-hidden mui-bar mui-bar-nav own-main-background-color headStyle">
+	<!--<header id="head4" class="headIndex own-header-hidden mui-bar mui-bar-nav own-main-background-color headStyle">
 		<div>
 			<span class="mui-icon mui-icon-settings mui-pull-right"></span>
 		</div>
-	</header>
+	</header>-->
 
 	<nav class="mui-bar mui-bar-tab">
 		<a class="mui-tab-item mui-active" data-id='head1' href="barItem/home.html">
@@ -119,20 +119,37 @@
 		//初始化所有bar页面
 		function inittabitemWebviews(){
 			for (var i = 0; i < barItemArray.length; i++) {
-				barItemWebviewArray[i] = mui.preload({
+				if(i==1||i==3){
+					barItemWebviewArray[i] = mui.preload({
 					id:barItemArray[i],
 					url:barItemArray[i],
 					styles:{
-						top:'44px',
-						bottom: '51px',
+						top:'0px',
+						bottom: '50px',
 						left: '0px',
 						bounce: 'vertical',
 						bounceBackground: '#f8f8f8'
-					},
-					waiting:{
-						autoShow:false
-					}
-				});
+						},
+						waiting:{
+							autoShow:false
+						}
+					});
+				}else{
+					barItemWebviewArray[i] = mui.preload({
+						id:barItemArray[i],
+						url:barItemArray[i],
+						styles:{
+							top:'44px',
+							bottom: '50px',
+							left: '0px',
+							bounce: 'vertical',
+							bounceBackground: '#f8f8f8'
+						},
+						waiting:{
+							autoShow:false
+						}
+					});
+				}
 				barItemWebviewArray[i].hide();
 				mainWebview.append(barItemWebviewArray[i]);
 			}
@@ -156,15 +173,17 @@
 							navTitle.addClass('own-header-hidden');
 							$('#'+headIndex).removeClass('own-header-hidden');
 							//切换baritemwebview
-							curBarItemWebview.hide();
+							curBarItemWebview.hide(); 
 							mui.later(function(){barItemWebviewArray[i].show();},100);
-//							if(baritemurl=='barItem/life.html'){
+							if(baritemurl=='barItem/life.html'){
 //								if(plus.webview.getWebviewById('movie.html'))
 //								plus.webview.getWebviewById('movie.html').hide();
 ////								plus.webview.getWebviewById('shopList.html').evalJS("mui('#pullrefresh').pullRefresh().scrollTo(0,100,0)");
 //								mui.fire(plus.webview.getWebviewById('shopList.html'),'scrollRefush');
-//								
-//							}
+								var clientHeight=document.documentElement.clientHeight;
+								var flag = (clientHeight-50)/3 +'px';
+								plus.webview.getWebviewById('barItem/life.html').evalJS("$('.list-1-1').css('height','"+flag+"');");
+							}
 							curBarItemWebview = barItemWebviewArray[i];
 							break;
 						}

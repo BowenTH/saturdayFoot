@@ -444,7 +444,11 @@
 					"data/dataList.json",
 					"img/jump.gif",
 					"img/bg.png",
-					"img/1.jpg"
+					"img/1.jpg",
+					"js/menuList.js",
+					"js/av.js",
+					"js/require.js",
+					"js/jquery.fly.min.js"
 				],
 				"refer": [
 					"shopList/detail/orderForm.html"
@@ -473,7 +477,14 @@
 					"js/mui.js",
 					"png/2017-02-21_204233.png",
 					"css/mui.css",
-					"js/jquery.js"
+					"js/jquery.js",
+					"png/2.jpg",
+					"png/4.jpg",
+					"css/app.css",
+					"png/3.jpg",
+					"png/7.jpg",
+					"png/5.jpg",
+					"png/6.jpg"
 				],
 				"refer": [],
 				"priority": 0
@@ -486,6 +497,18 @@
 					"css/mui.min.css",
 					"js/mui.js",
 					"css/icons-extra.css",
+					"js/jquery.js",
+					"js/av.js"
+				],
+				"refer": [
+					"shopList/detail/orderReturn.html"
+				],
+				"priority": 0
+			},
+			"shopList/detail/orderReturn.html": {
+				"resources": [
+					"css/mui.min.css",
+					"js/mui.js",
 					"js/jquery.js"
 				],
 				"refer": [],

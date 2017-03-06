@@ -2,103 +2,98 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,height=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title></title>
 		<link rel="stylesheet" type="text/css" href="../css/mui.css"/>
-		<link rel="stylesheet" type="text/css" href=""/>
+		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
 		<link rel="stylesheet" type="text/css" href="../png/iconfont.css"/>
+		<script type="text/javascript" src="../js/mui.js" ></script>
 		
 
 		<style type="text/css">
 		body{
-			background: lightslategray;
+			/*min-height: 525px;
+			margin-bottom: 0px;*/
 		}
-			.list-1-1{
-				border: 1px solid grey;
-				width: 50%;
-				height: 173px;
-				min-height:100px;
-				float: left;				
-			}
-			.own-active{
-				/*background: grey;*/
-			}
-			.list-1-1 img{
-				width: 80px;
-				height: auto;
-				/*margin: 20%;
-				width: 40%;
-				margin-bottom: 20px;
-				padding-bottom: 50px;*/
-			}
-			.picture{
-				
-			}
-			.list-1-1 span{
-				margin-left: 35%;								
-			}
-			svg{				
-				margin-top: 50px;
-				margin-left: 40%;
-				margin-bottom: 10px;
-				height: 40px;
-				width: 40px;
-			}
-			 .icon {
-	          /* 通过设置 font-size 来改变图标大小 */
-	          width: 3em; height: 3em;
-	          /* 图标和文字相邻时，垂直对齐 */
-	          vertical-align: -0.15em;
-	          color: #DF5000;
-	          /* 通过设置 color 来改变 SVG 的颜色/fill */
-	          fill: currentColor;
-	          /* path 和 stroke 溢出 viewBox 部分在 IE 下会显示
-	             normalize.css 中也包含这行 */
-	          overflow: hidden;
-	        }
+		.list-1-1{
+			border: 1px solid grey;
+			width: 50%;
+			height: 50%;
+			/*height: 175px;*/
+			/*min-height:100px;*/
+			float: left;
+			/*display: none;*/				
+		}
+		.own-active{
+			/*background: grey;*/
+		}
+		.list-1-1 span{
+			margin-left: 35%;								
+		}
+		svg{				
+			margin-top: 50px;
+			margin-left: 40%;
+			margin-bottom: 10px;
+			height: 40px;
+			width: 40px;
+		}
+		 .icon {
+          /* 通过设置 font-size 来改变图标大小 */
+          width: 3em; height: 3em;
+          /* 图标和文字相邻时，垂直对齐 */
+          vertical-align: -0.15em;
+          color: #DF5000;
+          /* 通过设置 color 来改变 SVG 的颜色/fill */
+          fill: currentColor;
+          /* path 和 stroke 溢出 viewBox 部分在 IE 下会显示
+             normalize.css 中也包含这行 */
+          overflow: hidden;
+        }
 		</style>
 	</head>
 	<body>
-		<div class="">
-			<div class="list-1-1">
-				<svg class="icon">
-					<use xlink:href="#icon-taiyang"></use>
-				</svg>
-				<span>手电筒</span>
-			</div>			
-		</div>
-			
-			<div class="list-1-1">
-				<svg class="icon">
-					<use xlink:href="#icon-yueliang"></use>
-				</svg>
-				<span>照镜子</span>
-			</div>
-			<div class="list-1-1">	
-				<svg class="icon">
-					<use xlink:href="#icon-yueliang1"></use>
-				</svg>
-				<span>扫描码</span>
-			</div>
-			<div class="list-1-1">	
-				<svg class="icon">
-					<use xlink:href="#icon-taiyang"></use>
-				</svg>
-				<span>放大镜</span>
-			</div>
-			<div class="list-1-1" style="border: 0px;background: url(../png/u=4283357259,4270108372&fm=21&gp=0.jpg);">	
-				
-				<span class="picture">分贝仪</span>
-			</div>
-			<div class="list-1-1" style="margin: 0px;background: url(../png/2017-02-21_204233.png);">	
-				<span class="picture">随机事</span>
-			</div>
-			
-			
-		</div>
 		
+		<div class="list-1-1" id="ownbg" style="background:url(../png/5.jpg) ;background-size: 100% 100%;">
+			
+			<span>手电筒</span>
+		</div>			
+
+		
+		<div class="list-1-1" style="background:url(../png/7.jpg) ;background-size: 100% 100%;">
+			<span>照镜子</span>
+		</div>
+		<div class="list-1-1" style="background:url(../png/4.jpg) ;background-size: 100% 100%;">	
+			<span>扫描码</span>
+		</div>
+		<div class="list-1-1" style="background:url(../png/6.jpg) ;background-size: 100% 100%;">	
+			<span>放大镜</span>
+		</div>
+		<div class="list-1-1"  style="background: url(../png/3.jpg);background-size:100% 100%;" >	
+			<!--style="border: 0px;background: url(../png/77.png);background-repeat: no-repeat;padding-left: 10px;"-->
+			<!--<div  id="w2" style="margin: 0px;background: url(../png/88.png);background-size:100% 100%;">-->
+			<span class="picture" style="color: white ;"><a href="mine.html" style="color: white;">分贝仪</a></span>
+		</div>
+		<div class="list-1-1" style="margin: 0px;background: url(../png/2.jpg);background-size:100% 100% ;">	
+			<span class="picture">随机事</span>
+		</div>	
 		
 		<script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/mui.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../png/iconfont.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">	
+		
+		mui.init();			
+		
+		$(document).ready(function(){
+//		mui.plusReady(function(){
+//			var clientHeight=document.documentElement.clientHeight;
+//			var flag = clientHeight/3 +'px';
+//			var flag = $(window).height()/3 +'px';
+//			$('.list-1-1').css('height',flag);  
+		});
+		$('body').on('tap','.list-1-1',function(){
+			mui.toast('click'); 
+		});
+		</script>
 	</body>
 </html>

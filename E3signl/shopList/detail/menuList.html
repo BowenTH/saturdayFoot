@@ -31,6 +31,7 @@
 			
 			.mui-control-content {
 				display: block;
+				border-left-color: red!important;
 			}
 			
 			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
@@ -42,6 +43,17 @@
 			img{
 				width: 50px;
 			}
+			ul .mui-active{
+				background-color: white!important;
+			}
+			#segmentedControlContents{
+				/*border: 1px solid red;*/
+				/*margin-bottom: 50px;*/
+			}
+			#segmentedControlContents .mui-table-view-cell{
+				height: 110px;
+			}
+			.u-flyer{display: block;width: 50px;height: 50px;border-radius: 50px;position: fixed;z-index: 9999;}
 		</style>
 	</head>
 	<body>		
@@ -61,7 +73,8 @@
 			<ul class="mui-table-view">
 			</ul>
 		</div>
-		<div id="">		
+		<div id="">			
+			<!--<i class="end"></i>-->
 			<button id="menu" type="button" data-id='1' class="mui-btn-grey"style="height: 50px;border-radius: 0;;width: 60%;position: fixed;bottom: 0px;">
 				<span>菜单<span id="count-list" style="margin: -10px;" class="mui-badge mui-badge-red mui-btn-red mui-pull-right ">0</span></span>
 			</button>
@@ -76,6 +89,7 @@
 			<img src="../../img/jump.gif"/>
 		</div>
 		<script src="../../js/jquery.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/jquery.fly.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/mui.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/av.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/require.js" type="text/javascript" charset="utf-8"></script>
@@ -85,12 +99,41 @@
 				swipeBack: true //启用右滑关闭功能
 			});	
 			var leftMenu=null;
+//			$(function() {
+			var offset = $("#menu").offset();
+//			$(".addcar").click(
+			function ownFly(e,addcar){
+//				console.log(offset.top);
+				var img = null;
+				if(e.target.tagName==='SPAN'){
+					img = $(addcar).siblings('img').attr('src');
+				}else{
+					img = $(addcar).parent().siblings('img').attr('src');
+				}				
+				console.log(e.target.tagName);
+				var flyer = $('<img class="u-flyer" src="'+img+'">');
+				flyer.fly({
+					start: {
+						left: '0',
+						top: '0'
+					},
+					end: {
+						left: offset.left+10,
+						top: offset.top+10,
+						width: 0,
+						height: 0
+					},
+					onEnd: function(){
+						this.destory();
+					}
+				});
+			}
 			upShopList();
 //			封装商户信息上传
 		function upShopList(){
 			$.getJSON('../../data/dataList.json',function(result){
 				leftMenu=result;				
-				alert(JSON.stringify(result));
+//				alert("本地获取店铺信息"+JSON.stringify(leftMenu));
 			});
 			var Product=AV.Object.extend('shopList');
 			var product = new Product();
@@ -100,10 +143,11 @@
 				Query.equalTo('shopname','诚哥的店');	
 				var resultFind = Query.find({
 				success:function(resp){
-					mui.toast('正在查找商户...');
+					mui.toast('正在查找商户...'); 
 					if(resp.length){
+//						alert('服务器查询结果'+JSON.stringify(resp));
 						if(!confirm("该商户已存在，上传会覆盖原商户信息，是否继续")){
-							return;
+							return; 
 						}else{
 							resp[0].destroy().then(  
 								function(){},function(error){alert(JSON.stringify(error));}
@@ -113,13 +157,14 @@
 					product.save({
 						shopname:'诚哥的店',
 						product:{'data':leftMenu},
-						position:localStorage.getItem('shopPosition')
+						position:localStorage.getItem('shopPosition'),
+						orderList:null
 						}
 					).then(function() {
 					    //  发布成功，跳转到商品 list 页面			    
-					    alert('上传成功'); 
+					    alert('开始上传'+JSON.stringify(leftMenu));  
 					}, function(error) {
-					    alert(JSON.stringify(error));
+					    alert('上传出错  '+JSON.stringify(error));
 					});
 				},
 				error:function(error){
@@ -129,22 +174,9 @@
 			},100);
 		}
 		
-		var shopDown= null;	
-		upDateFile();
-		function upDateFile(){								
-			console.log('go datalist');
-			var shopQuery=new AV.Query('shopList');
-			shopQuery.find().then(function(results){
-				shopDown = results;
-				console.log(JSON.stringify(shopDown)); 
-			},function(error){
-				console.log(error);
-			});
-		}
-		
-			var controls = document.getElementById("segmentedControls");
-			var contents = document.getElementById("segmentedControlContents");
-			mui.later(doData,200);
+		var controls = document.getElementById("segmentedControls");
+		var contents = document.getElementById("segmentedControlContents");
+		mui.later(doData,200);
 		function doData(){
 			var html = [];
 			var i = 1,
@@ -160,17 +192,18 @@
 			html = [];
 			for (i = 1; i <=leftMenu.length; i++) { 
 				html.push('<div id="content' + i + '"  class="mui-control-content"><ul data-id="'+i+'" class="mui-table-view">');
-				html.push('<strong style="color:#007aff">'+leftMenu[i-1].type+'</strong>');
+				html.push('<strong style="color:#007aff;margin:5%">'+leftMenu[i-1].type+'</strong>');
 				for (j = 1; j <= leftMenu[i-1].info.length; j++) {						
-						html.push('<li class="mui-table-view-cell" data-id="'+j+'">'+ leftMenu[i-1].info[j-1].title);
-						html.push('<img src='+ leftMenu[i-1].info[j-1].img +'>');
-						html.push('<span id="siglePrice" style="margin-left:5%;font-size:13px">'+ leftMenu[i-1].info[j-1].price+"</span>");
+						html.push('<li class="mui-table-view-cell" data-id="'+j+'">');
+						html.push('<img style="float:left;width:80px" src='+ leftMenu[i-1].info[j-1].img +'>');
+						html.push('<span style="margin-left:5%;width:50%;color:black;font-weight:"500px"">'+leftMenu[i-1].info[j-1].title+'</span><br/>');
+						html.push('<span id="siglePrice" style="color:red;margin-left:5%;font-size:13px">'+ leftMenu[i-1].info[j-1].price+"</span>");
 //						第' + i + '个选项卡子项-' + j  
 						html.push("<div class='mui-numbox' style='float: right; display:none'>");
 						html.push("<button class='mui-btn mui-btn-numbox-minus'  type='button'>-</button>");
 						html.push("<input id='countInput' class='mui-input-numbox' type='number' value='0'>");
-						html.push("<button class='mui-btn mui-btn-numbox-plus' type='button'>+</button></div>");
-						html.push("<span class='mui-icon mui-icon-plus mui-icon-plus-filled' style='color: green;float: right;font-size: 30px;' ></span>");
+						html.push("<button class='mui-btn mui-btn-numbox-plus addcar' type='button'>+</button></div>");
+						html.push("<span class='mui-icon mui-icon-plus mui-icon-plus-filled addcar' style='color: black;float: right;font-size: 30px;' ></span>");
 				}
 				html.push('</li></ul></div>');
 			}
@@ -287,7 +320,8 @@
 			
 			var listcount=0;
 			var foodsum=0;
-			mui('.mui-control-content').on('tap','.mui-btn-numbox-plus',function(){
+			mui('.mui-control-content').on('tap','.mui-btn-numbox-plus',function(e){
+				ownFly(e,this);
 			var flag=$(this).siblings('.mui-input-numbox').val();
 			flag++;			
 			$(this).siblings('.mui-input-numbox').val(flag);
@@ -353,16 +387,18 @@
 			}
 		});
 //3 0+
-		mui('.mui-control-content').on('tap','.mui-icon-plus-filled',function(){
+		mui('.mui-control-content').on('tap','.mui-icon-plus-filled',function(e){
+//			console.log(JSON.stringify(e));
+			ownFly(e,this);
 			this.style.display='none'; 
 			$(this).siblings('.mui-numbox').children('input').val(1);			
 //			input里显示购买量
 			$(this).siblings('.mui-numbox').css({'display':'inline'});
 			
 			var sigleList = {};  //定义单个订单,要添加新的菜单
-			var info ={};
+			var info ={}; 
 			var Index=[],count,InputPrice,title,detail,img,price;
-			Index[1] = $(this).parents('li').data('id')-1;//左栏
+			Index[1] = $(this).parents('li').data('id')-1;//左栏 
 			Index[0] = $(this).parents('ul').data('id')-1;//右栏
 			
 			type = leftMenu[Index[0]].type;
@@ -401,7 +437,9 @@
 				$(this).data('id','1');
 			}
 		});	
-
+//		$("#segmentedControlContents").on('tap','li',function(){
+//			alert('go');
+//		});
 		document.getElementById('listSubmit').addEventListener('tap',function(){			
 			$("div").last().removeClass('ownHidden');
 //			mui.later(function(){

@@ -64,9 +64,9 @@
 					</li>
 				</ul>
 			</div>
-			<div class="mui-card">
+			<div class="mui-card" style="font-size: 80%;">
 				<ul class="mui-table-view">					
-					<li  class="mui-table-view-cell" style="font-size: ;">
+					<li  class="mui-table-view-cell" >
 						<span class="mui-icon-extra mui-icon-extra-hotel" style="font-size: 100%;color: gray;margin-right: 4%;">
 						</span>徐泾东购物市场(剑川路店)
 					</li>					
@@ -100,7 +100,7 @@
 		
 		<script src="../../js/jquery.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/mui.js" type="text/javascript" charset="utf-8"></script>
-		
+		<script src="../../js/av.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 	mui.init();
 	var foodList=null;
@@ -113,7 +113,7 @@
 //				plus.webview.getWebviewById('menuList.html').evalJS("window.location.reload()");
 				});
 				var foodList = plus.webview.getWebviewById('orderForm.html').foodList;				
-				console.log(JSON.stringify(foodList));
+//				console.log(JSON.stringify(foodList));
 				var sum = addForm(foodList);				
 				$(".ownSum").text(sum);
 			});
@@ -134,29 +134,60 @@ function addForm(foodList){
 	return sum;
 }
 
+function addOrderList(){
+	var signalOrder={};
+	signalOrder.user = {name:'bowen',phone:'13764196371',address:'紫晶南苑210号'};
+	signalOrder.foodList = foodList;
+	signalOrder.dealData= Date();
+	signalOrder.shoper = {name:'徐泾东购物市场',phone:'15387649871',address:'徐泾东沧源路300号'};
+
+	var Query=new AV.Query("shopList");
+	Query.equalTo('shopname','诚哥的店');	
+	var resultFind = Query.find({
+	success:function(resp){
+		mui.toast('正在查找商户...'); 
+		if(!resp.length){
+			mui.toast('查询异常，无该商家!');
+			return false;
+		}
+		if(resp[0].get('orderList')===null){
+			var flag ={data:[]};
+			flag.data.push(signalOrder);
+			resp[0].save({orderList:flag}).then(function(){
+				console.log('商家第一单');
+			},function(error){
+				console.error(error);
+			});
+		}else{
+			var orderList =	resp[0].get('orderList');
+			orderList.data.push(signalOrder);
+//			alert(JSON.stringify(orderList));
+			resp[0].save({orderList:orderList}).then(function(){
+				console.log('订单更新成功');
+			},function(error){
+				console.error(error);
+			});
+		}		
+	},
+	error:function(error){
+		alert(JSON.stringify(error));
+	}				
+	});	
+}
 /* 支付宝支付引用  */
 var channel =null;
 function plusReady(){
 	document.getElementById('go').addEventListener('tap',function(){
-//	mui.toast('结算金额:'+foodsum);
-	//生成订单
-//	alert(JSON.stringify(checklist));
-	//订单导入数据库 
-//	var db = openDatabase('testDB', '1.0', 'Test DB', 2 * 1024 * 1024);
-//	db.transaction(function (context) {
-//     	    context.executeSql('CREATE TABLE IF NOT EXISTS LshopData (shopname unique, checklist)');
-//   		context.executeSql('INSERT INTO LshopData (shopname,checklist) values (?,?)',
-//     		[shopName,JSON.stringify(checklist)]);  
-//     });
-
-	plus.payment.getChannels(function(channels){
-	channel=channels[0];
-	},function(e){
-		alert('获取支付通道失败:'+e.message);
-	});
-	pay('alipay');
+//	plus.payment.getChannels(function(channels){
+//	channel=channels[0];
+//	},function(e){
+//		alert('获取支付通道失败:'+e.message);
+//	});
+//	pay('alipay');
 //	pay('weixin');
-})
+	addOrderList();
+	plus.webview.open('orderReturn.html','orderReturn.html');
+});
 }
 document.addEventListener('plusready',plusReady,false);
 var ALLPAYSERVER='http://demo.dcloud.net.cn/helloh5/payment/alipay.php?total=';
