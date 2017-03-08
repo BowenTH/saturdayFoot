@@ -15,8 +15,46 @@
 			/*min-height: 525px;
 			margin-bottom: 0px;*/
 		}
+		
+		a {
+	position: relative;
+    color: rgba(255,255,255,1);
+    text-decoration: none;    
+    background-size: 100% 100%;
+    /*background-color: rgba(219,87,5,1);*/
+    font-family: 'Yanone Kaffeesatz';
+    /*font-weight: 700;
+    font-size: 3em;*/
+    display: block;
+    padding: 4px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    /*-webkit-box-shadow: 0px 9px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
+    -moz-box-shadow: 0px 9px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
+    box-shadow: 0px 9px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);*/
+   box-shadow: 0px 6px 0px black, 0px 6px 6px black;
+    /*margin: 100px auto;
+	width: 160px;*/
+	text-align: center;
+	
+	-webkit-transition: all .1s ease;
+	-moz-transition: all .1s ease;
+	-ms-transition: all .1s ease;
+	-o-transition: all .1s ease;
+	transition: all .1s ease;
+}
+
+a:active {
+    /*-webkit-box-shadow: 0px 30px 0px rgba(219,31,5,1), 0px 30px 6px rgba(0,0,0,.9);
+    -moz-box-shadow: 0px 30px 0px rgba(219,31,5,1), 0px 30px 6px rgba(0,0,0,.9);*/
+    /*box-shadow: 0px 6px 0px black, 0px 6px 6px black;*/
+    position: relative;
+    box-shadow:none;
+    top: 6px;
+}
 		.list-1-1{
-			border: 1px solid grey;
+			border: 0px solid grey!important; 
 			width: 50%;
 			height: 50%;
 			/*height: 175px;*/
@@ -28,7 +66,7 @@
 			/*background: grey;*/
 		}
 		.list-1-1 span{
-			margin-left: 35%;								
+			/*margin-left: 35%;*/								
 		}
 		svg{				
 			margin-top: 50px;
@@ -52,30 +90,31 @@
 		</style>
 	</head>
 	<body>
+		<a class="list-1-1" style="background:url(../png/2.jpg)" href="javascript:;">好</a>
+		<a class="list-1-1" style="background:url(../png/3.jpg)" href="javascript:;">大</a>
+		<a class="list-1-1" style="background:url(../png/4.jpg)" href="javascript:;">的</a>
+		<a class="list-1-1" style="background:url(../png/5.jpg)" href="javascript:;">家</a>
+		<a class="list-1-1" style="background:url(../png/6.jpg)" href="javascript:;">活</a>
+		<a class="list-1-1" style="background:url(../png/7.jpg)" href="javascript:;">呀</a>
 		
-		<div class="list-1-1" id="ownbg" style="background:url(../png/5.jpg) ;background-size: 100% 100%;">
-			
+		<!--<div class="list-1-1" id="ownbg" style="background:url(../png/5.jpg) ;background-size: 110% 110%;">
 			<span>手电筒</span>
-		</div>			
-
-		
-		<div class="list-1-1" style="background:url(../png/7.jpg) ;background-size: 100% 100%;">
+		</div>	
+		<div class="list-1-1" style="background:url(../png/7.jpg) ;background-size: 110% 110%;">
 			<span>照镜子</span>
 		</div>
-		<div class="list-1-1" style="background:url(../png/4.jpg) ;background-size: 100% 100%;">	
+		<div class="list-1-1" style="background:url(../png/4.jpg) ;background-size: 110% 110%;">	
 			<span>扫描码</span>
 		</div>
-		<div class="list-1-1" style="background:url(../png/6.jpg) ;background-size: 100% 100%;">	
+		<div class="list-1-1" style="background:url(../png/6.jpg) ;background-size: 110% 110%;">	
 			<span>放大镜</span>
 		</div>
 		<div class="list-1-1"  style="background: url(../png/3.jpg);background-size:100% 100%;" >	
-			<!--style="border: 0px;background: url(../png/77.png);background-repeat: no-repeat;padding-left: 10px;"-->
-			<!--<div  id="w2" style="margin: 0px;background: url(../png/88.png);background-size:100% 100%;">-->
-			<span class="picture" style="color: white ;"><a href="mine.html" style="color: white;">分贝仪</a></span>
+			<span class="picture" style="color: white ;"></span>
 		</div>
 		<div class="list-1-1" style="margin: 0px;background: url(../png/2.jpg);background-size:100% 100% ;">	
 			<span class="picture">随机事</span>
-		</div>	
+		</div>	-->
 		
 		<script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/mui.js" type="text/javascript" charset="utf-8"></script>
