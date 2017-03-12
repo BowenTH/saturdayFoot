@@ -37,6 +37,7 @@
 		<div class="mui-content">
 
 			<div class="headImg">
+				<button id="testLogin">登录</button>
 				<div class="touxiang">
 					<div>
 						<span id="touxiangimg" class="mui-icon mui-icon-person" style="font-size: 3.8em; color: white;"></span>
@@ -86,6 +87,7 @@
 
 		</div>
 		<script type="text/javascript" src="../js/mui.min.js"></script>
+		<script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="../js/own.js"></script>
 		<script type="text/javascript" charset="UTF-8">
 			mui.init({
@@ -141,7 +143,14 @@
 							}
 						});
 					}, false)
-				})
+				});
+				$('#testLogin').on('tap',function(){					
+					mui.openWindow({
+					url:'../regist.html',id:'testRegist.html',
+					show:{
+						aniShow:'slide-in-right',duration:400
+					}});
+				});
 				//点击头像事件
 			function addHeadevent() {
 				//点击头像登录

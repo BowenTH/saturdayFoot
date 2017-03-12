@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../css/mui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/icons-extra.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/iconfont.css"/>
+		<style type="text/css">
+			body{
+				background: white;				
+			}
+			li{
+				list-style: none;
+				width: 33%; 			
+				text-align: center;
+			}
+			a{
+				color: white;
+			}
+			
+			h4,h5{
+				text-align: center;
+				color: red;
+			}
+			#star i{
+				font-size: 15px!important;
+			}
+			#playIcon{
+				/*position: absolute;
+				top: 30%;left: 40%;*/
+				/*margin: 0 auto;*/
+				/*margin-top: -50px;*/
+			}
+			.icon-bofang-copy{
+				font-size: 60px!important;
+				color: white;
+			}
+			.active{
+				border-bottom: 1px solid red;
+				color: red;
+			}
+			#tabMove li{
+				padding-bottom: 15px!important;
+			}
+			.ownHidden{
+				display: none;
+			}
+			.ownSmall{
+				/*height: 1px;width: 1px;*/
+				/*color: transparent;*/
+			}
+		</style>
+	</head>
+	<body>
+		<div style="position: fixed;top: 0!important;height: 50px;background: black;width: 100%;">
+			<a style="margin-top: 10px;" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<div class="ownIcon">
+				<img width="50px" src="../img/book/icon.jpg" style="border-radius:50% 50% 50% 50% ;"/>
+			</div>
+			<a style="position: absolute;top: 0;right: 10px;top: 10px;" class="mui-icon-extra mui-icon-extra-share mui-pull-right"></a>
+		</div>
+		<div style="margin-top: 50px;background: radial-gradient(green,grey);padding: 5px;">
+			<h4>大话西游</h4>
+			<h5 id="star"><span><i class="mui-icon mui-icon-star-filled"></i>
+				<i class="mui-icon mui-icon-star-filled"></i>
+				<i class="mui-icon mui-icon-star-filled"></i>
+				<i class="mui-icon mui-icon-star-filled"></i>
+				<i class="mui-icon mui-icon-starhalf"></i>
+			</span><span>9.9</span></h5>
+			<!--<div class="">-->
+				<img id="img" src="../img/music/xiyou-0.jpg" style="width: 100%;margin-bottom: 8px;"/>
+				<div id="playIcon"><i class="icon iconfont icon-bofang-copy"></i></div>
+			<!--</div>-->
+			<video id="video" class="ownHidden" style="width: 100%;margin-bottom: 8px;" controls="controls">
+				<source src="http://oi7xjum3c.bkt.clouddn.com/%5B%E5%B0%84%E9%9B%95YX%E4%BC%A02017%E7%89%88%5D%E7%AC%AC26%E9%9B%86_bd.mp4">
+				当前浏览器不支持 video直接播放，点击这里下载视频： <a href="myvideo.webm">下载视频</a>
+			</video>
+		</div>
+		<div style="background: lightgray!important; height: 50px;">
+			<ul style="padding-top: 12px!important;">
+				<li style="float: left;"><span>99+</span><i class="icon iconfont icon-iconfontzan"></i></li>
+				<li style="float: left;"><i class="mui-icon mui-icon-chatboxes"></i></li>
+				<li style="float: right;"><span>99+</span><i class="icon iconfont icon-caibishi"></i></li>
+			</ul>
+		</div>
+		<div style="background: lightgray!important; height: 50px;">
+			<ul id="tabMove" style="padding-top: 12px!important;padding-left: 0;margin-bottom: ;">
+				<li style="float: left;">简介</li>
+				<li style="float: left;">演员</li>
+				<li style="float: right;">图片</li>
+			</ul>
+			<p style="margin-top: 20px!important;font-size: 20px;">孙悟空（周星驰）护送唐三藏（罗家英）去西天取经路上，与牛魔王合谋
+				杀害唐三藏，被观音发现打入五指山成为至尊宝历经白骨精和给他三个...
+			</p>
+		</div>
+	</body>
+	<script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		mui.init();
+		$('#tabMove').on('tap','li',function(){
+			$(this).addClass('active');
+			$(this).siblings().removeClass('active');
+		});
+		mui.plusReady(function(){
+			var self = plus.webview.currentWebview();
+				self.setStyle({
+				    videoFullscreen: 'landscape'
+				});
+				$('#playIcon').on('tap',function(){
+//				$('#img').addClass('ownHidden');
+				$("#video").removeClass('ownHidden');
+				$(this).addClass('ownSmall'); 
+				$('#img').addClass('ownHidden');
+//				$('#playIcon').hide();
+				var myVideo = document.getElementById('video');
+				myVideo.play();
+				ownFullScreen();
+});
+});
+
+function ownFullScreen() {
+	var docElm = document.getElementById('video');
+	if(docElm.requestFullscreen) {
+		docElm.requestFullscreen();
+	}
+	//FireFox 
+	else if(docElm.mozRequestFullScreen) {
+		docElm.mozRequestFullScreen();
+	}
+
+	//Chrome等 
+	else if(docElm.webkitRequestFullScreen) {
+		docElm.webkitRequestFullScreen();
+	}
+	//IE11
+	else if(elem.msRequestFullscreen) {
+		elem.msRequestFullscreen();
+	}
+}</script>	
+</html>

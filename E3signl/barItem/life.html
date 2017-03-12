@@ -11,12 +11,12 @@
 		
 
 		<style type="text/css">
-		body{
-			/*min-height: 525px;
-			margin-bottom: 0px;*/
+		body{			
 		}
-		
-		a {
+		button div{
+			margin-top: 80%;
+		}		
+		button{
 	position: relative;
     color: rgba(255,255,255,1);
     text-decoration: none;    
@@ -45,7 +45,7 @@
 	transition: all .1s ease;
 }
 
-a:active {
+button:active {
     /*-webkit-box-shadow: 0px 30px 0px rgba(219,31,5,1), 0px 30px 6px rgba(0,0,0,.9);
     -moz-box-shadow: 0px 30px 0px rgba(219,31,5,1), 0px 30px 6px rgba(0,0,0,.9);*/
     /*box-shadow: 0px 6px 0px black, 0px 6px 6px black;*/
@@ -67,55 +67,17 @@ a:active {
 		}
 		.list-1-1 span{
 			/*margin-left: 35%;*/								
-		}
-		svg{				
-			margin-top: 50px;
-			margin-left: 40%;
-			margin-bottom: 10px;
-			height: 40px;
-			width: 40px;
-		}
-		 .icon {
-          /* 通过设置 font-size 来改变图标大小 */
-          width: 3em; height: 3em;
-          /* 图标和文字相邻时，垂直对齐 */
-          vertical-align: -0.15em;
-          color: #DF5000;
-          /* 通过设置 color 来改变 SVG 的颜色/fill */
-          fill: currentColor;
-          /* path 和 stroke 溢出 viewBox 部分在 IE 下会显示
-             normalize.css 中也包含这行 */
-          overflow: hidden;
-        }
+		}		
 		</style>
 	</head>
 	<body>
-		<a class="list-1-1" style="background:url(../png/2.jpg)" href="javascript:;">好</a>
-		<a class="list-1-1" style="background:url(../png/3.jpg)" href="javascript:;">大</a>
-		<a class="list-1-1" style="background:url(../png/4.jpg)" href="javascript:;">的</a>
-		<a class="list-1-1" style="background:url(../png/5.jpg)" href="javascript:;">家</a>
-		<a class="list-1-1" style="background:url(../png/6.jpg)" href="javascript:;">活</a>
-		<a class="list-1-1" style="background:url(../png/7.jpg)" href="javascript:;">呀</a>
-		
-		<!--<div class="list-1-1" id="ownbg" style="background:url(../png/5.jpg) ;background-size: 110% 110%;">
-			<span>手电筒</span>
-		</div>	
-		<div class="list-1-1" style="background:url(../png/7.jpg) ;background-size: 110% 110%;">
-			<span>照镜子</span>
-		</div>
-		<div class="list-1-1" style="background:url(../png/4.jpg) ;background-size: 110% 110%;">	
-			<span>扫描码</span>
-		</div>
-		<div class="list-1-1" style="background:url(../png/6.jpg) ;background-size: 110% 110%;">	
-			<span>放大镜</span>
-		</div>
-		<div class="list-1-1"  style="background: url(../png/3.jpg);background-size:100% 100%;" >	
-			<span class="picture" style="color: white ;"></span>
-		</div>
-		<div class="list-1-1" style="margin: 0px;background: url(../png/2.jpg);background-size:100% 100% ;">	
-			<span class="picture">随机事</span>
-		</div>	-->
-		
+		<button class="list-1-1" data-id='' style="background:url(../png/1.jpg)" href="javascript:;"><div>一本书</div></button>
+		<button class="list-1-1" data-id='move.html' style="background:url(../png/3.jpg)" href="javascript:;"><div>一部电影</div></button>
+		<button class="list-1-1" data-id='' style="background:url(../png/4.jpg)" href="javascript:;"><div>一本书</div></button>
+		<button class="list-1-1" data-id='book.html' style="background:url(../png/5.jpg)" href="javascript:;"><div>一本书</div></button>
+		<button class="list-1-1" data-id='' style="background:url(../png/2.jpg)" href="javascript:;"><div>一本书</div></button>
+		<button class="list-1-1"data-id='music.html' style="background:url(../png/6.jpg)" href="javascript:;"><div>一首歌</div></button>
+			
 		<script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/mui.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../png/iconfont.js" type="text/javascript" charset="utf-8"></script>
@@ -130,8 +92,9 @@ a:active {
 //			var flag = $(window).height()/3 +'px';
 //			$('.list-1-1').css('height',flag);  
 		});
+		
 		$('body').on('tap','.list-1-1',function(){
-			mui.toast('click'); 
+			mui.openWindow('../life/'+$(this).data('id'),$(this).data('id'));
 		});
 		</script>
 	</body>
