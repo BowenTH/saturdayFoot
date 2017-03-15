@@ -494,7 +494,8 @@
 					"png/7.jpg",
 					"png/5.jpg",
 					"png/6.jpg",
-					"png/1.jpg"
+					"png/1.jpg",
+					"png/5.png"
 				],
 				"refer": [
 					"life/book.html",
@@ -585,6 +586,21 @@
 				"priority": 0
 			},
 			"regist.html": {
+				"resources": [
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"img/bg.jpg",
+					"js/mui.js",
+					"js/av.js",
+					"js/jquery.js",
+					"img/666.png"
+				],
+				"refer": [
+					"login.html"
+				],
+				"priority": 0
+			},
+			"login.html": {
 				"resources": [
 					"fonts/mui.ttf",
 					"css/mui.min.css",

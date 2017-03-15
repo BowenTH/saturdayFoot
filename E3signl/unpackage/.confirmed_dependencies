@@ -17,7 +17,9 @@
 			"css/icons-extra.css",
 			"js/jquery.js",
 			"fonts/mui-icons-extra.ttf",
-			"js/location.js"
+			"js/location.js",
+			"js/common.js",
+			"js/immersed.js"
 		],
 		"refer": [
 			"barItem/category.html",
@@ -64,7 +66,15 @@
 			"img/bg.jpeg",
 			"fonts/mui.ttf",
 			"fonts/iconfont.ttf",
-			"js/own.js"
+			"js/own.js",
+			"css/own.css",
+			"js/mui.min.js",
+			"css/iconfont.css",
+			"css/mui.min.css",
+			"js/jquery.js"
+		],
+		"refer": [
+			"regist.html"
 		]
 	},
 	"template.html": {
@@ -224,7 +234,11 @@
 			"data/dataList.json",
 			"img/jump.gif",
 			"img/bg.png",
-			"img/1.jpg"
+			"img/1.jpg",
+			"js/menuList.js",
+			"js/av.js",
+			"js/require.js",
+			"js/jquery.fly.min.js"
 		],
 		"refer": [
 			"shopList/detail/orderForm.html"
@@ -250,7 +264,21 @@
 			"js/mui.js",
 			"png/2017-02-21_204233.png",
 			"css/mui.css",
-			"js/jquery.js"
+			"js/jquery.js",
+			"png/2.jpg",
+			"png/4.jpg",
+			"css/app.css",
+			"png/3.jpg",
+			"png/7.jpg",
+			"png/5.jpg",
+			"png/6.jpg",
+			"png/1.jpg",
+			"png/5.png"
+		],
+		"refer": [
+			"life/book.html",
+			"life/music.html",
+			"life/move.html"
 		]
 	},
 	"shopList/detail/orderForm.html": {
@@ -261,7 +289,93 @@
 			"css/mui.min.css",
 			"js/mui.js",
 			"css/icons-extra.css",
+			"js/jquery.js",
+			"js/av.js"
+		],
+		"refer": [
+			"shopList/detail/orderReturn.html"
+		]
+	},
+	"shopList/detail/orderReturn.html": {
+		"resources": [
+			"css/mui.min.css",
+			"js/mui.js",
 			"js/jquery.js"
+		]
+	},
+	"life/book.html": {
+		"resources": [
+			"img/book/icon.jpg",
+			"img/book/��.png",
+			"img/book/\u0005�.png",
+			"img/book/-p.png",
+			"img/book/shu.jpg",
+			"fonts/mui-icons-extra.ttf",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/icons-extra.css",
+			"js/jquery.js",
+			"img/book/buy.png",
+			"img/book/read.png",
+			"img/book/talk.png",
+			"img/book/loading.gif"
+		]
+	},
+	"life/music.html": {
+		"resources": [
+			"css/iconfont.ttf",
+			"img/music/mohu.jpg",
+			"img/music/800.jpg",
+			"js/mui.min.js",
+			"css/iconfont.css",
+			"css/mui.min.css",
+			"js/jquery.js",
+			"css/app.css",
+			"js/common.js",
+			"js/immersed.js",
+			"fonts/mui-icons-extra.ttf",
+			"css/icons-extra.css"
+		]
+	},
+	"life/move.html": {
+		"resources": [
+			"img/book/icon.jpg",
+			"fonts/mui-icons-extra.ttf",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/icons-extra.css",
+			"js/jquery.js",
+			"img/music/xiyou-1.jpg",
+			"img/music/xiyou-0.jpg",
+			"css/iconfont.ttf",
+			"css/iconfont.css"
+		]
+	},
+	"regist.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"img/bg.jpg",
+			"js/mui.js",
+			"js/av.js",
+			"js/jquery.js",
+			"img/666.png"
+		],
+		"refer": [
+			"login.html"
+		]
+	},
+	"login.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"img/bg.jpg",
+			"js/mui.js",
+			"js/av.js",
+			"js/jquery.js",
+			"img/666.png"
 		]
 	}
 }

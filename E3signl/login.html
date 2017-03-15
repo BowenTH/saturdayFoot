@@ -56,41 +56,23 @@
 </body>
 <script type="text/javascript" charset="utf-8">
       	mui.init();
-      	$(document).ready(function(){
-
+      	mui.plusReady(function(){
+      		
       	});
       	$('#login').on('tap',function(){
       		var mobilePhoneNumber = $('input[name=phone]').val();
       		var password = $('input[name=password]').val();
       		if(mobilePhoneNumber==''||password==''){
-      			mui.toast('请输入用户名和密码!');
+      			mui.toast('请输入用户名和密码!'); 
       			return;
       		}
-      		mui.ajax({ 			
- 			url:"https://api.leancloud.cn/1.1/login",
- 			type:'post',
- 			headers:{
- 				"X-LC-Id": "91TtjFpYIeeLfxTlfYAo9GLT-gzGzoHsz",
- 				"X-LC-Key": "lLxPT0gKqEBd2Vk56OCjYfbp",
- 				"Content-Type": "application/json"
- 			},
- 			data:{
-   				"mobilePhoneNumber":mobilePhoneNumber, 
-   				'password':password    				
- 			},
- 			success:function(resp){
- 				debugger
- 				mui.openWindow({
-				url:'pullrefresh_main.html',id:'pullrefresh_main.html',
-				show:{
-					aniShow:'slide-in-right',duration:400
-				}});
- 			},
- 			error:function(error){
- 				alert(JSON.stringify(error));
- 				debugger
- 			}
- 		});
+      		AV.User.logIn(mobilePhoneNumber,password).then(
+      			function(loginedUser){      				
+      				plus.webview.getLaunchWebview().show("slide-in-right",400);
+      			},
+      		function(error){
+      			alert(JSON.stringify(error));
+      		});
       	});
 </script>
 </html>

@@ -49,7 +49,7 @@
 			<!--</div>-->
 			<div style="margin-top: 50px;width: 100%;text-align: center;color: lightgray;">已注册过，<span id="login" style="color: #4cd964;">登录</span></div>
 		</div>
-	</div>
+	</div>	
 	<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/mui.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/av.js" type="text/javascript" charset="utf-8"></script>
@@ -59,44 +59,37 @@
 	mui.plusReady(function(){
 		$('#login').on('tap',function(){
 			mui.openWindow({
-			url:'login.html',id:'login.html',
+			url:'login.html',id:'login.html',			
 			show:{
 				aniShow:'slide-in-right',duration:400
 			}});
 		});
 	});
 	
-	$("#getCode").on('tap',function(){
+	$("#getCode").on('tap',function(){		
 		var mobilePhoneNumber = $('input[name=phone]').val();
 		if(mobilePhoneNumber==''){
 			mui.toast('请填写用户名!');
 			return false;
 		}
+		mui.toast('请稍后...');
 		var query = new AV.Query('_User');
-		query.equalTo('mobilePhoneNumber',mobilePhoneNumber);
+		query.equalTo('mobilePhoneNumber',mobilePhoneNumber);		
 		query.find({
 			success:function(resp){
 				if(resp.length){
 					mui.toast('该手机已经注册，请直接登录');
 					return;
 				}else{
-					mui.ajax({ 			
-		 			url:"https://api.leancloud.cn/1.1/requestSmsCode",
-		 			type:'post',
-		 			headers:{
-		 				"X-LC-Id": "91TtjFpYIeeLfxTlfYAo9GLT-gzGzoHsz",
-		 				"X-LC-Key": "lLxPT0gKqEBd2Vk56OCjYfbp",
-		 				"Content-Type": "application/json"
-		 			},
-		 			data:{
-		   				"mobilePhoneNumber":mobilePhoneNumber
-		 			},
-		 			sucess:function(resp){
-		 			},
-		 			error:function(error){
-		 				mui.toast(JSON.stringify(error));
-		 			}
-		 		});
+					AV.Cloud.requestSmsCode({
+						mobilePhoneNumber:mobilePhoneNumber,
+						name:'footer',
+						op:'注册',
+						ttl:10
+					}).then(function(){}),
+					function(err){
+						alert(JSON.stringify(err));
+					}
 				}
 			},
 			error:function(error){
@@ -105,54 +98,31 @@
 			});		
 	});
 
-	$('#reg').on('tap',function(){
+	$('#reg').on('tap',function(){		
 		var mobilePhoneNumber = $('input[name=phone]').val();
 		var smsCode = $('input[name=check]').val();
-//		var 
-		
 		var password = $('input[name=password]').val();
 		console.log(password);
 		if(mobilePhoneNumber==''||password == ''){
 			mui.toast('请填写用户名和密码!');
 			return false;
 		}
- 		mui.ajax({ 			
- 			url:"https://api.leancloud.cn/1.1/usersByMobilePhone",
- 			type:'post',
- 			headers:{
- 				"X-LC-Id": "91TtjFpYIeeLfxTlfYAo9GLT-gzGzoHsz",
- 				"X-LC-Key": "lLxPT0gKqEBd2Vk56OCjYfbp",
- 				"Content-Type": "application/json"
- 			},
- 			data:{
-   				"mobilePhoneNumber":mobilePhoneNumber,
-   				"smsCode":smsCode,				
-				'password':password
- 			},
- 			success:function(resp){
- 				alert('注册成功');
- 				mui.openWindow({
-				url:'pullrefresh_main.html',id:'pullrefresh_main.html',
-				show:{
-					aniShow:'slide-in-right',duration:400
-				}});
- 			},
- 			error:function(error){
- 				mui.toast('手机或验证码填写失败');
- 				debugger
- 			}
- 		});
-// 		user.signUp().then(function(loginedUser){
-// 			mui.openWindow({
-//			url:'pullrefresh_main.html',id:'pullrefresh_main.html',
-//			show:{
-//				aniShow:'slide-in-right',duration:400
-//			}});
-//			alert(JSON.stringify(loginedUser));
-// 		},(function(error){
-// 			alert(JSON.stringify(error));
-// 		}));
-	});
-      	
+		AV.Cloud.verifySmsCode(smsCode,mobilePhoneNumber).then(function(){
+			var user = new AV.User();
+	 		user.set('username',mobilePhoneNumber);
+	 		user.set('password',password);
+	 		user.setMobilePhoneNumber(mobilePhoneNumber);
+	 		user.signUp().then(function(loginerUser){
+	 			mui.toast('登录成功');
+				plus.webview.getLaunchWebview().show("slide-in-right",400);				
+				},function(error){
+					mui.toast('登录失败');
+		   			alert(JSON.stringify(error)); 
+	 		});		
+		},function(error){
+			mui.toast('验证码验证失败');
+			alert(JSON.stringify(error));
+		});
+     });
 </script>
 </html>
