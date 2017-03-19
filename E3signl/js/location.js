@@ -14,9 +14,9 @@ function displayLocation(position){
 	 	if(position.address)
 	 	{
 	 		localStorage.setItem('shopPosition',position.addresses);
-	 		alert(JSON.stringify(position));
+//	 		alert(JSON.stringify(position));
 	 		$(".mui-icon-location").text(position.addresses);
-			mui.confirm(position.addresses,'定位',['确认','重新定位']);
+//			mui.confirm(position.addresses,'定位',['确认','重新定位']);
 	 	}
 //	 	document.getElementById('local').innerHTML='当前距离:'+getDisance(31.022031,121.442132,latitude,longitude)+'米'+'<br/>'+position.addresses;
 	 },3000);

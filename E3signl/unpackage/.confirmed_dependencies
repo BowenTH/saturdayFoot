@@ -71,7 +71,8 @@
 			"js/mui.min.js",
 			"css/iconfont.css",
 			"css/mui.min.css",
-			"js/jquery.js"
+			"js/jquery.js",
+			"css/iconfont.ttf"
 		],
 		"refer": [
 			"regist.html"
@@ -335,7 +336,10 @@
 			"js/common.js",
 			"js/immersed.js",
 			"fonts/mui-icons-extra.ttf",
-			"css/icons-extra.css"
+			"css/icons-extra.css",
+			"img/music/900.jpg",
+			"img/music/800.png",
+			"fonts/mui.ttf"
 		]
 	},
 	"life/move.html": {

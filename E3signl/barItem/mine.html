@@ -11,7 +11,8 @@
 		<style type="text/css">
 			.headImg {
 				padding: 8% 0px 13% 0px;
-				background: url(../img/bg.jpeg);
+				/*background: url(../img/bg.jpeg);*/
+				background-color: black;
 				background-position: center center;
 				background-size: 100% auto;
 			}
@@ -30,14 +31,17 @@
 				margin: 0px auto;
 				margin-bottom: 5px;
 			}
+			#he1{
+				/*background-color: black;*/
+			}
 		</style>
 	</head>
 
 	<body>
-		<div class="mui-content">
+		<div id="he1" class=mui-content">
 
 			<div class="headImg">
-				<button id="testLogin">登录</button>
+				<!--<button id="testLogin">登录</button>-->
 				<div class="touxiang">
 					<div>
 						<span id="touxiangimg" class="mui-icon mui-icon-person" style="font-size: 3.8em; color: white;"></span>
@@ -46,7 +50,22 @@
 					<span id="touxiangword">请登录</span>
 				</div>
 			</div>
+			<ul class="" style="padding:0px;margin-top:0px;list-style: none;height: 50px;line-height: 50px;border-bottom: 1px solid lightgray;background-color: white;">
+				<li class="icon iconfont icon-yue" style="padding:0px;color: black;float: left;height: 50px;text-align: center;font-size: 130%;width: 50%;">
+				
+					<span class="" style="font-size: 70%;">余额<span> 
+						
+						
+						<span class="icon iconfont icon-shuxian" style="float: right;color: lightgray;font-size: 150%;"></span>
+				</li>
+			
+				<li class="icon iconfont icon-jifen" style="padding:0px;color: black;text-align: center;font-size: 130%;width: 50%;float: left;height: 50px;">
+											<span class="" style="font-size: 70%;">积分</span> 
 
+				</li>
+			</ul>
+			
+			
 			<ul class="mui-table-view" style="margin-top: 10px;">
 				<li class="mui-table-view-cell">
 					<a class="mui-navigate-right" href="../mine/my-order-needtem.html">
@@ -59,6 +78,7 @@
 					</a>
 				</li>
 			</ul>
+			
 			<ul class="mui-table-view" style="margin-top: 20px;">
 				<li class="mui-table-view-cell">
 					<a class="mui-navigate-right" href="../mine/change-email-needtem.html">
@@ -108,7 +128,7 @@
 					trueimg.style.display = 'none';
 					logoutBtn.style.display = 'none'
 					touxiangimg.style.display = 'inline'
-					touxiangword.style.color = 'indianred'
+					touxiangword.style.color = 'white';
 						//注册列表的点击事件
 					addListevent();
 					//点击头像事件

@@ -53,6 +53,10 @@
 			#segmentedControlContents .mui-table-view-cell{
 				height: 110px;
 			}
+			.a-active{
+				border-left: 5px solid green!important;
+				color: red;
+			}
 			.u-flyer{display: block;width: 50px;height: 50px;border-radius: 50px;position: fixed;z-index: 9999;}
 		</style>
 	</head>
@@ -143,6 +147,7 @@
 				Query.equalTo('shopname','诚哥的店');	
 				var resultFind = Query.find({
 				success:function(resp){
+					return;//注释掉，可实现上传功能
 					mui.toast('正在查找商户...'); 
 					if(resp.length){
 //						alert('服务器查询结果'+JSON.stringify(resp));
@@ -186,9 +191,11 @@
 //			添加实例
 			//测试代码
 			for (i=1; i <= leftMenu.length; i++) {
-					html.push('<a class="mui-control-item a-active" data-index="' + (i - 1) + '" href="#content' + i + '">' + leftMenu[i-1].type + '</a>');
+					html.push('<a class="mui-control-item " data-index="' + (i - 1) + '" href="#content' + i + '">' + leftMenu[i-1].type + '</a>');
 			}
 			controls.innerHTML = html.join('');
+			//初始化，侧栏第一个选项加左侧颜色
+			$('#segmentedControls a').eq(0).addClass('a-active');
 			html = [];
 			for (i = 1; i <=leftMenu.length; i++) { 
 				html.push('<div id="content' + i + '"  class="mui-control-content"><ul data-id="'+i+'" class="mui-table-view">');
@@ -298,7 +305,7 @@
 						if($('a').eq(i).hasClass('a-active'))
 						$('a').eq(i).removeClass('a-active');
 						$(aflag).addClass('a-active');
-					}
+					} 
 					scrollTo(this.getAttribute('data-index'));
 					return false;
 				});
