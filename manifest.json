@@ -267,10 +267,12 @@
 					"css/iconfont.css",
 					"css/mui.min.css",
 					"js/jquery.js",
-					"css/iconfont.ttf"
+					"css/iconfont.ttf",
+					"js/av.js"
 				],
 				"refer": [
-					"regist.html"
+					"regist.html",
+					"login.html"
 				],
 				"priority": 0
 			},
@@ -548,7 +550,9 @@
 					"img/book/talk.png",
 					"img/book/loading.gif"
 				],
-				"refer": [],
+				"refer": [
+					"life/book-comment.html"
+				],
 				"priority": 0
 			},
 			"life/music.html": {
@@ -613,6 +617,19 @@
 					"js/av.js",
 					"js/jquery.js",
 					"img/666.png"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"life/book-comment.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/iconfont.css",
+					"css/mui.min.css",
+					"img/book/shu.jpg",
+					"js/av.js",
+					"js/jquery.js"
 				],
 				"refer": [],
 				"priority": 0

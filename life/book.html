@@ -58,6 +58,7 @@
 		</div>
 		<img src="../img/book/loading.gif" style="width: 100%;"/>
 		<h4 style="color:gray" style="margin: 25px 0 10px 30px!important;">书籍简介</h4>		
+		<div class="thin-line"></div>
 		<div style="margin: 0 auto;padding: 10px;margin-bottom: 100px;">
 			<p>《查令十字街84号》，作者：海莲.汉芙。这本书被誉为“爱书人的圣经”的书信集，记录了纽约女作家海莲和伦敦马克斯与科恩书店的书商
 			</p>
@@ -70,7 +71,10 @@
 		<div class="mui-row"style="padding: 5px;position: fixed;top:90%;height: 10%;width: 100%;background-color: gray;">
 			<div class="mui-col-xs-4">
 				<img src="../img/book/talk.png"/>
-				<h5>交流</h5>
+				<span class="mui-inline mui-badge mui-badge-royal" style="color: red;background: gray;margin-left: -10px;">+999</span>
+				<h5 id="comment">交流</h5>
+				<!--<span class="mui-icon-extra mui-icon-extra-classroom">评论</span>
+		        <button type="button" class="mui-btn mui-btn-royal">评论 <span class="mui-inline mui-badge mui-badge-royal">999</span></button>-->
 			</div>
 			<div class="mui-col-xs-4">
 				<img src="../img/book/read.png"/>
@@ -100,5 +104,13 @@
 				$('#moreText').parent().hide();
 			}else {$('#moreText').parent().show();}		
 		});
+		$('#comment').on('tap',function(){
+			mui.openWindow({
+					url:'book-comment.html',id:'book-comment.html', 
+					show:{
+						aniShow:'slide-in-right',duration:400
+					}
+			});
+		})
 	</script>	
 </html>

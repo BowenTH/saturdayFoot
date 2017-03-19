@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/mui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css"/>
+	</head>
+	<style type="text/css">
+		#comment-input{
+			position: absolute;
+			height: 30px;
+			top:90%
+		}
+		#comment-input input{
+			width: 75%;
+		}
+		#comment-input button{
+			/*float: right;*/
+			height: 40px;
+			width: 20%;
+		}
+		li{
+			list-style: none;
+			margin: 10px;
+		}
+	</style>
+	<body>		
+	<header class="mui-bar mui-bar-nav">
+	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	    <h1 class="mui-title">评论</h1>
+	</header>
+	<template id='commenter' style="background: white;">
+		<li  class="mui-table-view-cell" data-id = "00">
+			<div class="" style="float: left;">
+				<img src="../img/detail/3.jpg"/>
+			</div>
+		</li>
+	</template>
+	<div class="mui-content">
+		<div id="comment-input">
+			<input type="text" name="" id="" value="" />
+			<button class="mui-btn-outlined" onclick="commentSend(this)">发送</button>
+		</div>
+		<div id="comment">
+			<ul>
+				<li  class="mui-table-view-cell" data-id = "00">
+					<div class="" style="float: left;">
+						<img src="../"/>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+		<div class="mui-scroll-wrapper">
+		    <div class="mui-scroll">
+		        xxxx
+		    </div>
+		</div>
+		<hr />
+		<hr />
+		<hr />
+		xx
+	</body>
+	<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/mui.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/av.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){  
+	
+		var query = new AV.Query('_User'); 
+		var user=null;
+		query.equalTo('username','13764196371');
+		/************************查询评价的用户******************/
+		query.find({
+			success:function(resp){ 
+				var	user = resp[0];				
+				/********创建评论**********/
+				console.log(JSON.stringify(user)); 
+				var commentTable = new AV.Object('Comment');
+				
+				var indexComment=0;
+				var queryReCommenter = new AV.Query('Comment');
+				queryReCommenter.equalTo('username','bowen'); 
+				var result=queryReCommenter.find().then(function(resp){
+					indexComment=resp.length+1;
+					commentTable.set('index',indexComment);
+					commentTable.set('commenter',user);
+					commentTable.set('info','再牛逼的梦想，也抵不了你傻逼似的坚持!');
+					commentTable.set('commentTime','2017年3月18日 11:01:30');
+					commentTable.save().then(
+						function(){
+//							alert('评论成功');
+						},function(error){
+							alert(JSON.stringify(error));
+						});
+				},function(error){
+					alert(JSON.stringify(error));
+					if(error.code=='101')
+					{
+						indexComment=1;
+						commentTable.set('index',indexComment);
+						commentTable.set('commenter',user);
+						commentTable.set('info','再牛逼的梦想，也抵不了你傻逼似的坚持!');
+						commentTable.set('commentTime','2017年3月18日 11:01:30');
+						commentTable.save().then(
+							function(){
+//								alert('评论成功');
+							},function(error){
+								alert(JSON.stringify(error));
+						});
+					}
+				});
+				
+			},
+			error:function(error){
+				alert('用户账号异常');
+			}
+		});
+		
+		
+		var queryReCommenter = new AV.Query('_User'); 
+		var recommentUser=null;
+		queryReCommenter.equalTo('username','bowen'); 
+		var resultReCommenter=queryReCommenter.find(); 
+		/************************查询回复人******************/
+		mui.later(function(){
+			var reCommenter=resultReCommenter._result[0][0]; 
+			console.log(JSON.stringify(reCommenter));
+			var reComment = new AV.Object('ReComment');
+			reComment.set('reCommenter',reCommenter);
+//			alert('recomment:'+reCommenter.username);
+			reComment.set('info','呵呵!'); 
+			reComment.set('commentTime','2017年3月18日 15:49:25');
+			
+			var speakerComment= new AV.Object('SpeakerComment');
+			/*********添加中间表，用户绑定评价，每绑定一次会增加一条评论****/
+			var queryReCommenter = new AV.Query('Comment');
+			queryReCommenter.equalTo('index',1); 
+			queryReCommenter.find().then(function(resp){
+				speakerComment.set('comment',resp[0]);
+				speakerComment.set('reComment',reComment);
+				speakerComment.save().then(
+						function(){
+//							alert('绑定成功');
+						},function(error){
+							alert(JSON.stringify(error));
+						});
+			}); 
+			
+//			speakerComment.set('comment',comment);
+//			speakerComment.set('reComment',reComment);
+			
+		},2000);
+//		queryReCommenter.find({
+//			success:function(resp){				
+//				var reCommenter=resp[0];
+//				var reComment = new AV.Object('ReComment');
+//				reComment.set('reCommenter',reCommenter);
+//				reComment.set('info','呵呵!');
+//				reComment.set('commentTime','2017年3月18日 15:49:25');
+//				reComment.save().then(  
+//				function(){
+//					alert('回复成功');
+//				},function(error){
+//					alert(JSON.stringify(error));
+//				});
+//			},
+//			error:function(error){}
+//		});
+		
+	})	
+	function commentSend(btn){
+		var commentInfo = $(btn).siblings('input').val();
+		$(btn).siblings('input').val('');
+		addCommentLi(commentInfo);
+		console.log(commentInfo);
+		return commentInfo;
+	}
+	function addCommentLi(commentInfo){
+		
+		var commenter=document.querySelector('#commenter');
+		
+		var commentUl= document.body.querySelector('#comment ul');
+		var cloneLi = commenter.content.cloneNode(true);
+		commentUl.appendChild(cloneLi);
+		
+		var li = document.createElement('li');
+		li.innerHTML = commentInfo;
+		$('#comment ul').append(li);
+	}
+	</script>
+</html>

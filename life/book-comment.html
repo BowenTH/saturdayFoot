@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../css/mui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/iconfont.css"/>
+		<style type="text/css">
+		header,.mui-title{
+			background: black!important;
+			color: white!important;
+			text-align: left;
+		}
+		.book-content{
+			margin-top: 30px;
+			padding: 20px;
+		}
+		.book-title{
+			padding: 10px;
+			margin-top: 12%;
+			height: 10%;
+		}
+		.comment-title{
+			/*background: lightgray;*/
+			margin-top: 20%;
+			padding: 10px;
+			width: 100%;
+		}
+		#comment-input{
+		position: fixed;
+		background: red;
+		width: 100%;
+		height: 20%;
+		bottom: 0;
+		}
+		#comment-input input{
+			border: yellow 1px solid!important;
+			width: 100%;
+			height: 100px;
+		}
+		#comment-input button{
+			height: 40px;
+			width: 15%;
+		}
+		li{
+			list-style: none;
+			margin: 10px;
+		}
+		.pj-li img{
+			width: 50px;height: 50px;
+			border-radius: 50%; 
+			float: left;
+		}
+		.comment-text{
+			/*width: 100%;*/
+			margin-left: 10%;
+			margin-bottom: 5%;
+			font-size: 15px;
+		}
+		</style>
+		<template id='commenter' style="background: white;">
+			<li  class="mui-table-view-cell pj-li" style="padding: 0;" data-id = "00">
+				<img src="../img/book/shu.jpg"/>
+				<h5><span class="username">原理少年</span> <span style="float: right;">1996+</span></h5>
+				<h6 class="time">2017年3月19日 13:19:53</h6>
+				<br />
+				<div class="comment-text">
+					评论多少和歌好不好听有关？你们真是。。是不是傻，是不是傻！！！
+				</div>
+			</li>
+		</template>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">评论 <span>(1609)</span></h1>
+		</header>		
+		<div class="book-title">
+			<img style="width: 15%; float: left;" src="../img/book/shu.jpg"/>
+			<h4 style="width: 50%;float: left;margin-top: 30px;margin-left: 10px;">查令十字街84号</h4>
+		</div>
+		<div class="comment-title">
+			<h5 style="font-size: 20px;">精彩评论</h5>
+		</div>
+		<div class="thin-line"></div>
+				
+		<div id="comment">
+			<ul style="padding: 0;margin: 0 0 50px 0;">
+				<li  class="mui-table-view-cell pj-li" style="padding: 0;" data-id = "00">
+					<img src="../img/book/shu.jpg"/>
+					<h5><span class="username">原理少年</span> <span style="float: right;">1996+</span></h5>
+					<h6>2017年3月19日 13:19:53</h6>
+					<br />
+					<div class="comment-text">
+						评论多少和歌好不好听有关？你们真是。。是不是傻，是不是傻！！！
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="mui-input-row" style="position: fixed;bottom: 0; background: white;width: 100%;">
+	        <label id="comment-button">评论</label> 
+	        <input type="text"  class="mui-input-clear" placeholder="请输入评论">
+	    </div>
+	</body>
+	<script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/av.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		mui.init();
+		var currentUser = AV.User.current();
+		var commenterX={};
+		mui.ready(function(){
+			commentInit();
+			$('#comment-button').on('tap',function(){
+				var commentInfo = $(this).siblings('input').val();
+				$(this).siblings('input').val('');
+				var commentData ={};
+				commentData.commenter = currentUser;
+				commentData.time = Date();
+				commentData.info = commentInfo;
+				
+				addCommentLi(commentData);
+				console.log(commentInfo);
+			})			
+		});
+		function commentInit(){
+			var queryCommenter = new AV.Query('Comment');
+			queryCommenter.equalTo();
+			queryCommenter.include(['commenter']);
+			queryCommenter.find().then(function(resp){ 
+//				alert(resp.length);
+				for (var i=0;i<resp.length;i++) {
+					var eachComment={};
+					eachComment.commenter = resp[i].get('commenter');
+					var user = resp[i].get('commenter');
+					eachComment.commenter = user;
+//					alert('评论者:'+JSON.stringify(eachComment.commenter));
+					eachComment.time = resp[i].get('commentTime');
+					eachComment.info = resp[i].get('info');
+					setTimeout(commentLiInit(eachComment),1000);
+				}
+			},
+			function(error){
+				alert(JSON.stringify(error)+'4');
+			})
+		}
+		function commentLiInit(eachComment){
+			mui.later(function(){
+				var commentUl= document.body.querySelector('#comment ul');
+				var cloneLi = commenter.content.cloneNode(true); 		
+				commentUl.appendChild(cloneLi);
+				console.log(JSON.stringify(eachComment.info)); 
+				$('#comment ul li .username').last().text(eachComment.commenter.get('username'));
+				$('#comment ul li .time').last().text(eachComment.time);
+				$('#comment ul li .comment-text').last().text(eachComment.info); 
+			},200);
+		} 
+		function addCommentLi(commentData){
+			currentUser = AV.User.current();
+			if(typeof(currentUser.get('username'))=='undefined' || commentData.commentInfo==''){ 
+				alert('评论为空，或是账号异常');
+				return false;
+			}
+			var commentUl= document.body.querySelector('#comment ul');
+			var cloneLi = commenter.content.cloneNode(true); 		
+			commentUl.appendChild(cloneLi);
+						
+			$('#comment ul li .username').last().text(currentUser.get('username'));
+			$('#comment ul li .time').last().text(Date());	
+			$('#comment ul li .comment-text').last().text(commentData.info);
+			commentTable(commentData); 
+		} 
+		/********添加评论到后台***********/
+		function commentTable(commentData){
+			var queryCommenter = new AV.Query('Comment');
+				queryCommenter.equalTo('username',commentData.commenter.get('username')); 
+				var commentTable = new AV.Object('Comment');
+			queryCommenter.find().then(function(resp){				
+				commentTable.set('commenter',commentData.commenter);
+				commentTable.set('info',commentData.info);
+				commentTable.set('commentTime',commentData.time);
+				commentTable.save().then(
+					function(resp){
+							alert('评论成功');
+					},function(error){
+						alert(JSON.stringify(error)+'1');
+					});
+				},function(error){
+					alert(JSON.stringify(error)+'2');
+				if(error.code=='101')
+				{
+					commentTable.set('commenter',commentData.commenter);
+					commentTable.set('info',commentData.info);
+					commentTable.set('commentTime',commentData.time);
+					commentTable.save().then(
+						function(){
+								alert('首次评论成功');
+						},function(error){
+							alert(JSON.stringify(error)+'3');
+					});
+				}
+			});
+		}
+	</script>
+</html>
