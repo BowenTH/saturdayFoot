@@ -42,12 +42,39 @@
 			}
 			@keyframes play{
     			0%  {
+     		   -webkit-transform:rotate(0deg);     		   
+     		   -moz-transform:rotate(0deg);
      		   transform:rotate(0deg);
      		   }
      		   100%  {
-     		   transform:rotate(360deg);
+     		   	transform:rotate(360deg);
+     		   -moz-transform:rotate(360deg);
+     		   -webkit-transform:rotate(360deg);
+     		   }     		   
+     		}
+     		@-moz-keyframes play{
+    			0%  {
+     		   -webkit-transform:rotate(0deg);     		   
+     		   -moz-transform:rotate(0deg);
+     		   transform:rotate(0deg);
      		   }
-     		   
+     		   100%  {
+     		   	transform:rotate(360deg);
+     		   -moz-transform:rotate(360deg);
+     		   -webkit-transform:rotate(360deg);
+     		   }       		   
+     		}
+     		@-webkit-keyframes play{
+    			0%  {
+     		   -webkit-transform:rotate(0deg);     		   
+     		   -moz-transform:rotate(0deg);
+     		   transform:rotate(0deg);
+     		   }
+     		   100%  {
+     		   	transform:rotate(360deg);
+     		   -moz-transform:rotate(360deg);
+     		   -webkit-transform:rotate(360deg);
+     		   }       		   
      		}
 			.icon-jindutiao{				
 				font-size: 15px;
@@ -104,7 +131,7 @@
 			<img src="../img/music/900.jpg"/>
 			<!--<i style="position: absolute;right: 10%;" class="icon iconfont icon-zifuwuicon- smallFont"></i>-->
 		</div>
-		<div class="mui-row"style="position: absolute;top: 73%;width: 100%;">
+		<!--<div class="mui-row"style="position: absolute;top: 73%;width: 100%;">-->
 		<div  style="width: 33%;float: left;height: 30px;" >
 				<span class="icon iconfont icon-dianzan smallFont "style="float: left;margin-left: 50%;" >
 				</span>
@@ -120,9 +147,9 @@
 				</div>
 			</div>
 			<div style="width: 33%;float: left;">
-				<i class="icon iconfont icon-zifuwuicon- smallFont""></i>
+				<i class="icon iconfont icon-zifuwuicon- smallFont"></i>
 			</div>
-		</div>		
+		<!--</div>-->		 
 		<div id="progressbarDiv" style="height: 20px;margin: 0 20px 0 20px;position: absolute;top: 80%;width: 90%;">
 			<span style="margin-right: 5%;">00:00</span>
 			<div id="progressbar">
@@ -195,7 +222,8 @@
 		if ( plus.audio == undefined ) {
 			alert( "Device not ready!" );
 		}
-		p = plus.audio.createPlayer( "_doc/2.mp3");	
+//		p = plus.audio.createPlayer( "_doc/2.mp3");	 
+		p = plus.audio.createPlayer( "http://oi7xjum3c.bkt.clouddn.com/1.mp3");	
 		
 		p.play( function () {
 			flagProgressbar=0;			
@@ -212,7 +240,7 @@
 			$('#progressbar').prev('span').text(ownTimetoStr(p.getPosition()));
 			$('#progressbar').next('span').text(ownTimetoStr(p.getDuration()));
 			mui(progressbar1).progressbar().setProgress(flagProgressbar);			
-//			console.log("当前长度:"+ownTimetoStr(p.getDuration())+':'+ownTimetoStr(p.getPosition())); 
+			console.log("当前长度:"+ownTimetoStr(p.getDuration())+':'+ownTimetoStr(p.getPosition())); 
 		},1000);		
 	}
 	function pausePlay() {		
