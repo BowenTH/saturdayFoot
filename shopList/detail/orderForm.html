@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/app.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/icons-extra.css"/>
+		<style type="text/css">
+			span{
+				/*font-size: 80%;*/
+			}
+			h5{
+				margin: 10px;
+			}
+			h5 span{
+				margin: 5px;
+			}
+			.own-icon-right{
+				color:grey;margin-left: 8%;float: left; padding: 20px;right: 10px;
+			}
+			.ownSum{}
+			.mui-card{
+				margin-bottom: 10px;				
+			}
+		</style>
+		<header class="mui-bar mui-bar-nav" style="display: block;">
+			<a class="mui-action-back mui-icon mui-icon-arrowthinleft mui-pull-left"></a>
+			<h1 class="mui-title">提交订单</h1>
+		</header>
+	</head>
+	<body>
+		<div class="mui-content" style="margin-top: 45px!important;">
+			<div class="mui-card">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						<div class="" style="width: 70%;float: left;">
+							<span class="mui-icon mui-icon-location" style="font-size: 70%;"> </span>
+							<span>紫晶南苑	215号201室</span>
+							<h5  style="color: gray;font-size: 70%;margin-left: 1%;">
+								<span>闫阳阳先生</span><span>13764196371</span>
+							</h5>							
+						</div>
+						<span  class="mui-icon mui-icon-arrowright own-icon-right">
+						</span>						
+					</li>
+					<li class="mui-table-view-cell">
+						<div class="" style="width: 70%;float: left;">
+							<span class="mui-icon mui-icon-location" style="font-size: 100%;">
+								<span>立即配送</span>
+								<span style="color: red;font-size: 80%;">约20：20送达</span> </span>
+							<h5  style="color: gray;font-size: 80%;margin-left: 6%;">
+								<span>商家自配送</span>
+							</h5>							
+						</div>
+						<span  class="mui-icon mui-icon-arrowright own-icon-right">
+						</span>
+					</li>
+					<li class="mui-table-view-cell" style="color: gray; font-size: 13px;">
+						<span class="mui-icon mui-icon-compose" style="font-size: 150%;"></span>
+						给小二留言
+						<span  class="mui-icon mui-icon-arrowright"style="float: right;margin-right: 8%;">
+						</span>
+					</li>
+				</ul>
+			</div>
+			<div class="mui-card" style="font-size: 80%;">
+				<ul class="mui-table-view">					
+					<li  class="mui-table-view-cell" >
+						<span class="mui-icon-extra mui-icon-extra-hotel" style="font-size: 100%;color: gray;margin-right: 4%;">
+						</span>徐泾东购物市场(剑川路店)
+					</li>					
+					<li id="shopUl" class="mui-table-view-cell">
+						<span class="mui-icon-extra mui-icon-extra-new" style="color: red;"></span>
+						<span style="margin-right: 10%;">新鲜五花肉</span>x<span style="font-size: 80%;">0.5斤</span>						
+						<span style="float: right;margin-top: 5px;">￥20</span>
+					</li>
+					
+					<li class="mui-table-view-cell" style="">
+						<h5>包装费 <span style="float: right;">￥0</span></h5>
+						<h5>配送费 <span style="float: right;">￥5</span></h5>
+						<h5 style="font-size: 65%;color: lightslategray;">暂无优惠，敬请期待</h5>
+					</li>
+					<li class="mui-table-view-cell" style="font-size: 75%;">
+						订单￥<span class="ownSum">20</span> <span style="float: right;">需支付￥<span class="ownSum">20</span></span>
+					</li>
+				</ul>			
+			</div>
+			<div style="float: right;padding-right: 5%;margin-bottom: 50px;">
+				<h6 style="font-size: 65%;">10内分钟商户没有给接单提醒，订单将自动取消</h6>
+			</div>			
+			
+			<nav class="mui-bar mui-bar-tab" style="font-size: 70%;">
+			<span class="mui-icon mui-icon-location" style="font-size: 150%;"></span>
+			当前地址：<span>紫晶南苑	215号201室</span>
+			<button id="go" class="mui-btn mui-btn-red" style="background-color: red;margin: -7px;float: right;width: 30%;height: 50px;border-radius:0 0 0 0!important ;">支付
+				<span class="ownSum">20</span>元</button>
+			</nav>
+		</div>
+		
+		<script src="../../js/jquery.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/av.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	mui.init();
+	var foodList=null;
+	window.onload = function(){
+		mui.later(function(){
+			mui.plusReady(function(){
+				plus.nativeUI.closeWaiting();
+				plus.webview.getWebviewById('orderForm.html').show('slide-in-left',300,function(){
+				plus.webview.getWebviewById('menuList.html').evalJS('$("div").last().addClass("ownHidden")');
+//				plus.webview.getWebviewById('menuList.html').evalJS("window.location.reload()");
+				});
+				var foodList = plus.webview.getWebviewById('orderForm.html').foodList;				
+//				console.log(JSON.stringify(foodList));
+				var sum = addForm(foodList);				
+				$(".ownSum").text(sum);
+				
+				/* 支付宝支付引用  */
+				var channel =null;
+				document.getElementById('go').addEventListener('tap',function(){
+			//	plus.payment.getChannels(function(channels){
+			//	channel=channels[0];
+			//	},function(e){
+			//		alert('获取支付通道失败:'+e.message);
+			//	});
+			//	pay('alipay');
+			//	pay('weixin');
+				addOrderList(foodList);
+				plus.webview.open('orderReturn.html','orderReturn.html');
+				});
+			});
+		},50);
+	}
+	
+function addForm(foodList){
+	alert(JSON.stringify(foodList));
+	var sum=20;
+	for (var j=0;j<foodList.length;j++) {
+		var listLi = document.createElement("li");
+		listLi.setAttribute('class','mui-table-view-cell');
+		listLi.innerHTML = '<span class="mui-icon-extra mui-icon-extra-new" style="color: red;"></span>'
+		+'<span style="margin-left:1%;margin-right: 10%;">'+foodList[j].info.title+'</span>x'
+		+'<span style="font-size: 80%;">'+foodList[j].info.count+'斤</span>'+'<span style="float: right;">￥'+foodList[j].info.count*foodList[j].info.price+'</span>';
+		$('#shopUl').after(listLi);	
+		sum+=foodList[j].info.count*foodList[j].info.price;
+	}
+	return sum;
+}
+
+function addOrderList(foodList){
+	var signalOrder={};
+	signalOrder.user = {name:'bowen',phone:'13764196371',address:'紫晶南苑210号'};
+	signalOrder.foodList = foodList;
+	signalOrder.dealData= Date();
+	signalOrder.shoper = {name:'徐泾东购物市场',phone:'15387649871',address:'徐泾东沧源路300号'};
+
+	var Query=new AV.Query("shopList");
+	Query.equalTo('shopname','诚哥的店');	
+	var resultFind = Query.find({
+	success:function(resp){
+		mui.toast('正在查找商户...'); 
+		if(!resp.length){
+			mui.toast('查询异常，无该商家!');
+			return false;
+		}
+		if(resp[0].get('orderList')===null){
+			var flag ={data:[]};
+			flag.data.push(signalOrder);
+			resp[0].save({orderList:flag}).then(function(){
+				mui.toast('商家第一单');
+			},function(error){
+				console.error(error);
+			});
+		}else{
+			var orderList =	resp[0].get('orderList');
+			orderList.data.push(signalOrder);
+//			alert(JSON.stringify(orderList));
+			resp[0].save({orderList:orderList}).then(function(){
+				mui.toast('订单更新成功');
+			},function(error){
+				console.error(error);
+			});
+		}		
+	},
+	error:function(error){
+		alert(JSON.stringify(error));
+	}				
+	});	
+}
+///* 支付宝支付引用  */
+//var channel =null;
+//function plusReady(){ 
+//	document.getElementById('go').addEventListener('tap',function(){
+////	plus.payment.getChannels(function(channels){
+////	channel=channels[0];
+////	},function(e){
+////		alert('获取支付通道失败:'+e.message);
+////	});
+////	pay('alipay');
+////	pay('weixin');
+//	addOrderList(foodList);
+//	plus.webview.open('orderReturn.html','orderReturn.html');
+//});
+//}
+//document.addEventListener('plusready',plusReady,false);
+var ALLPAYSERVER='http://demo.dcloud.net.cn/helloh5/payment/alipay.php?total=';
+//var ALLPAYSERVER='https://bowenth.github.io/';
+var WXPAYSERVER='http://demo.dcloud.net.cn/helloh5/payment/wxpay.php?total=';
+
+
+
+//2.发起支付请求
+function pay(id){
+ var PAYSERVER='';
+    if(id=='alipay'){
+        PAYSERVER=ALLPAYSERVER;
+//      alert('发起支付请求')
+    }else if(id=='weixin'){
+    	alert('微信支付哟');
+        PAYSERVER=WXPAYSERVER;
+    }else{
+        plus.nativeUI.alert("不支持此支付通道！",null,"捐赠");
+        return;
+    }
+    var xhr=new XMLHttpRequest();
+    xhr.onreadystatechange=function(){
+//  	alert('判断');
+        switch(xhr.readyState){
+            case 4:
+            if(xhr.status==200){
+                plus.payment.request(channel,xhr.responseText,function(result){
+                    plus.nativeUI.alert("支付成功！",function(){
+                        back();
+                    });
+                },function(error){
+                    plus.nativeUI.alert("支付失败：" + error.code);
+                });
+            }else{
+                alert("获取订单信息失败！");
+            }
+            break;
+            default:
+            break;
+        }
+    }
+    xhr.open('GET',PAYSERVER);
+    xhr.send();
+}		
+	</script>
+	</body>
+</html>

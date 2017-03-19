@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/icons-extra.css"/>
+		<style type="text/css">
+			img{
+				height: 80px;width: 100px;
+			}
+			#shopUl{
+				background: white!important;
+				margin: 10px;
+			}
+			#shopUl li{
+				list-style: none;				
+			}
+			.shopSpan{				
+				float: left;
+				margin-top: 5px;
+				margin-bottom: 5px;
+				margin-left: 5px;
+			}
+			.shopSmall{
+				font-size: 12px;
+				color: grey;
+			}
+			.mui-icon{
+				color: red;
+				font-size:15px;
+				margin-left: -5px;
+			}
+		</style>
+	<template id='shopTemp'  style="background: white;">
+		<li  style="" data-id = "01" style="background: white;">
+			<div style="">
+			<div class="" style="float: left;">
+				<img src="../img/detail/3.jpg"/>
+			</div>
+			<div class="shopSpan" style="background: white;">
+				<div class="">
+					<h5>火锅店(闵行店)</h5>
+					<span class="mui-icon mui-icon-star-filled"/>
+					<span class="mui-icon mui-icon-star-filled"/>
+					<span class="mui-icon mui-icon-star-filled"/>
+					<span class="mui-icon mui-icon-star-filled"/>
+					<span class="mui-icon mui-icon-starhalf"/>
+					<span  class="shopSmall">
+						20￥/人
+					</span>
+				</div>
+				<div class="" style="margin-bottom: 5px;">
+					<span class="shopSmall">
+						韩国菜 <span>|							
+						</span> 北新泾
+					</span><span class="shopSmall" style="background: lightgray;margin-left: 120px;">
+						1000m
+					</span><br />
+					<span class="shopSmall mui-icon-extra mui-icon-extra-heart-filled">
+						1000人消费
+					</span>	
+					<div style="border-top: 1px solid lightgrey;">	
+						<span class="shopSmall mui-icon-extra mui-icon-extra-new">
+							商家优惠，满30立减8元
+						</span>
+					</div>
+				</div>	
+			</div>		
+			</div>	
+		</li>
+	</template>	
+	</head>
+
+	<body>
+		<!--下拉刷新容器-->
+
+
+				<!--数据列表-->
+				<ul id="shopUl" class="mui-table-view">
+					<li data-id = "01"class="mui-table-view-cell" style="background: white;">
+			<div style="">
+			<div class="" style="float: left;">
+				<img src="../img/detail/3.jpg"/>
+			</div>
+			<div class="shopSpan" style="background: white;">
+				<div class="">
+					<h5>火锅店(闵行店)</h5>
+					<span class="mui-icon mui-icon-star-filled"/>
+					<span class="mui-icon mui-icon-star-filled"/>
+					<span class="mui-icon mui-icon-star-filled"/>
+					<span class="mui-icon mui-icon-star-filled"/>
+					<span class="mui-icon mui-icon-starhalf"/>
+					<span  class="shopSmall">
+						20￥/人
+					</span>
+				</div>
+				<div class="" style="margin-bottom: 5px;">
+					<span class="shopSmall">
+						韩国菜 <span>|							
+						</span> 北新泾
+					</span><span class="shopSmall" style="background: lightgray;margin-left: 120px;">
+						1000m
+					</span><br />
+					<span class="shopSmall mui-icon-extra mui-icon-extra-heart-filled">
+						1000人消费
+					</span>	
+					<div style="border-top: 1px solid lightgrey;">	
+						<span class="shopSmall mui-icon-extra mui-icon-extra-new">
+							商家优惠，满30立减8元
+						</span>
+					</div>
+				</div>	
+			</div>		
+			</div>	
+		</li>
+				</ul>
+
+
+		<script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js"></script>
+	</body>
+
+</html>

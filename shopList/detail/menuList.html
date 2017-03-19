@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/app.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/icons-extra.css"/>
+		
+		<header class="mui-bar mui-bar-nav" style="display: block;">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">徐泾东购物市场</h1>
+		    <a style="margin: 10px;z-index: 999;"  class="mui-icon-extra mui-icon-extra-share mui-pull-right"></a>
+			<a  class="mui-icon mui-icon-search mui-pull-right"></a>  	
+		</header>
+		<style>
+			.mui-row.mui-fullscreen>[class*="mui-col-"] {
+				height: 100%;
+			}
+			
+			.mui-col-xs-3,
+			.mui-col-xs-9 {
+				overflow-y: auto;
+				height: 100%;
+			}
+			
+			.mui-segmented-control .mui-control-item {
+				line-height: 50px;
+				width: 100%;
+			}
+			
+			.mui-control-content {
+				display: block;
+				border-left-color: red!important;
+			}
+			
+			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+				background-color: #fff;
+			}
+			.ownHidden{
+				display: none;				
+			}
+			img{
+				width: 50px;
+			}
+			ul .mui-active{
+				background-color: white!important;
+			}
+			#segmentedControlContents{
+				/*border: 1px solid red;*/
+				/*margin-bottom: 50px;*/
+			}
+			#segmentedControlContents .mui-table-view-cell{
+				height: 110px;
+			}
+			.a-active{
+				border-left: 5px solid green!important;
+				color: red;
+			}
+			.u-flyer{display: block;width: 50px;height: 50px;border-radius: 50px;position: fixed;z-index: 9999;}
+		</style>
+	</head>
+	<body>		
+		<!--加侧栏-->
+		<div  class="mui-content mui-row mui-fullscreen" style="margin-top: 50px;">
+			<div class="mui-col-xs-3">
+				<div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical">
+
+				</div>
+			</div>
+			<div id="segmentedControlContents" class="mui-col-xs-9" style="border-left: 1px solid #c8c7cc;">
+			</div>
+		</div>
+		<!--end-->
+		<!--menu list关闭开启-->
+		<div id="menu-list"style="display: none;width: 100%;bottom: 45px;position: fixed;">
+			<ul class="mui-table-view">
+			</ul>
+		</div>
+		<div id="">			
+			<!--<i class="end"></i>-->
+			<button id="menu" type="button" data-id='1' class="mui-btn-grey"style="height: 50px;border-radius: 0;;width: 60%;position: fixed;bottom: 0px;">
+				<span>菜单<span id="count-list" style="margin: -10px;" class="mui-badge mui-badge-red mui-btn-red mui-pull-right ">0</span></span>
+			</button>
+		        <button id="listSubmit" style="height: 50px;width: 40%;right: 0;background:lightblue;bottom: 0px;position: fixed;">
+		         	<span id="" >
+						提交订单：<span id='sum-finally'>0</span>元
+					</span>					
+		        </button>			
+		</div>
+		
+		<div class="ownHidden" style="position: fixed;margin: 50%;">
+			<img src="../../img/jump.gif"/>
+		</div>
+		<script src="../../js/jquery.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/jquery.fly.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/av.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/require.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/menuList.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">  
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});	
+			var leftMenu=null;
+//			$(function() {
+			var offset = $("#menu").offset();
+//			$(".addcar").click(
+			function ownFly(e,addcar){
+//				console.log(offset.top);
+				var img = null;
+				if(e.target.tagName==='SPAN'){
+					img = $(addcar).siblings('img').attr('src');
+				}else{
+					img = $(addcar).parent().siblings('img').attr('src');
+				}				
+				console.log(e.target.tagName);
+				var flyer = $('<img class="u-flyer" src="'+img+'">');
+				flyer.fly({
+					start: {
+						left: '0',
+						top: '0'
+					},
+					end: {
+						left: offset.left+10,
+						top: offset.top+10,
+						width: 0,
+						height: 0
+					},
+					onEnd: function(){
+						this.destory();
+					}
+				});
+			}
+			upShopList();
+//			封装商户信息上传
+		function upShopList(){
+			$.getJSON('../../data/dataList.json',function(result){
+				leftMenu=result;				
+//				alert("本地获取店铺信息"+JSON.stringify(leftMenu));
+			});
+			var Product=AV.Object.extend('shopList');
+			var product = new Product();
+
+			mui.later(function(){
+				var Query=new AV.Query("shopList");
+				Query.equalTo('shopname','诚哥的店');	
+				var resultFind = Query.find({
+				success:function(resp){
+					return;//注释掉，可实现上传功能
+					mui.toast('正在查找商户...'); 
+					if(resp.length){
+//						alert('服务器查询结果'+JSON.stringify(resp));
+						if(!confirm("该商户已存在，上传会覆盖原商户信息，是否继续")){
+							return; 
+						}else{
+							resp[0].destroy().then(  
+								function(){},function(error){alert(JSON.stringify(error));}
+							); 
+						} 
+					}
+					product.save({
+						shopname:'诚哥的店',
+						product:{'data':leftMenu},
+						position:localStorage.getItem('shopPosition'),
+						orderList:null
+						}
+					).then(function() {
+					    //  发布成功，跳转到商品 list 页面			    
+					    alert('开始上传'+JSON.stringify(leftMenu));  
+					}, function(error) {
+					    alert('上传出错  '+JSON.stringify(error));
+					});
+				},
+				error:function(error){
+					alert(JSON.stringify(error));
+				}				
+				});				
+			},100);
+		}
+		
+		var controls = document.getElementById("segmentedControls");
+		var contents = document.getElementById("segmentedControlContents");
+		mui.later(doData,200);
+		function doData(){
+			var html = [];
+			var i = 1,
+				j = 1,
+				m = 16, //左侧选项卡数量+1
+				n = 21; //每个选项卡列表数量+1
+//			添加实例
+			//测试代码
+			for (i=1; i <= leftMenu.length; i++) {
+					html.push('<a class="mui-control-item " data-index="' + (i - 1) + '" href="#content' + i + '">' + leftMenu[i-1].type + '</a>');
+			}
+			controls.innerHTML = html.join('');
+			//初始化，侧栏第一个选项加左侧颜色
+			$('#segmentedControls a').eq(0).addClass('a-active');
+			html = [];
+			for (i = 1; i <=leftMenu.length; i++) { 
+				html.push('<div id="content' + i + '"  class="mui-control-content"><ul data-id="'+i+'" class="mui-table-view">');
+				html.push('<strong style="color:#007aff;margin:5%">'+leftMenu[i-1].type+'</strong>');
+				for (j = 1; j <= leftMenu[i-1].info.length; j++) {						
+						html.push('<li class="mui-table-view-cell" data-id="'+j+'">');
+						html.push('<img style="float:left;width:80px" src='+ leftMenu[i-1].info[j-1].img +'>');
+						html.push('<span style="margin-left:5%;width:50%;color:black;font-weight:"500px"">'+leftMenu[i-1].info[j-1].title+'</span><br/>');
+						html.push('<span id="siglePrice" style="color:red;margin-left:5%;font-size:13px">'+ leftMenu[i-1].info[j-1].price+"</span>");
+//						第' + i + '个选项卡子项-' + j  
+						html.push("<div class='mui-numbox' style='float: right; display:none'>");
+						html.push("<button class='mui-btn mui-btn-numbox-minus'  type='button'>-</button>");
+						html.push("<input id='countInput' class='mui-input-numbox' type='number' value='0'>");
+						html.push("<button class='mui-btn mui-btn-numbox-plus addcar' type='button'>+</button></div>");
+						html.push("<span class='mui-icon mui-icon-plus mui-icon-plus-filled addcar' style='color: black;float: right;font-size: 30px;' ></span>");
+				}
+				html.push('</li></ul></div>');
+			}
+			contents.innerHTML = html.join('');
+			//默认选中第一个
+			controls.querySelector('.mui-control-item').classList.add('mui-active');
+			(function() {
+				var controlsElem = document.getElementById("segmentedControls");
+				var contentsElem = document.getElementById("segmentedControlContents");
+				var controlListElem = controlsElem.querySelectorAll('.mui-control-item');
+				var contentListElem = contentsElem.querySelectorAll('.mui-control-content');
+				var controlWrapperElem = controlsElem.parentNode;
+				var controlWrapperHeight = controlWrapperElem.offsetHeight;
+				var controlMaxScroll = controlWrapperElem.scrollHeight - controlWrapperHeight;//左侧类别最大可滚动高度
+				var maxScroll = contentsElem.scrollHeight - contentsElem.offsetHeight;//右侧内容最大可滚动高度
+				var controlHeight = controlListElem[0].offsetHeight;//左侧类别每一项的高度
+				var controlTops = []; //存储control的scrollTop值
+				var contentTops = [0]; //存储content的scrollTop值
+				var length = contentListElem.length;
+				for (var i = 0; i < length; i++) {
+					controlTops.push(controlListElem[i].offsetTop + controlHeight);
+				}
+				for (var i = 1; i < length; i++) {
+					var offsetTop = contentListElem[i].offsetTop;
+					if (offsetTop + 100 >= maxScroll) {
+						var height = Math.max(offsetTop + 100 - maxScroll, 100);
+						var totalHeight = 0;
+						var heights = [];
+						for (var j = i; j < length; j++) {
+							var offsetHeight = contentListElem[j].offsetHeight;
+							totalHeight += offsetHeight;
+							heights.push(totalHeight);
+						}
+						for (var m = 0, len = heights.length; m < len; m++) {
+							contentTops.push(parseInt(maxScroll - (height - heights[m] / totalHeight * height)));
+						}
+						break;
+					} else {
+						contentTops.push(parseInt(offsetTop));
+					}
+				}
+				contentsElem.addEventListener('scroll', function() {
+					var scrollTop = contentsElem.scrollTop;
+					for (var i = 0; i < length; i++) {
+						var offsetTop = contentTops[i];
+						var offset = Math.abs(offsetTop - scrollTop);
+//						console.log("i:"+i+",scrollTop:"+scrollTop+",offsetTop:"+offsetTop+",offset:"+offset);
+						if (scrollTop < offsetTop) {
+							if (scrollTop >= maxScroll) {
+								onScroll(length - 1);
+							} else {
+								onScroll(i - 1);
+							}
+							break;
+						} else if (offset < 20) {
+							onScroll(i);
+							break;
+						}else if(scrollTop >= maxScroll){
+							onScroll(length - 1);
+							break;
+						}
+					}
+				});
+				var lastIndex = 0;
+				//监听content滚动
+				var onScroll = function(index) {
+					if (lastIndex !== index) {
+						lastIndex = index;
+						var lastActiveElem = controlsElem.querySelector('.mui-active');
+						lastActiveElem && (lastActiveElem.classList.remove('mui-active'));
+						lastActiveElem && (lastActiveElem.classList.remove('a-active'));
+						var currentElem = controlsElem.querySelector('.mui-control-item:nth-child(' + (index + 1) + ')');
+						currentElem.classList.add('mui-active');
+						currentElem.classList.add('a-active');
+						//简单处理左侧分类滚动，要么滚动到底，要么滚动到顶
+						var controlScrollTop = controlWrapperElem.scrollTop;
+						if (controlScrollTop + controlWrapperHeight < controlTops[index]) {
+							controlWrapperElem.scrollTop = controlMaxScroll;
+						} else if (controlScrollTop > controlTops[index] - controlHeight) {
+							controlWrapperElem.scrollTop = 0;
+						}
+					}
+				};
+				//滚动到指定content
+				var scrollTo = function(index) {
+					contentsElem.scrollTop = contentTops[index];
+				};
+//				测试代码
+				mui(controlsElem).on('tap', '.mui-control-item', function(e) {
+					var aflag = this;
+					for (var i=0;i<$('a').length;i++) {
+						if($('a').eq(i).hasClass('a-active'))
+						$('a').eq(i).removeClass('a-active');
+						$(aflag).addClass('a-active');
+					} 
+					scrollTo(this.getAttribute('data-index'));
+					return false;
+				});
+				
+//				mui($('#segmentedControlContents')).on('tap','li',function(){
+//					mui.openWindow('detail/menuList.html','menuList.html');
+//				})；
+
+	/*处理按钮操作事件*/
+			var foodList = [];	//本地订单	
+//			foodList.list = []; //本地单个订单
+			var sumMoney = 0;
+			var listCount = 0;
+//			foodList.type='肉类';
+//			var sigleList = {"Index":[1,2],"count":'2','InputPrice':'10',"title":"冰糖苹果16颗","detail":"知名品牌，香甜可口","img":"0.png","price":"10"};
+//			foodList.list.push(sigleList);
+//			foodList.list.splice(0,1);
+			
+			
+			var listcount=0;
+			var foodsum=0;
+			mui('.mui-control-content').on('tap','.mui-btn-numbox-plus',function(e){
+				ownFly(e,this);
+			var flag=$(this).siblings('.mui-input-numbox').val();
+			flag++;			
+			$(this).siblings('.mui-input-numbox').val(flag);
+			
+			var Index =[];
+			Index[1] = $(this).parents('li').data('id')-1;//左栏
+			Index[0] = $(this).parents('ul').data('id')-1;//右栏
+			var sigleList=null;
+			var i=0;
+			for(i in foodList){
+				if(foodList[i].Index[0] == Index[0]&&foodList[i].Index[1] == Index[1])
+				{
+					sigleList = foodList[i];break;
+				}				
+			}
+		 	listCount++;
+		 	foodList[i].info.count++;//订单列表里数量添加
+			sumMoney+= parseInt(foodList[i].info.price);
+ 
+			$('#sum-finally').text(sumMoney);
+			$('#count-list').text(listCount);			
+			//动态添加menulist的数目 1，2，3，4				
+			var span= $("#menu-list ul li:contains("+sigleList.info.title+")");
+			$(span).children('span').last().text(sigleList.info.count);
+		});
+//3 -	
+		mui('.mui-control-content').on('tap','.mui-btn-numbox-minus',function(){
+			var flag=$(this).siblings('.mui-input-numbox').val();
+			flag--;			
+			$(this).siblings('.mui-input-numbox').val(flag);
+			if ($(this).siblings('.mui-input-numbox').val()<0) {//numbox值不能小于0
+				$(this).siblings('.mui-input-numbox').val(0);
+				return; 
+			}
+			
+			var Index =[];
+			Index[1] = $(this).parents('li').data('id')-1;//左栏
+			Index[0] = $(this).parents('ul').data('id')-1;//右栏
+			var sigleList=null;
+			var i=0;
+			for(i in foodList){
+				if(foodList[i].Index[0] == Index[0]&&foodList[i].Index[1] == Index[1])
+				{
+					sigleList = foodList[i];break;
+				}				
+			}
+			
+			listCount--;//如果不买该种类水果，listcount--；			
+			foodList[i].info.count--;//订单列表里数量添加
+			sumMoney-= parseInt(foodList[i].info.price);
+ 
+			$('#sum-finally').text(sumMoney);
+			$('#count-list').text(listCount);
+
+			//动态添加menulist的数目 1，2，3，4
+			var span= $("#menu-list li:contains("+sigleList.info.title+")");
+			$(span).children('span').last().text(sigleList.info.count);
+			if(flag==0){
+				$(this).parent().css('display','none');
+				$(this).parent().next().css('display','inline');
+				var span= $("#menu-list li:contains("+sigleList.info.title+")");
+				span.remove(); 
+			}
+		});
+//3 0+
+		mui('.mui-control-content').on('tap','.mui-icon-plus-filled',function(e){
+//			console.log(JSON.stringify(e));
+			ownFly(e,this);
+			this.style.display='none'; 
+			$(this).siblings('.mui-numbox').children('input').val(1);			
+//			input里显示购买量
+			$(this).siblings('.mui-numbox').css({'display':'inline'});
+			
+			var sigleList = {};  //定义单个订单,要添加新的菜单
+			var info ={}; 
+			var Index=[],count,InputPrice,title,detail,img,price;
+			Index[1] = $(this).parents('li').data('id')-1;//左栏 
+			Index[0] = $(this).parents('ul').data('id')-1;//右栏
+			
+			type = leftMenu[Index[0]].type;
+			info.count = 1;
+			info.InputPrice = 0;
+			info.title = leftMenu[Index[0]].info[Index[1]].title;
+			info.price = parseInt(leftMenu[Index[0]].info[Index[1]].price);
+			sigleList.type = type;
+			sigleList.Index = Index;
+			sigleList.info = info;
+			foodList.push(sigleList);
+			console.log("总菜单数目："+foodList.length);
+
+			sumMoney += sigleList.info.count*sigleList.info.price + sigleList.info.InputPrice;
+			listCount++;
+			$('#sum-finally').text(sumMoney);
+			$('#count-list').text(listCount);
+		//加入菜单主列表
+			var li = document.createElement('li');
+			$(li).addClass('mui-table-view-cell food-type');
+			var foodCount = sigleList.info.count;
+			li.dataset.ulid = sigleList.Index[0];
+			li.dataset.liid = sigleList.Index[1];
+			
+			//添加菜单列表具体内容 foodcount为一单个数			
+			li.innerHTML= sigleList.info.title+'<span class="mui-badge mui-badge-green mui-btn-green mui-pull-right ">'+sigleList.info.count+'</span>';
+			document.body.querySelector('#menu-list ul').appendChild(li);
+		});
+		
+			document.getElementById('menu').addEventListener('tap',function(){
+			if($(this).data('id')==1){
+				$('#menu-list').css("display","block");
+				$(this).data('id','0');
+			}else{
+				$('#menu-list').css("display","none");
+				$(this).data('id','1');
+			}
+		});	
+//		$("#segmentedControlContents").on('tap','li',function(){
+//			alert('go');
+//		});
+		document.getElementById('listSubmit').addEventListener('tap',function(){			
+			$("div").last().removeClass('ownHidden');
+//			mui.later(function(){
+//				$("div").last().addClass('ownHidden');		
+//			},2000);
+			mui.openWindow({url:'orderForm.html',
+			id:'orderForm.html',
+			extras:{foodList:foodList},
+			show:{
+				autoShow:false,
+//				aniShow:'slide-in-left',duration:200
+			},waiting:{
+				autoShow:false,
+				title:'拼命加载...',
+				options:{
+//			        width:waiting-dialog-widht,//等待框背景区域宽度，默认根据内容自动计算合适宽度
+//			        height:waiting-dialog-height
+			       }
+			}			
+			});
+			
+		});		
+			})();
+		}
+		</script>
+	</body>
+</html>

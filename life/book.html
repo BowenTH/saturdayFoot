@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../css/mui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/icons-extra.css"/>
+		<style type="text/css">
+			body{
+				background: white;
+			}
+			a{
+				color: white!important;
+			}
+			.ownIcon{
+				margin: 0 auto;
+				width: 15%;
+			}
+			.mui-icon,.mui-icon-extra{
+				color: black;
+			}
+			.mui-row div{
+				margin: 0 auto;
+				text-align: center;
+			}
+			h5{
+				color: black;	
+			}
+			.ownOver{
+				height: 100px;
+				overflow: hidden
+			}
+			.ownMargin{
+				margin-bottom: 90px!important;				
+			}
+			li{
+				list-style: none;
+			}
+			.mui-col-xs-4 img{
+				width: 25px!important;
+			}
+			.mui-col-xs-4 h5{
+				margin-top: 0px;
+			}
+		</style>
+	</head>
+	<body>
+		<div style="position: fixed;top: 0!important;height: 50px;background: black;width: 100%;">
+			<a style="margin-top: 10px;" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<div class="ownIcon">
+				<img width="50px" src="../img/book/icon.jpg" style="border-radius:50% 50% 50% 50% ;"/>
+			</div>
+			<a style="position: absolute;top: 0;right: 10px;top: 10px;" class="mui-icon-extra mui-icon-extra-share mui-pull-right"></a>
+		</div>
+		<h4 style="text-align: center;margin: 20px;">查令十字街84号</h4>
+		<div style="margin: 0 auto;width: 50%;">
+			<img style="width: 110%;" src="../img/book/shu.jpg"/>
+		</div>
+		<img src="../img/book/loading.gif" style="width: 100%;"/>
+		<h4 style="color:gray" style="margin: 25px 0 10px 30px!important;">书籍简介</h4>		
+		<div style="margin: 0 auto;padding: 10px;margin-bottom: 100px;">
+			<p>《查令十字街84号》，作者：海莲.汉芙。这本书被誉为“爱书人的圣经”的书信集，记录了纽约女作家海莲和伦敦马克斯与科恩书店的书商
+			</p>
+			<p>
+			 	《查令十字街84号》，作者：海莲.汉芙。这本书被誉为“爱书人的圣经”的书信集，记录了纽约女作家海莲和伦敦马克斯与科恩书店的书商
+			
+			</p>			 
+		</div>
+		<h4 style="position: fixed;text-align: right;width: 100%;color: gray;top: 82%;height: 10%;right: 5px;background-color: white;"><span id="moreText">下滑展开<i style="color: gray;" class="mui-icon mui-icon-arrowdown"></i></span></h4>
+		<div class="mui-row"style="padding: 5px;position: fixed;top:90%;height: 10%;width: 100%;background-color: gray;">
+			<div class="mui-col-xs-4">
+				<img src="../img/book/talk.png"/>
+				<h5>交流</h5>
+			</div>
+			<div class="mui-col-xs-4">
+				<img src="../img/book/read.png"/>
+				<h5>在线阅读</h5>
+			</div>
+			<div class="mui-col-xs-4">
+				<img src="../img/book/buy.png"/>
+				<h5>购买</h5>
+			</div>
+		</div>
+	</body>
+	<script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		mui.init();
+		mui.plusReady(function(){
+			plus.webview.currentWebview().setStyle({scrollIndicator:'none'}); 
+		});
+		 
+		$('#moreText').on('tap',function(){	
+			$(this).parent().prev().removeClass('ownOver');
+			$(this).parent().prev().addClass('ownMargin');
+			$(this).parent().hide();
+		});
+		$(document).scroll(function(e){
+			if($(this).scrollTop()>10){
+				$('#moreText').parent().hide();
+			}else {$('#moreText').parent().show();}		
+		});
+	</script>	
+</html>

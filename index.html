@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+   	<title>E3-demo</title>
+   	<link rel="stylesheet" type="text/css" href="css/mui.min.css"/>
+   	<link rel="stylesheet" type="text/css" href="css/icons-extra.css"/>
+   	<link rel="stylesheet" type="text/css" href="css/own.css"/>
+   	<link rel="stylesheet" type="text/css" href="css/iconfont.css"/>
+   	<style type="text/css">
+		.mui-active .mui-icon,
+		.mui-active .mui-tab-label {
+			color: #41cea9;
+		}
+		.headIndex{
+			
+		}
+   	</style>
+</head>
+<body class="own-gray-color">
+	<header id="head1" class="headIndex mui-bar mui-bar-nav own-main-background-color headStyle">
+		<div class=""> 
+			<img class="logo" src="img/666.png"/>		
+			<h1 id="nav-title" class="mui-title" style="margin-left: 35px;">
+				<span style="font-size: 15px;" class="mui-icon mui-icon-location">玉兰清苑13号...
+					<span class="mui-icon mui-icon-arrowdown"></span>
+					<!--<a style="margin-left: 35px;" href="#"><span class="mui-icon mui-pull-right mui-icon-search"></span></a>-->
+				</span> 			
+			</h1>
+		</div>
+	</header>
+		<!--<div id="head2" style="margin: 20px;" class="headIndex own-header-hidden">
+			诗意远方
+			<span class="mui-icon-extra mui-icon-extra-share mui-pull-right"></span>
+		</div>-->
+		<div id="head3" style="margin: 20px;" class="headIndex own-header-hidden"> 
+			收藏
+		</div>
+	<!--<header id="head4" class="headIndex own-header-hidden mui-bar mui-bar-nav own-main-background-color headStyle">
+		<div>
+			<span class="mui-icon mui-icon-settings mui-pull-right"></span>
+		</div>
+	</header>-->
+
+	<nav class="mui-bar mui-bar-tab">
+		<a class="mui-tab-item mui-active" data-id='head1' href="barItem/home.html">
+			<span class="mui-icon mui-icon-home"></span>
+			<span class="mui-tab-label">首页</span>
+		</a>
+		<a class="mui-tab-item" data-id='head2' href="barItem/life.html">
+			<span class="mui-icon mui-icon-extra mui-icon-extra-holiday"></span>
+			<span class="mui-tab-label">生活</span>
+		</a>
+		<a class="mui-tab-item" data-id='head3' href="barItem/cart.html">
+			<span class="mui-icon mui-icon-extra mui-icon-extra-cart"></span>
+			<span class="mui-tab-label">购物车</span>
+		</a>
+		<a class="mui-tab-item" data-id='head4' href="barItem/mine.html">
+			<span class="mui-icon mui-icon-person"></span>
+			<span class="mui-tab-label">我的</span>
+		</a>
+	</nav>
+	
+	<script src="js/mui.min.js" charset="UTF-8"></script>
+	<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+	<!--<script src="http://api.map.baidu.com/api?v=2.0&amp;ak=HR3RRyTsXYdQ3QzzG5yUkg0q" type="text/javascript" charset="utf-8"></script>
+	<script src="http://developer.baidu.com/map/jsdemo/demo/convertor.js" type="text/javascript" charset="utf-8"></script>-->
+	<script src="js/location.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" charset="UTF-8">
+		mui.init({
+			swipeBack:false
+		});
+		
+		var navTitle;
+		var mainWebview;
+		var curBarItemWebview;
+		
+		var barItemWebviewArray = [];
+		var barItemArray = ['barItem/home.html','barItem/life.html','barItem/cart.html','barItem/mine.html'];
+		mui.plusReady(function(){
+			plus.geolocation.getCurrentPosition(displayLocation,displayError,option);
+			//获取当前title和当前webview
+//			navTitle = document.querySelector('.headIndex');
+			navTitle = $('.headIndex');
+			mainWebview = plus.webview.currentWebview();
+			
+			plus.navigator.setStatusBarBackground( "#41cea9" );
+			
+			//设置只支持竖屏幕显示
+			plus.screen.lockOrientation("portrait-primary");
+			//初始化与index有关的页面
+			initIndexView();
+			
+			//检测是否需要显示导航页面todo
+			
+			//判断是否已经登陆,若没有登陆将预加载登陆页面
+			judgelogin();
+			
+			//预加载父子模版
+			initTemplate();
+		});
+		
+		
+		//初始化
+		function initIndexView(){
+			//初始化所有bar页面
+			inittabitemWebviews();
+			//添加bar点击事件接受
+			tapBaritem();		
+			mui.later(function(){
+				if(plus.webview.getWebviewById('barItem/home.html')){
+					mui.fire(plus.webview.getWebviewById('barItem/home.html'),'scrollRefush');
+				}
+			},2000);
+		}
+		
+		
+		//初始化所有bar页面
+		function inittabitemWebviews(){
+			for (var i = 0; i < barItemArray.length; i++) {
+				if(i==1||i==3){
+					barItemWebviewArray[i] = mui.preload({
+					id:barItemArray[i],
+					url:barItemArray[i],
+					styles:{
+						top:'0px',
+						bottom: '50px',
+						left: '0px',
+						bounce: 'vertical',
+						bounceBackground: '#f8f8f8'
+						},
+						waiting:{
+							autoShow:false
+						}
+					});
+				}else{
+					barItemWebviewArray[i] = mui.preload({
+						id:barItemArray[i],
+						url:barItemArray[i],
+						styles:{
+							top:'44px',
+							bottom: '50px',
+							left: '0px',
+							bounce: 'vertical',
+							bounceBackground: '#f8f8f8'
+						},
+						waiting:{
+							autoShow:false
+						}
+					});
+				}
+				barItemWebviewArray[i].hide();
+				mainWebview.append(barItemWebviewArray[i]);
+			}
+			barItemWebviewArray[0].show();
+			curBarItemWebview = barItemWebviewArray[0];
+		}
+		
+		
+		//添加点击事件
+		function tapBaritem(){
+			mui('.mui-bar-tab').on('tap','.mui-tab-item',function(){
+				var baritem = this;
+				var baritemurl = baritem.getAttribute('href'); 
+				var headIndex = baritem.dataset.id;				
+//				indexof()如果为false返回－1所以前面加上~
+				if (!~curBarItemWebview.getURL().indexOf(baritemurl)) {
+					for (var i = 0; i < barItemArray.length; i++) {
+						if (barItemArray[i] == baritemurl) {
+							//更改头部名字
+//							navTitle.innerText = baritem.children[baritem.children.length-1].innerText;
+							navTitle.addClass('own-header-hidden');
+							$('#'+headIndex).removeClass('own-header-hidden');
+							//切换baritemwebview
+							curBarItemWebview.hide(); 
+							mui.later(function(){barItemWebviewArray[i].show();},100);
+							if(baritemurl=='barItem/life.html'){
+//								if(plus.webview.getWebviewById('movie.html'))
+//								plus.webview.getWebviewById('movie.html').hide();
+////								plus.webview.getWebviewById('shopList.html').evalJS("mui('#pullrefresh').pullRefresh().scrollTo(0,100,0)");
+//								mui.fire(plus.webview.getWebviewById('shopList.html'),'scrollRefush');
+								var clientHeight=document.documentElement.clientHeight;
+								var flag = (clientHeight-50)/3 +'px';
+								plus.webview.getWebviewById('barItem/life.html').evalJS("$('.list-1-1').css('height','"+flag+"');");
+							}
+							curBarItemWebview = barItemWebviewArray[i];
+							break;
+						}
+					}
+				}
+			});
+		}
+		
+		
+		//预加载template
+		function initTemplate(){
+			var webview =  mui.preload({
+				id:'template',
+				url:'template.html',
+				styles:{
+					top: '-1000px',
+				}
+			});
+			webview.show();
+		};
+		
+		function judgelogin() {
+			//测试语句
+			localStorage.removeItem('user');
+			//判断是否已经登录成功//localstorage在页面关闭的时候也同样存在，sessionstorage页面关闭数据不存在
+			if (!localStorage.getItem('user')) {
+				mui.preload({
+					url:'mine/login.html',
+					id:'mine/login.html',
+					styles:{
+						top:'0px',
+						bottom:'0px'
+					}
+				});
+			}
+		}
+		
+		
+	</script>
+</body>
+</html>
