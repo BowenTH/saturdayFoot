@@ -16,13 +16,13 @@
 				height: 40px;
 				margin: 20px 10px 0 10px;				
 			}
-			.iconfont{color: white;}s
+			.iconfont{color: white;}
 			.smallFont{
 				color: white;
-				font-size: 30px;
+				font-size: 20px;
 			}
 			.bigFont{
-				font-size: 40px;
+				font-size: 30px;
 			}
 			#ownCircle{
 				height: 250px;width: 250px;
@@ -31,8 +31,8 @@
 				border-radius: 50% 50% 50% 50%;
 			}
 			#ownCircle img{
-				-webkit-animation:play 3s linear infinite;
-				-moz-animation:play 3s linear infinite;
+				-webkit-animation:play 10s linear infinite;
+				-moz-animation:play 10s linear infinite;
 				animation:play 10s linear infinite;
 				
 				margin: 0 auto;
@@ -76,6 +76,16 @@
      		   -webkit-transform:rotate(360deg);
      		   }       		   
      		}
+     		.pauseImg{
+     			animation-play-state: paused!important;
+     			-webkit-animation-play-state: paused!important;
+   				-moz-animation-play-state: paused!important;
+     		}
+     		.playImg{
+     			animation-play-state: running!important;
+     			-webkit-animation-play-state: running!important;
+   				-moz-animation-play-state: running!important;
+     		}
 			.icon-jindutiao{				
 				font-size: 15px;
 			}
@@ -110,8 +120,7 @@
 				border-radius: 50%;
 				position: absolute;
 				top: -10px;
-				left: 0px;
-				
+				left: 0px;				
 			}
 		</style>
 	</head>
@@ -126,30 +135,31 @@
 			</div>
 			<i class="mui-icon-extra mui-icon-extra-share smallFont" style="margin: 5px 10px 0 0;float: right;color: white;"></i>
 		</div>
+		<div id=""> 
+			sss 
+			<audio style="background-color: transparent;" controls="controls" src="http://oi7xjum3c.bkt.clouddn.com/1.mp3">不支持</audio>
+		</div>
 		<div style="border-top: 1px solid gray;height: 1px;"></div>
 		<div id="ownCircle">
-			<img src="../img/music/900.jpg"/>
-			<!--<i style="position: absolute;right: 10%;" class="icon iconfont icon-zifuwuicon- smallFont"></i>-->
+			<img class="pauseImg" src="../img/music/900.jpg"/>
 		</div>
-		<!--<div class="mui-row"style="position: absolute;top: 73%;width: 100%;">-->
 		<div  style="width: 33%;float: left;height: 30px;" >
-				<span class="icon iconfont icon-dianzan smallFont "style="float: left;margin-left: 50%;" >
-				</span>
-				<div style="margin-top: -5%;float: left;">
-					<span style="font-size: 12px;">+99</span>
-				</div>
-			</div> 
-
-			<div style="width:33%;float: left;height: 30px;margin-left: -5px;" >
-				<span  class="icon iconfont icon-caibishi smallFont" style="float: left;margin-left: 50%;" ></span>	
+			<span class="icon iconfont icon-dianzan smallFont "style="float: left;margin-left: 50%;" >
+			</span>
 			<div style="margin-top: -5%;float: left;">
-					<span style="font-size: 12px;">99+</span>
-				</div>
+				<span style="font-size: 12px;">+99</span>
 			</div>
-			<div style="width: 33%;float: left;">
-				<i class="icon iconfont icon-zifuwuicon- smallFont"></i>
+		</div> 
+
+		<div style="width:33%;float: left;height: 30px;margin-left: -5px;" >
+			<span  class="icon iconfont icon-caibishi smallFont" style="float: left;margin-left: 50%;" ></span>	
+		<div style="margin-top: -5%;float: left;">
+				<span style="font-size: 12px;">99+</span>
 			</div>
-		<!--</div>-->		 
+		</div>
+		<div style="width: 33%;float: left;">
+			<i class="icon iconfont icon-zifuwuicon- smallFont"></i>
+		</div>
 		<div id="progressbarDiv" style="height: 20px;margin: 0 20px 0 20px;position: absolute;top: 80%;width: 90%;">
 			<span style="margin-right: 5%;">00:00</span>
 			<div id="progressbar">
@@ -159,7 +169,7 @@
 		</div>
 		<div class="mui-row"style="position: absolute;top: 90%;width: 100%;">
 			<div  style="width: 33%;float: left;" >
-				<i class="icon iconfont icon-shoucang1 bigFont" style="font-size: 150%;"></i>
+				<i class="icon iconfont icon-shoucang1 bigFont" style="font-size: 150%;color: red;"></i>
 			</div>
 			<div style="width: 33%;float: left;" >
 				<i  class="icon iconfont icon-bofang3-copy bigFont" style="font-size: 30px;"></i>	
@@ -173,7 +183,6 @@
 		<script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
-		<!--<script src="../js/immersed.js" type="text/javascript" charset="utf-8"></script>-->
 	</body>
 	<script type="text/javascript">
 	mui.init();
@@ -190,23 +199,24 @@
 	document.addEventListener( "plusready", onPlusReady, false );
 	// 扩展API加载完毕，现在可以正常调用扩展API 
 	function onPlusReady() { 
-	}
-	
+	}	
 	var p = null; 
 	var d=null;	
 	var flagTimer = null;
 	var plusPre = 0;
-	function startPlay() {		
+	function startPlay() {	
 		if(p){
+			mui.toast('go play');
+			$('#ownCircle img').removeClass('pauseImg');
+			$('#ownCircle img').addClass('playImg');
 			$(this).addClass('ownHidden');
 			$(this).siblings('i').removeClass('ownHidden');	
 			
 			p.resume( function () {
-				flagProgressbar=0;
-				mui(progressbar1).progressbar().setProgress(flagProgressbar);
+				mui(progressbar1).progressbar().setProgress(0);
 				clearInterval(flagTimer);
 				}, function ( e ) {
-					alert( "Audio play error: " + e.message ); 
+					alert( "Audio play error:2- " + e.message ); 
 			});			
 			flagTimer = setInterval(function(){
 				flagProgressbar+=plusPre;
@@ -222,35 +232,43 @@
 		if ( plus.audio == undefined ) {
 			alert( "Device not ready!" );
 		}
-//		p = plus.audio.createPlayer( "_doc/2.mp3");	 
-		p = plus.audio.createPlayer( "http://oi7xjum3c.bkt.clouddn.com/1.mp3");	
-		
-		p.play( function () {
+//		p = plus.audio.createPlayer( "_doc/2.mp3");	  
+		p = plus.audio.createPlayer( "http://oi7xjum3c.bkt.clouddn.com/1.mp3");
+		$('#ownCircle img').removeClass('pauseImg');
+		$('#ownCircle img').addClass('playImg');
+		p.play( function () {			
 			flagProgressbar=0;			
 			mui(progressbar1).progressbar().setProgress(0);
 		}, function ( e ) {
-			alert( "Audio play error: " + e.message ); 
+			alert( "Audio play error: 1-" + e.message ); 
+			console.log(JSON.stringify(e));
 		} );
+		
 		//延时设置进度条每秒前进的数值
 		mui.later(function(){
-			plusPre=parseFloat(100/p.getDuration());			
-		},1000);
-		flagTimer = setInterval(function(){			
-			flagProgressbar+=plusPre;
-			$('#progressbar').prev('span').text(ownTimetoStr(p.getPosition()));
-			$('#progressbar').next('span').text(ownTimetoStr(p.getDuration()));
-			mui(progressbar1).progressbar().setProgress(flagProgressbar);			
-			console.log("当前长度:"+ownTimetoStr(p.getDuration())+':'+ownTimetoStr(p.getPosition())); 
-		},1000);		
+			plusPre=parseFloat(100/p.getDuration()); 
+			flagTimer = setInterval(function(){			
+				flagProgressbar+=plusPre;
+				$('#progressbar').prev('span').text(ownTimetoStr(p.getPosition()));
+				$('#progressbar').next('span').text(ownTimetoStr(p.getDuration()));
+				mui(progressbar1).progressbar().setProgress(flagProgressbar);			
+				console.log("当前长度:"+ownTimetoStr(p.getDuration())+':'+ownTimetoStr(p.getPosition())); 
+			},1000);
+		},5000);				
 	}
-	function pausePlay() {		
+	function pausePlay() { 
+		mui.toast('stop');
+		$('#ownCircle img').addClass('pauseImg');
+		$('#ownCircle img').removeClass('playImg');
 		clearInterval(flagTimer);
 		$(this).addClass('ownHidden');
-		$(this).siblings('i').removeClass('ownHidden'); 		
+		$(this).siblings('i').removeClass('ownHidden');
 		p.pause(function () {
 		}, function ( e ) {
 			alert( "Audio play error: " + e.message ); 
 		} );
 	}
+	
+	
 	</script>
 </html>

@@ -95,13 +95,21 @@
 			"Home/product-detail-needtem.html"
 		],
 		"resources": [
-			"js/own.js"
+			"js/own.js",
+			"css/own.css",
+			"js/mui.min.js",
+			"css/iconfont.css",
+			"css/mui.min.css"
 		]
 	},
 	"barItem/cart.html": {
 		"resources": [
 			"img/50.jpg",
-			"js/own.js"
+			"js/own.js",
+			"css/own.css",
+			"js/mui.min.js",
+			"css/iconfont.css",
+			"css/mui.min.css"
 		]
 	},
 	"mine/change-address-needtem.html": {
@@ -276,7 +284,8 @@
 			"png/5.jpg",
 			"png/6.jpg",
 			"png/1.jpg",
-			"png/5.png"
+			"png/5.png",
+			"css/mui.min.css"
 		],
 		"refer": [
 			"life/book.html",
@@ -396,6 +405,11 @@
 			"img/book/shu.jpg",
 			"js/av.js",
 			"js/jquery.js"
+		]
+	},
+	"template-main-second.html": {
+		"resources": [
+			"fonts/mui.ttf"
 		]
 	}
 }
