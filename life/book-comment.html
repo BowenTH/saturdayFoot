@@ -6,6 +6,8 @@
 		<link rel="stylesheet" type="text/css" href="../css/mui.min.css"/>
 		<link rel="stylesheet" type="text/css" href="../css/iconfont.css"/>
 		<style type="text/css">
+		.mui-backdrop{
+		}
 		header,.mui-title{
 			background: black!important;
 			color: white!important;
@@ -57,6 +59,13 @@
 			margin-bottom: 5%;
 			font-size: 15px;
 		}
+		#popover li{
+			text-align: center;
+			color: #41cea9;
+		}
+		#popComment button{
+			width: 45%!important;
+		}
 		</style>
 		<template id='commenter' style="background: white;">
 			<li  class="mui-table-view-cell pj-li" style="padding: 0;" data-id = "00">
@@ -69,8 +78,49 @@
 				</div>
 			</li>
 		</template>
+		<template id='recommenter'>
+			<li  class="mui-table-view-cell hf-li" style="padding: 0;background: white;" data-id = "00">
+				<img src="../img/book/shu.jpg"/>
+				<h5><span class="username">金正恩导师</span></h5>
+				<h6 class="time">2017年3月19日 13:19:53</h6>
+				<br />
+				<div class="comment-text">
+					评论多少和歌好不好听有关？你们真是。。是不是傻，是不是傻！！！
+				</div>
+			</li>
+		</template>
 	</head>
 	<body>
+		<div id="popover" class="mui-popover" style="width: 70%;margin-left: 15%;top: 40%;">
+			<div class="mui-content-padded">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell" data-id = "00">回复</li>
+					<li class="mui-table-view-cell">举报</li>
+				</ul>
+			</div>
+		</div>
+		<div id="popComment" class="mui-popover" style="width: 80%;margin-left: 10%;top: 35%;padding: 20px!important;">
+			<div class="mui-content-padded">
+				<h5 style="text-align: center;margin-bottom: 20px;"><i class="mui-icon mui-icon-compose"></i> 回复</h5>
+				<textarea name="" rows="3" cols="20"></textarea>
+				<div id="edit_div" class="mui-row">
+					<button type="button" class="mui-btn mui-btn-red mui-left">
+						<i class="mui-icon mui-icon-refreshempty"></i>清空</button>
+					<button type="button" class="mui-btn mui-btn-blue mui-pull-right">
+						<i class="mui-icon mui-icon-checkmarkempty"></i>回复
+					</button>
+				</div>
+			</div>
+		</div>
+		<div id="alertComment" class="mui-popover mui-popover-action mui-popover-bottom">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<a href="#" style="color: #FF3B30;">恶意辱骂</a>
+					<a href="#" style="color: #FF3B30;">灌水、广告</a>
+					<a href="#" style="color: #FF3B30;">黄色信息</a>
+				</li>
+			</ul>
+		</div>
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		    <h1 class="mui-title">评论 <span>(1609)</span></h1>
@@ -79,13 +129,14 @@
 			<img style="width: 15%; float: left;" src="../img/book/shu.jpg"/>
 			<h4 style="width: 50%;float: left;margin-top: 30px;margin-left: 10px;">查令十字街84号</h4>
 		</div>
+		
 		<div class="comment-title">
 			<h5 style="font-size: 20px;">精彩评论</h5>
 		</div>
 		<div class="thin-line"></div>
 				
-		<div id="comment">
-			<ul style="padding: 0;margin: 0 0 50px 0;">
+		<div id="comment"> 
+			<ul class="" style="padding: 0;margin: 0 0 50px 0;">
 				<li  class="mui-table-view-cell pj-li" style="padding: 0;" data-id = "00">
 					<img src="../img/book/shu.jpg"/>
 					<h5><span class="username">原理少年</span> <span style="float: right;">1996+</span></h5>
@@ -109,79 +160,144 @@
 		mui.init();
 		var currentUser = AV.User.current();
 		var commenterX={};
+		var mask = null;
+		
 		mui.ready(function(){
 			commentInit();
-			$('#comment-button').on('tap',function(){
+			
+			$('#comment-button').on('tap',function(){ 
 				var commentInfo = $(this).siblings('input').val();
 				$(this).siblings('input').val('');
-				var commentData ={};
-				commentData.commenter = currentUser;
-				commentData.time = Date();
-				commentData.info = commentInfo;
+				var commentDataLi ={};
+				commentDataLi.commenter = currentUser;
+				commentDataLi.time = myDate(new Date());
+				commentDataLi.info = commentInfo;
 				
-				addCommentLi(commentData);
-				console.log(commentInfo);
-			})			
+				addCommentLi(commentDataLi);
+			});
+			$('#comment ul').on('tap','li',function(){
+				$('#popover ul li').eq(0).data('id',$(this).data('id'));
+				$('#popover ul li').eq(1).data('id',$(this).data('id'));				
+				$('#popComment textarea').data('id',$(this).data('id'));
+				mui("#popover").popover("toggle");
+			});
+			/************处理回复*************/
+			$('#popover ul li').eq(0).on('tap',function(){
+				mui("#popover").popover("toggle");
+				mui('#popComment').popover('toggle');				
+			});
+			/************处理举报*************/
+			$('#popover ul li').eq(1).on('tap',function(){
+				mui("#popover").popover("toggle");
+				mui('#alertComment').popover('toggle');
+			});
+			$('#popComment button').eq(0).on('tap',function(){
+				$(this).parent().siblings('textarea').val('');
+			})
+			$('#popComment button').eq(1).on('tap',function(){
+				var id = $(this).parent().siblings('textarea').data('id');
+				var info = $(this).parent().siblings('textarea').val();
+				goRecomment(id,info);
+				mui('#popComment').popover('toggle');
+			})
 		});
+		function myDate(day){
+			var dateFlag = day.getFullYear()+'-'+(day.getMonth()+1)+'-'+day.getDate()
+			+" "+day.getHours()+":"+day.getMinutes()+":"+day.getSeconds(); 
+			return dateFlag;
+		}
+		/*********************获取评论表里的所有信息**********************/
 		function commentInit(){
 			var queryCommenter = new AV.Query('Comment');
 			queryCommenter.equalTo();
 			queryCommenter.include(['commenter']);
 			queryCommenter.find().then(function(resp){ 
-//				alert(resp.length);
 				for (var i=0;i<resp.length;i++) {
-					var eachComment={};
-					eachComment.commenter = resp[i].get('commenter');
-					var user = resp[i].get('commenter');
-					eachComment.commenter = user;
-//					alert('评论者:'+JSON.stringify(eachComment.commenter));
-					eachComment.time = resp[i].get('commentTime');
-					eachComment.info = resp[i].get('info');
-					setTimeout(commentLiInit(eachComment),1000);
+					commentLiInit(resp[i]);
 				}
 			},
 			function(error){
-				alert(JSON.stringify(error)+'4');
+				if(error.code=='101')
+				{
+					queryCommenter.save().then(function(){
+						alert('评论表创建成功');
+					},function(err){alert(JSON.stringify(err))});
+				}else{
+					alert(JSON.stringify(error)+'4');
+				}				
 			})
 		}
+		/*************************页面展示所有评论表信息***************************/
 		function commentLiInit(eachComment){
 			mui.later(function(){
 				var commentUl= document.body.querySelector('#comment ul');
-				var cloneLi = commenter.content.cloneNode(true); 		
-				commentUl.appendChild(cloneLi);
-				console.log(JSON.stringify(eachComment.info)); 
-				$('#comment ul li .username').last().text(eachComment.commenter.get('username'));
-				$('#comment ul li .time').last().text(eachComment.time);
-				$('#comment ul li .comment-text').last().text(eachComment.info); 
+				var cloneLi = commenter.content.cloneNode(true);  		
+				commentUl.appendChild(cloneLi);  
+				/*******************每个li添加data-id**********************/ 
+				$('#comment ul li').last().data('id',eachComment.get('commentId'));
+				$('#comment ul li .username').last().text(eachComment.get('commenter').get('username'));
+				$('#comment ul li .time').last().text(eachComment.get('commentTime')); 
+				$('#comment ul li .comment-text').last().text(eachComment.get('info'));
+				if(eachComment.get('recomment').length<1){
+					return false;
+				}				
+//				recommendLiInit(eachComment.recomment);
+				setTimeout(recommendLiInit(eachComment),100);
 			},200);
 		} 
-		function addCommentLi(commentData){
+		/***************网页里添加回复*****************/
+		function recommendLiInit(eachComment){		
+			var recommentArray = eachComment.recomment;
+			var recommentUL= $('#comment ul').find('li').last();
+			
+//			var comment =  AV.Object.createWithoutData('Comment',eachComment.commentId);
+			var recommentQuery = new AV.Query('Recomment');
+			recommentQuery.include(['recommenter']);
+			recommentQuery.equalTo('comment',eachComment);
+			recommentQuery.find().then(function(recomments){			
+				recomments.forEach(function(recomment, i, a){
+					var cloneLi = recommenter.content.cloneNode(true);  		
+					recommentUL.append(cloneLi);  
+//					setTimeout(function(){
+						$('#comment ul li .username').last().text(recomments[i].get('recommenter').get('username'));
+						$('#comment ul li .time').last().text(recomments[i].get('recommentTime')); 
+						$('#comment ul li .comment-text').last().text(recomments[i].get('recommentInfo'));
+//					},100);
+				});
+			},function(error){});			
+		}
+		function addCommentLi(commentDataLi){
 			currentUser = AV.User.current();
-			if(typeof(currentUser.get('username'))=='undefined' || commentData.commentInfo==''){ 
-				alert('评论为空，或是账号异常');
-				return false;
+			if(typeof(currentUser.get('username'))=='undefined'){ 
+				mui.toast('登录后才能评论哟');
+				return false; 
+			}else if(commentDataLi.info==''){
+				mui.toast('小主，说点什么吧');
+				return false; 
 			}
 			var commentUl= document.body.querySelector('#comment ul');
 			var cloneLi = commenter.content.cloneNode(true); 		
 			commentUl.appendChild(cloneLi);
-						
 			$('#comment ul li .username').last().text(currentUser.get('username'));
-			$('#comment ul li .time').last().text(Date());	
-			$('#comment ul li .comment-text').last().text(commentData.info);
-			commentTable(commentData); 
+			$('#comment ul li .time').last().text(commentDataLi.time);	
+			$('#comment ul li .comment-text').last().text(commentDataLi.info);
+			commentTable(commentDataLi); 
 		} 
 		/********添加评论到后台***********/
 		function commentTable(commentData){
 			var queryCommenter = new AV.Query('Comment');
-				queryCommenter.equalTo('username',commentData.commenter.get('username')); 
-				var commentTable = new AV.Object('Comment');
+			queryCommenter.equalTo('username',commentData.commenter.get('username')); 
+			var commentTable = new AV.Object('Comment');
+			var recommentArray = [];
 			queryCommenter.find().then(function(resp){				
 				commentTable.set('commenter',commentData.commenter);
 				commentTable.set('info',commentData.info);
 				commentTable.set('commentTime',commentData.time);
-				commentTable.save().then(
+				commentTable.set('recomment',recommentArray);
+				commentTable.save().then( 
 					function(resp){
-							alert('评论成功');
+							alert('评论成功:'+commentTable.get('objectId'));
+							$('#comment ul li').data('id',commentTable.get('objectId'));
 					},function(error){
 						alert(JSON.stringify(error)+'1');
 					});
@@ -191,7 +307,8 @@
 				{
 					commentTable.set('commenter',commentData.commenter);
 					commentTable.set('info',commentData.info);
-					commentTable.set('commentTime',commentData.time);
+					commentTable.set('commentTime',commentData.time);					
+					commentTable.set('recomment',recommentArray);
 					commentTable.save().then(
 						function(){
 								alert('首次评论成功');
@@ -200,6 +317,60 @@
 					});
 				}
 			});
+		}
+		/************************查找评论，创建回复*******************************/
+		function goRecomment(commendId ,recommendInfo){
+			var recommendTable = new AV.Object('Recomment');
+			var todo = AV.Object.createWithoutData('Comment',commendId);
+			var queryCommenter = new AV.Query('Comment');
+			queryCommenter.equalTo('objectId',commendId);
+			console.log('commendId:'+commendId);
+			queryCommenter.find().then(function(resp){
+				currentUser = AV.User.current();
+				console.log('查到该评论');
+//				console.log(JSON.stringify(resp[0]));
+				if(typeof(currentUser.get('username'))=='undefined' || recommendInfo==''){ 
+					alert('回复为空，或是账号异常');
+					return false;
+				}		
+				//创建回复对象
+				recommendTable.set('recommenter',currentUser);
+				recommendTable.set('comment',resp[0]);
+				recommendTable.set('recommentTime',myDate(new Date()));
+				recommendTable.set('recommentInfo',recommendInfo);
+				recommendTable.save().then(
+					function(){ 
+//						console.log(JSON.stringify(resp[0]));
+						var recommentFlag=resp[0].get('recomment');
+//						recommentFlag.push(recommendTable.get('objectId'));
+						recommentFlag.push(recommendTable);
+//						console.log(JSON.stringify(recommentFlag[0]));
+						todo.set('recomment',recommentFlag);
+						todo.save().then(function(){ 
+							alert('回复关联评论成功');
+							},function(error){
+								alert(JSON.stringify(error)+'7');
+						});
+						alert('回复成功');
+					},function(error){
+						alert(JSON.stringify(error)+'recommended');
+				});
+			},function(error){
+				alert(JSON.stringify(error)+'recommend');
+				if(error.code=='101')
+				{
+//					recommendTable.set('comment','');
+					recommendTable.set('recommenter','');
+					recommendTable.set('recommentInfo','');
+					recommendTable.save().then(
+						function(){
+								alert('回复表创建成功');
+						},function(error){
+							alert(JSON.stringify(error)+'5');
+					});
+				}
+			});
+			
 		}
 	</script>
 </html>
