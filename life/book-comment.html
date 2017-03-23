@@ -59,13 +59,24 @@
 			margin-bottom: 5%;
 			font-size: 15px;
 		}
+		#popover{
+			position: fixed;
+			width: 70%;
+			margin-left: 15%;top: 40%;
+		}
 		#popover li{
 			text-align: center;
 			color: #41cea9;
 		}
+		#popComment {
+			position: fixed;
+			width: 80%;
+			margin-left: 10%;top: 35%;padding: 20px!important;
+		}
 		#popComment button{
 			width: 45%!important;
 		}
+		
 		</style>
 		<template id='commenter' style="background: white;">
 			<li  class="mui-table-view-cell pj-li" style="padding: 0;" data-id = "00">
@@ -91,7 +102,7 @@
 		</template>
 	</head>
 	<body>
-		<div id="popover" class="mui-popover" style="width: 70%;margin-left: 15%;top: 40%;">
+		<div id="popover" class="mui-popover">
 			<div class="mui-content-padded">
 				<ul class="mui-table-view">
 					<li class="mui-table-view-cell" data-id = "00">回复</li>
@@ -99,7 +110,7 @@
 				</ul>
 			</div>
 		</div>
-		<div id="popComment" class="mui-popover" style="width: 80%;margin-left: 10%;top: 35%;padding: 20px!important;">
+		<div id="popComment" class="mui-popover">
 			<div class="mui-content-padded">
 				<h5 style="text-align: center;margin-bottom: 20px;"><i class="mui-icon mui-icon-compose"></i> 回复</h5>
 				<textarea name="" rows="3" cols="20"></textarea>
@@ -137,15 +148,7 @@
 				
 		<div id="comment"> 
 			<ul class="" style="padding: 0;margin: 0 0 50px 0;">
-				<li  class="mui-table-view-cell pj-li" style="padding: 0;" data-id = "00">
-					<img src="../img/book/shu.jpg"/>
-					<h5><span class="username">原理少年</span> <span style="float: right;">1996+</span></h5>
-					<h6>2017年3月19日 13:19:53</h6>
-					<br />
-					<div class="comment-text">
-						评论多少和歌好不好听有关？你们真是。。是不是傻，是不是傻！！！
-					</div>
-				</li>
+				
 			</ul>
 		</div>
 		<div class="mui-input-row" style="position: fixed;bottom: 0; background: white;width: 100%;">
@@ -176,6 +179,7 @@
 				addCommentLi(commentDataLi);
 			});
 			$('#comment ul').on('tap','li',function(){
+				console.log("data-id:"+$(this).data('id'));
 				$('#popover ul li').eq(0).data('id',$(this).data('id'));
 				$('#popover ul li').eq(1).data('id',$(this).data('id'));				
 				$('#popComment textarea').data('id',$(this).data('id'));
@@ -220,10 +224,10 @@
 				if(error.code=='101')
 				{
 					queryCommenter.save().then(function(){
-						alert('评论表创建成功');
-					},function(err){alert(JSON.stringify(err))});
+						mui.toast('评论表创建成功');
+					},function(err){mui.toast(JSON.stringify(err))});
 				}else{
-					alert(JSON.stringify(error)+'4');
+					mui.toast(JSON.stringify(error)+'4');
 				}				
 			})
 		}
@@ -231,13 +235,13 @@
 		function commentLiInit(eachComment){
 			mui.later(function(){
 				var commentUl= document.body.querySelector('#comment ul');
-				var cloneLi = commenter.content.cloneNode(true);  		
+				/*******************每个li添加data-id**********************/
+				commenter.content.querySelector('li').setAttribute('data-id',eachComment.get('objectId'));
+				commenter.content.querySelector('.username').innerText = eachComment.get('commenter').get('username');
+				commenter.content.querySelector('.time').innerText = eachComment.get('commentTime');
+				commenter.content.querySelector('.comment-text').innerText = eachComment.get('info');
+				var cloneLi = commenter.content.cloneNode(true);   		
 				commentUl.appendChild(cloneLi);  
-				/*******************每个li添加data-id**********************/ 
-				$('#comment ul li').last().data('id',eachComment.get('commentId'));
-				$('#comment ul li .username').last().text(eachComment.get('commenter').get('username'));
-				$('#comment ul li .time').last().text(eachComment.get('commentTime')); 
-				$('#comment ul li .comment-text').last().text(eachComment.get('info'));
 				if(eachComment.get('recomment').length<1){
 					return false;
 				}				
@@ -254,15 +258,16 @@
 			var recommentQuery = new AV.Query('Recomment');
 			recommentQuery.include(['recommenter']);
 			recommentQuery.equalTo('comment',eachComment);
-			recommentQuery.find().then(function(recomments){			
+			recommentQuery.find().then(function(recomments){	
+				var recommenterLi = document.querySelector('#recommenter');	
+				$(recommenterLi).children('.comment-text').text(recomments[0].get('recommentInfo'));
 				recomments.forEach(function(recomment, i, a){
-					var cloneLi = recommenter.content.cloneNode(true);  		
-					recommentUL.append(cloneLi);  
-//					setTimeout(function(){
-						$('#comment ul li .username').last().text(recomments[i].get('recommenter').get('username'));
-						$('#comment ul li .time').last().text(recomments[i].get('recommentTime')); 
-						$('#comment ul li .comment-text').last().text(recomments[i].get('recommentInfo'));
-//					},100);
+					recommenterLi.content.querySelector('.username').innerText = recomment.get('recommenter').get('username');
+					recommenterLi.content.querySelector('.time').innerText = recomment.get('recommentTime');
+					recommenterLi.content.querySelector('.comment-text').innerText = recomment.get('recommentInfo');
+					
+					var cloneLi = recommenterLi.content.cloneNode(true);
+					recommentUL.append(cloneLi); 
 				});
 			},function(error){});			
 		}
@@ -276,11 +281,16 @@
 				return false; 
 			}
 			var commentUl= document.body.querySelector('#comment ul');
-			var cloneLi = commenter.content.cloneNode(true); 		
-			commentUl.appendChild(cloneLi);
-			$('#comment ul li .username').last().text(currentUser.get('username'));
-			$('#comment ul li .time').last().text(commentDataLi.time);	
-			$('#comment ul li .comment-text').last().text(commentDataLi.info);
+			var cloneLi = commenter.content.cloneNode(true);
+
+//			commenter.content.querySelector('.username').innerText = currentUser.get('username');
+//			commenter.content.querySelector('.time').innerText = commentDataLi.time;
+//			commenter.content.querySelector('.comment-text').innerText = commentDataLi.info;
+//			commentUl.appendChild(cloneLi);
+			
+//			$('#comment ul li .username').last().text(currentUser.get('username'));
+//			$('#comment ul li .time').last().text(commentDataLi.time);	
+//			$('#comment ul li .comment-text').last().text(commentDataLi.info);
 			commentTable(commentDataLi); 
 		} 
 		/********添加评论到后台***********/
@@ -296,13 +306,15 @@
 				commentTable.set('recomment',recommentArray);
 				commentTable.save().then( 
 					function(resp){
-							alert('评论成功:'+commentTable.get('objectId'));
+							mui.toast('评论成功:'+commentTable.get('objectId'));
 							$('#comment ul li').data('id',commentTable.get('objectId'));
+							window.location.reload();
+//							$('#comment').load(location.href+'#comment');
 					},function(error){
-						alert(JSON.stringify(error)+'1');
+						mui.toast(JSON.stringify(error)+'1');
 					});
 				},function(error){
-					alert(JSON.stringify(error)+'2');
+					mui.toast(JSON.stringify(error)+'2');
 				if(error.code=='101')
 				{
 					commentTable.set('commenter',commentData.commenter);
@@ -311,9 +323,9 @@
 					commentTable.set('recomment',recommentArray);
 					commentTable.save().then(
 						function(){
-								alert('首次评论成功');
+								mui.toast('首次评论成功');
 						},function(error){
-							alert(JSON.stringify(error)+'3');
+							mui.toast(JSON.stringify(error)+'3');
 					});
 				}
 			});
@@ -326,11 +338,13 @@
 			queryCommenter.equalTo('objectId',commendId);
 			console.log('commendId:'+commendId);
 			queryCommenter.find().then(function(resp){
-				currentUser = AV.User.current();
-				console.log('查到该评论');
-//				console.log(JSON.stringify(resp[0]));
+				currentUser = AV.User.current(); 
+				if(resp.length<1){
+					console.log('查找成功，但无该评论');
+				}
+				console.log(JSON.stringify(currentUser));
 				if(typeof(currentUser.get('username'))=='undefined' || recommendInfo==''){ 
-					alert('回复为空，或是账号异常');
+					mui.toast('回复为空，或是账号异常');
 					return false;
 				}		
 				//创建回复对象
@@ -347,16 +361,17 @@
 //						console.log(JSON.stringify(recommentFlag[0]));
 						todo.set('recomment',recommentFlag);
 						todo.save().then(function(){ 
-							alert('回复关联评论成功');
+							mui.toast('回复关联评论成功');
+							window.location.reload();
 							},function(error){
-								alert(JSON.stringify(error)+'7');
+								mui.toast(JSON.stringify(error)+'7');
 						});
-						alert('回复成功');
+						mui.toast('回复成功');
 					},function(error){
-						alert(JSON.stringify(error)+'recommended');
+						mui.toast(JSON.stringify(error)+'recommended');
 				});
 			},function(error){
-				alert(JSON.stringify(error)+'recommend');
+				mui.toast(JSON.stringify(error)+'recommend');
 				if(error.code=='101')
 				{
 //					recommendTable.set('comment','');
@@ -364,9 +379,9 @@
 					recommendTable.set('recommentInfo','');
 					recommendTable.save().then(
 						function(){
-								alert('回复表创建成功');
+								mui.toast('回复表创建成功');
 						},function(error){
-							alert(JSON.stringify(error)+'5');
+							mui.toast(JSON.stringify(error)+'5');
 					});
 				}
 			});
