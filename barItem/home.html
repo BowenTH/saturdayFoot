@@ -151,42 +151,7 @@
 					<div class="mui-scroll">
 						<!--数据列表-->
 						<ul id="shopUl" style="margin: 0;" class="mui-table-view">
-							<li  class="mui-table-view-cell" data-id = "00">
-								<div class="" style="float: left;">
-									<img src="../img/detail/3.jpg"/>
-								</div>
-								<div class="shopSpan">
-									<div class="">
-										<h5>火锅店(闵行店)</h5>
-										<span class="mui-icon mui-icon-star-filled"></span>
-										<span class="mui-icon mui-icon-star-filled"></span>
-										<span class="mui-icon mui-icon-star-filled"></span>
-										<span class="mui-icon mui-icon-star-filled"></span>
-										<span class="mui-icon mui-icon-starhalf"></span>
-										<span  class="shopSmall">
-											20￥/人
-										</span>
-									</div>
-									<div class="" style="">
-										<span class="shopSmall">
-											韩国菜 <span>|							
-											</span> 北新泾
-										</span><span class="shopSmall" style="background: lightgray;margin-left: 50px;">
-											1000m
-										</span><br />
-										<span class="shopSmall mui-icon-extra mui-icon-extra-heart-filled">
-											1000人消费
-										</span>	
-										<div style="border-top: 1px solid lightgrey;">	
-											<span class="shopSmall mui-icon-extra mui-icon-extra-new">
-												商家优惠，满30立减8元
-											</span>
-										</div>
-									</div>	
-								</div>		
-								<div style="margin-top: -15px;margin-left: -15px;border-bottom: 5px solid #efeff4;">				
-								</div>
-							</li>
+							
 						</ul>
 					</div>
 				</div>	
@@ -374,11 +339,11 @@
 			function pulldownRefresh() {
 				setTimeout(function() {					
 					var shopUl= document.body.querySelector('#shopUl');
+					shopTemp.content.querySelector('h5').innerText = '诚哥的店';
 					var cloneLi = dialog.content.cloneNode(true);
 					shopUl.appendChild(cloneLi);
 					$('#shopUl li').last().data('id',flag);
 					flag++;
-//					$("#shopTemp li").data('id','2').clone(true).show().appendTo($("#shopUl"));
 					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
 				}, 500);
 			}

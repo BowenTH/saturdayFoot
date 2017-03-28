@@ -9,7 +9,7 @@
 		
 		<header class="mui-bar mui-bar-nav" style="display: block;">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title">徐泾东购物市场</h1>
+		    <h1 class="mui-title">诚哥的店(蔬菜)</h1>
 		    <a style="margin: 10px;z-index: 999;"  class="mui-icon-extra mui-icon-extra-share mui-pull-right"></a>
 			<a  class="mui-icon mui-icon-search mui-pull-right"></a>  	
 		</header>
@@ -46,6 +46,24 @@
 			ul .mui-active{
 				background-color: white!important;
 			}
+			.num-owner{
+				float: right;
+				font-size:15px;
+			}
+			.sigleMoney:after{
+				content: '￥';
+			}
+			.menu-buttom{
+				padding: 10px;
+				margin: 0;
+				background: light;
+			}
+			.menu-buttom span{
+				float: right;
+				margin-right: 30px;
+				color: gray;
+				font-size: 15px;
+			}
 			#segmentedControlContents{
 				/*border: 1px solid red;*/
 				/*margin-bottom: 50px;*/
@@ -74,7 +92,8 @@
 		<!--end-->
 		<!--menu list关闭开启-->
 		<div id="menu-list"style="display: none;width: 100%;bottom: 45px;position: fixed;">
-			<ul class="mui-table-view">
+			<ul class="mui-table-view" style="line-height: 30px;">
+				<li class="menu-buttom">已选菜单<span class="mui-icon mui-icon-trash">清空购物车</span></li>
 			</ul>
 		</div>
 		<div id="">			
@@ -109,11 +128,11 @@
 			function ownFly(e,addcar){
 //				console.log(offset.top);
 				var img = null;
-				if(e.target.tagName==='SPAN'){
-					img = $(addcar).siblings('img').attr('src');
-				}else{
-					img = $(addcar).parent().siblings('img').attr('src');
-				}				
+//				if(e.target.tagName==='SPAN'){
+					img = $(addcar).parents('li').children('img').attr('src');
+//				}else{
+//					img = $(addcar).parent().siblings('img').attr('src');
+//				}				
 				console.log(e.target.tagName);
 				var flyer = $('<img class="u-flyer" src="'+img+'">');
 				flyer.fly({
@@ -132,7 +151,51 @@
 					}
 				});
 			}
-			upShopList();
+//			upShopList();
+			downProduct();
+			/**下载用户信息
+			 * 1.通过用户名找商店
+			 * 2.通过商店的objectId 找Product
+			 * 3.通过Product 的type分类，赋值给leftMenu
+			 * */
+		function downProduct(){
+			var queryProduct = new AV.Query('Product');
+			queryProduct.equalTo('shopId','58d61f3261ff4b00605aa1e7');
+			queryProduct.find().then(function(resp){
+				var result = [{"type":"肉类","info":[]},
+					{"type":"蔬菜","info":[]},{"type":"豆制品","info":[]},
+					{"type":"水产","info":[]},{"type":"禽蛋","info":[]},
+					{"type":"粮油副食","info":[]}];
+				for (var i=0;i<resp.length;i++) {
+					var productSig = resp[i]; 
+					switch (productSig.get('type')){
+						case "肉类":
+							result[0].info.push(productSig);
+							break;
+						case "蔬菜":
+							result[1].info.push(productSig);
+							break;
+						case "豆制品":
+							result[2].info.push(productSig);
+							break;
+						case "水产":
+							result[3].info.push(productSig);
+							break;
+						case "禽蛋":
+							result[4].info.push(productSig);
+							break;
+						case "粮油副食":
+							result[5].info.push(productSig);
+							break;
+						default:
+							break;
+					}
+				}
+				leftMenu=result;
+				console.log(JSON.stringify(leftMenu));
+			},function(err){console.log(err)});
+//			mui.later();
+		}
 //			封装商户信息上传
 		function upShopList(){
 			$.getJSON('../../data/dataList.json',function(result){
@@ -181,7 +244,7 @@
 		
 		var controls = document.getElementById("segmentedControls");
 		var contents = document.getElementById("segmentedControlContents");
-		mui.later(doData,200);
+		mui.later(doData,2000);
 		function doData(){
 			var html = [];
 			var i = 1,
@@ -189,7 +252,7 @@
 				m = 16, //左侧选项卡数量+1
 				n = 21; //每个选项卡列表数量+1
 //			添加实例
-			//测试代码
+			//测试代码 
 			for (i=1; i <= leftMenu.length; i++) {
 					html.push('<a class="mui-control-item " data-index="' + (i - 1) + '" href="#content' + i + '">' + leftMenu[i-1].type + '</a>');
 			}
@@ -201,16 +264,20 @@
 				html.push('<div id="content' + i + '"  class="mui-control-content"><ul data-id="'+i+'" class="mui-table-view">');
 				html.push('<strong style="color:#007aff;margin:5%">'+leftMenu[i-1].type+'</strong>');
 				for (j = 1; j <= leftMenu[i-1].info.length; j++) {						
-						html.push('<li class="mui-table-view-cell" data-id="'+j+'">');
-						html.push('<img style="float:left;width:80px" src='+ leftMenu[i-1].info[j-1].img +'>');
-						html.push('<span style="margin-left:5%;width:50%;color:black;font-weight:"500px"">'+leftMenu[i-1].info[j-1].title+'</span><br/>');
-						html.push('<span id="siglePrice" style="color:red;margin-left:5%;font-size:13px">'+ leftMenu[i-1].info[j-1].price+"</span>");
+						html.push('<li class="mui-table-view-cell" data-id="'+j+'" data-productId="'+leftMenu[i-1].info[j-1].get('objectId')+'">');
+						html.push('<img style="float:left;width:80px" src='+ leftMenu[i-1].info[j-1].get('img') +'>');
+						html.push('<span style="margin-left:5%;width:50%;color:black;font-weight:"500px"">'+leftMenu[i-1].info[j-1].get('name')+'</span><br/>');
+						html.push('<span id="siglePrice" style="color:red;margin-left:5%;font-size:13px">'+ leftMenu[i-1].info[j-1].get('price')+"</span>");
 //						第' + i + '个选项卡子项-' + j  
-						html.push("<div class='mui-numbox' style='float: right; display:none'>");
-						html.push("<button class='mui-btn mui-btn-numbox-minus'  type='button'>-</button>");
-						html.push("<input id='countInput' class='mui-input-numbox' type='number' value='0'>");
-						html.push("<button class='mui-btn mui-btn-numbox-plus addcar' type='button'>+</button></div>");
-						html.push("<span class='mui-icon mui-icon-plus mui-icon-plus-filled addcar' style='color: black;float: right;font-size: 30px;' ></span>");
+						html.push("<div class='mui-numbox-owner' style='float: right; display:none'>");
+						html.push("<span class='mui-icon mui-icon-plus mui-icon-plus-filled  addcar'style='color: black;float: right;font-size: 30px;'></span>");
+						html.push("<span class='num-owner' style='float: right;line-height: 20px;margin: 5px;'>1</span>");
+						html.push("<span class='mui-icon mui-icon-minus  addcar'style='color: black;float: right;font-size: 30px;'></span></div>");
+						 
+//						html.push("<button class='mui-btn mui-btn-numbox-minus'  type='button'>-</button>");
+//						html.push("<input id='countInput' class='mui-input-numbox' type='number' value='0'>");
+//						html.push("<button class='mui-btn mui-btn-numbox-plus addcar' type='button'>+</button></div>");
+						html.push("<span class='mui-icon mui-icon-plus plus-owner mui-icon-plus-filled addcar' style='color: black;float: right;font-size: 30px;' ></span>");
 				}
 				html.push('</li></ul></div>');
 			}
@@ -320,18 +387,19 @@
 			var sumMoney = 0;
 			var listCount = 0;
 //			foodList.type='肉类';
-//			var sigleList = {"Index":[1,2],"count":'2','InputPrice':'10',"title":"冰糖苹果16颗","detail":"知名品牌，香甜可口","img":"0.png","price":"10"};
+//			var sigleList = {"Index":[1,2],"count":'2','InputPrice':'10',"name":"冰糖苹果16颗","detail":"知名品牌，香甜可口","img":"0.png","price":"10"};
 //			foodList.list.push(sigleList);
 //			foodList.list.splice(0,1);
 			
 			
 			var listcount=0;
 			var foodsum=0;
-			mui('.mui-control-content').on('tap','.mui-btn-numbox-plus',function(e){
+		mui('.mui-numbox-owner').on('tap','.mui-icon-plus-filled',function(e){
 				ownFly(e,this);
-			var flag=$(this).siblings('.mui-input-numbox').val();
+			var flag=parseInt($(this).siblings('.num-owner').text());
+			console.log($(this).siblings('.num-owner').text());
 			flag++;			
-			$(this).siblings('.mui-input-numbox').val(flag);
+			$(this).siblings('.num-owner').text(flag);
 			
 			var Index =[];
 			Index[1] = $(this).parents('li').data('id')-1;//左栏
@@ -351,16 +419,17 @@
 			$('#sum-finally').text(sumMoney);
 			$('#count-list').text(listCount);			
 			//动态添加menulist的数目 1，2，3，4				
-			var span= $("#menu-list ul li:contains("+sigleList.info.title+")");
-			$(span).children('span').last().text(sigleList.info.count);
+			var li= $("#menu-list ul li:contains("+sigleList.info.name+")");
+			$(li).find(".num-owner").text(sigleList.info.count);
+			$(li).find(".sigleMoney").text();
 		});
 //3 -	
-		mui('.mui-control-content').on('tap','.mui-btn-numbox-minus',function(){
-			var flag=$(this).siblings('.mui-input-numbox').val();
+		mui('.mui-numbox-owner').on('tap','.mui-icon-minus',function(){
+			var flag=parseInt($(this).siblings('.num-owner').text());
 			flag--;			
-			$(this).siblings('.mui-input-numbox').val(flag);
-			if ($(this).siblings('.mui-input-numbox').val()<0) {//numbox值不能小于0
-				$(this).siblings('.mui-input-numbox').val(0);
+			$(this).siblings('.num-owner').text(flag);
+			if ($(this).siblings('.num-owner').val()<0) {//numbox值不能小于0
+				$(this).siblings('.num-owner').val(0);
 				return; 
 			}
 			
@@ -384,42 +453,44 @@
 			$('#count-list').text(listCount);
 
 			//动态添加menulist的数目 1，2，3，4
-			var span= $("#menu-list li:contains("+sigleList.info.title+")");
-			$(span).children('span').last().text(sigleList.info.count);
+			var li= $("#menu-list li:contains("+sigleList.info.name+")");
+			$(li).find(".num-owner").text(sigleList.info.count);
 			if(flag==0){
+				$(this).siblings('.num-owner').text(1);
 				$(this).parent().css('display','none');
 				$(this).parent().next().css('display','inline');
-				var span= $("#menu-list li:contains("+sigleList.info.title+")");
-				span.remove(); 
+//				var span= $("#menu-list li:contains("+sigleList.info.name+")");
+//				$(this).siblings('.mui-numbox').children('.num-owner').text(1);
+				li.remove();
 			}
 		});
 //3 0+
-		mui('.mui-control-content').on('tap','.mui-icon-plus-filled',function(e){
+		mui('.mui-control-content').on('tap','.plus-owner',function(e){
 //			console.log(JSON.stringify(e));
 			ownFly(e,this);
 			this.style.display='none'; 
-			$(this).siblings('.mui-numbox').children('input').val(1);			
+			$(this).siblings('.mui-numbox').children('.num-owner').text(1);			
 //			input里显示购买量
-			$(this).siblings('.mui-numbox').css({'display':'inline'});
+			$(this).siblings('.mui-numbox-owner').css({'display':'inline'});
 			
 			var sigleList = {};  //定义单个订单,要添加新的菜单
 			var info ={}; 
-			var Index=[],count,InputPrice,title,detail,img,price;
-			Index[1] = $(this).parents('li').data('id')-1;//左栏 
-			Index[0] = $(this).parents('ul').data('id')-1;//右栏
-			
+			var Index=[],count,InputPrice,name,detail,img,price;
+			Index[1] = $(this).parents('li').data('id')-1;//右栏 
+			Index[0] = $(this).parents('ul').data('id')-1;//左栏;肉类，蔬菜...
 			type = leftMenu[Index[0]].type;
 			info.count = 1;
 			info.InputPrice = 0;
-			info.title = leftMenu[Index[0]].info[Index[1]].title;
-			info.price = parseInt(leftMenu[Index[0]].info[Index[1]].price);
+			info.name = leftMenu[Index[0]].info[Index[1]].get('name');
+			info.price = parseInt(leftMenu[Index[0]].info[Index[1]].get('price'));
+			console.log(JSON.stringify(leftMenu[Index[0]].info[Index[1]].get('price')));
 			sigleList.type = type;
 			sigleList.Index = Index;
 			sigleList.info = info;
 			foodList.push(sigleList);
 			console.log("总菜单数目："+foodList.length);
-
-			sumMoney += sigleList.info.count*sigleList.info.price + sigleList.info.InputPrice;
+			sigleMoney = sigleList.info.count*sigleList.info.price + sigleList.info.InputPrice;
+			sumMoney += sigleMoney;
 			listCount++;
 			$('#sum-finally').text(sumMoney);
 			$('#count-list').text(listCount);
@@ -430,8 +501,15 @@
 			li.dataset.ulid = sigleList.Index[0];
 			li.dataset.liid = sigleList.Index[1];
 			
-			//添加菜单列表具体内容 foodcount为一单个数			
-			li.innerHTML= sigleList.info.title+'<span class="mui-badge mui-badge-green mui-btn-green mui-pull-right ">'+sigleList.info.count+'</span>';
+			//添加菜单列表具体内容 foodcount为一单个数		
+			var html = [];
+			html.push(sigleList.info.name);
+			html.push("<div class='mui-numbox-owner' style='float: right;'>");
+			html.push("<span class='mui-icon mui-icon-plus mui-icon-plus-filled'style='color: black;float: right;font-size: 30px;'></span>");
+			html.push("<span class='num-owner'>1</span>");
+			html.push("<span class='mui-icon mui-icon-minus' style='color: black;float: right;font-size: 30px;'></span>");
+			html.push('<strong class="sigleMoney" style="float:right;color:green;margin-right:20px">'+sigleMoney+'</strong></div>');
+			li.innerHTML = html.join('');
 			document.body.querySelector('#menu-list ul').appendChild(li);
 		});
 		
@@ -444,9 +522,22 @@
 				$(this).data('id','1');
 			}
 		});	
-//		$("#segmentedControlContents").on('tap','li',function(){
-//			alert('go');
-//		});
+		$("#segmentedControlContents").on('tap','img',function(){
+			var productId = $(this).parent().data('productid');
+			mui.openWindow({url:'menuDetail.html',
+			id:'menuDetail.html',
+			extras:{foodList:foodList,productId:productId},
+			show:{
+				autoShow:false,
+//				aniShow:'slide-in-left',duration:200
+			},waiting:{
+				autoShow:false,
+				title:'拼命加载...',
+				options:{
+			       }
+			}			
+			});
+		});
 		document.getElementById('listSubmit').addEventListener('tap',function(){			
 			$("div").last().removeClass('ownHidden');
 //			mui.later(function(){

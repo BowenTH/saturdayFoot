@@ -471,7 +471,8 @@
 					"js/jquery.fly.min.js"
 				],
 				"refer": [
-					"shopList/detail/orderForm.html"
+					"shopList/detail/orderForm.html",
+					"shopList/detail/menuDetail.html"
 				],
 				"priority": 0
 			},
