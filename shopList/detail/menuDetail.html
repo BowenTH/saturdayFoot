@@ -23,6 +23,11 @@
 			.mui-card{
 				margin-bottom: 10px;				
 			}
+			.addcar{
+				color: black;
+				float: right;
+				font-size: 30px;
+			}
 		</style>
 		<header class="mui-bar mui-bar-nav" style="display: block;">
 			<a class="mui-action-back mui-icon mui-icon-arrowthinleft mui-pull-left"></a>
@@ -60,10 +65,31 @@
 				</div>
 				</div>
 			</div>
+			<span>豆腐</span>
+			<span id="">5元/斤</span>
+			<div>
+				<span class='mui-icon mui-icon-plus mui-icon-plus-filled  addcar'></span>
+				<span class='num-owner' style='float: right;line-height: 20px;margin: 5px;'>1</span>
+				<span class='mui-icon mui-icon-minus  addcar'></span>
+			</div>
+			<br />
+			你可能喜欢
+			<hr />
+			<img style="width: 31%;" src="../../img/1.jpg"/>
+			<img style="width: 31%;" src="../../img/2.jpg"/>	
+			<img style="width: 31%;" src="../../img/1.jpg"/>
 		</div>		
-		<script src="../../js/jquery.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../../js/mui.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../../js/av.js" type="text/javascript" charset="utf-8"></script>
-	
 	</body>
+	<script src="../../js/jquery.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/mui.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/av.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript"> 
+		mui.init();
+		mui.plusReady(function(){
+			var productId =	plus.webview.currentWebview().productId;
+			var foodList =	plus.webview.currentWebview().foodList;
+			var liId =	plus.webview.currentWebview().liId;http://127.0.0.1:8020/saturdayfoot/png/2.jpg
+			alert(productId);
+		});
+	</script>
 </html>
