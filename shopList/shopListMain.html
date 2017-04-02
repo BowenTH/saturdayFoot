@@ -8,31 +8,50 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/icons-extra.css"/>
 		<!--<link rel="stylesheet" type="text/css" href="../css/jquery.mobile.css"/>-->
 		<style type="text/css">
-			ul{padding: 0;}
-			ul li{list-style: none;float: left;color: gray;font-size: 15px;padding-top: 7px;padding-bottom: 0px;}
-			ul li span{padding-bottom: 10px;}
+			ul{padding: 5px;width: 100%;}
+			ul li{
+				list-style: none;float: left;color: gray;
+				font-size: 15px;
+				width: 33%;
+				text-align: center;
+			}
+			ul li span{padding-bottom: 5px;}
 			.activeLi{color: #41cea9;border-bottom:2px solid #41cea9;}
-			
+			.mui-icon-extra-share{
+				line-height: 45px!important;
+				font-size: 20px;
+			}
+			.mui-content{
+				background: white;
+			}
 		</style>
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav">
-			<ul style="padding-left: 10%;margin-top: 2%;">
-				<li data-id='shopList'><span  class="activeLi">享美食</span></li>
-				<li data-id = "movie" style="padding-left: 70px;padding-right: 70px;"><span >爱玩乐</span></li>
-				<li data-id = "movie2"><span  >看电影</span></li>				
-			</ul>
-			
-			
+		<header class="mui-bar mui-bar-nav" style="background-color: transparent!important;">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<a class="mui-icon-extra mui-pull-right mui-icon-extra-share"></a>
 		</header>
-		<div class="mui-content"></div>
+		<div class="mui-content">
+			<div id="title" style="padding: 10px 0 0 10px;">
+				<img src="../img/1.jpg" style="float: left;width: 50px;border-radius: 50%;"/>
+				<span id="shopId" style="float: left;">小店</span><br /><p>小店上新，全场8折</p>
+			</div>
+			<div id="tabNav" style="height: 40px;">
+				<ul>
+					<li data-id='shopList'><span  class="activeLi">选菜</span></li>
+					<li data-id = "comment"><span>评价</span></li>
+					<li data-id = "detail"><span>小二有话</span></li>				
+				</ul>
+			</div>
+		</div>
 	</body>
 	<script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
-	<!--<script src="../js/jquery.mobile.js" type="text/javascript" charset="utf-8"></script>-->
 	<script src="../js/mui.min.js"></script>
+	<script src="../js/av.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		//启用双击监听
 		mui.init({
@@ -40,34 +59,64 @@
 				doubletap:true
 			},
 			subpages:[{ 
-				url:'shopList.html',
-				id:'shopList.html',
+				url:'detail/menuList.html',
+				id:'menuList.html',
 				styles:{
-						top: '45px',
+						top: '150px',
 						bottom: '0px', 
 					}
-				},,{ 
-				url:'movie.html',
-				id:'movie.html',
+				},{ 
+				url:'shop-comment.html',
+				id:'shop-comment.html',
 				styles:{
-					top: '45px',
+						top: '150px',
+						bottom: '0px'
+					}
+				},{
+				url:'shop-detail.html',
+				id:'shop-detail.html',
+				styles:{
+					top: '150px',
 					bottom: '0px', 
 				}
 			}] 
 		});
-		mui.plusReady(function(){});		
-
-		$("header ul").on('tap','li',function(){
+		mui.plusReady(function(){
+			console.log("shopListMain.html load");
+		});
+		var shopId = null;
+		document.addEventListener('initDetail',function(event){ 
+			shopId = event.detail.shopId;
+			var shopQuery = new AV.Query('Shop');
+			shopQuery.equalTo('objectId',shopId);
+			shopQuery.find().then( 
+				function(resp){
+					if(resp.length>=0){
+						$('#shopId').text(resp[0].get('shopName'));
+					}
+					var wsMenu = plus.webview.getWebviewById('menuList.html');
+					mui.fire(wsMenu,'sendShopId',{shopId:shopId});//shopId传递给子页面
+				},function(err){mui.toast(err)});
+		});		
+		
+		$("#tabNav ul").on('tap','li',function(){
+			var dataId = this.dataset.id;
 			if($(this).children().hasClass('activeLi'))return;
 			$(this).children().addClass('activeLi');
 			$(this).siblings().children().removeClass('activeLi');
-			if(this.dataset.id=='shopList'){
-				plus.webview.getWebviewById('movie.html').hide();
-				plus.webview.getWebviewById('shopList.html').show();
-
+			if(dataId=='shopList'){
+				plus.webview.getWebviewById('menuList.html').show();
+				plus.webview.getWebviewById('shop-comment.html').hide();
+				plus.webview.getWebviewById('shop-detail.html').hide();
+			}else if(dataId =='comment')
+			{
+				plus.webview.getWebviewById('shop-comment.html').show();
+				plus.webview.getWebviewById('menuList.html').hide();
+				plus.webview.getWebviewById('shop-detail.html').hide();
 			}else{
-				plus.webview.getWebviewById('movie.html').show();
-				plus.webview.getWebviewById('shopList.html').hide();
+				plus.webview.getWebviewById('shop-detail.html').show();
+				plus.webview.getWebviewById('shop-comment.html').hide();
+				plus.webview.getWebviewById('menuList.html').hide();
 			}
 				
 		})

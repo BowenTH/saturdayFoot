@@ -94,10 +94,13 @@
 				font-size:15px;
 				margin-left: -5px;
 			}
+			#slider img{
+				height: 200px;
+			}
 		</style>
 		
 	<template id='shopTemp' style="background: white;">
-		<li  class="mui-table-view-cell" data-id = "00">
+		<li  class="mui-table-view-cell">
 			<div class="" style="float: left;">
 				<img src="../img/detail/3.jpg"/>
 			</div>
@@ -138,27 +141,58 @@
 
 	<body>			 
 		<div class="mui-content">
-			<div id="homeDiv" class="mui-content own-content-padding">
-				<div id="productSlider" class="mui-slider">
-				</div>
-				<div class="">
-					<!--<a href="javascript:;"><img style="width: 100%;" src="../img/mypng/1.PNG"/></a>
-					<a href="javascript:;"><img style="width: 100%;" src="../img/mypng/2.PNG"/></a>-->
-				</div>
+			<div id="slider" class="mui-slider" >
+			  <div class="mui-slider-group mui-slider-loop">
+			    <!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+			    <div class="mui-slider-item mui-slider-item-duplicate">
+			      <a href="#">
+			        <img src="../img/detail/4.jpg">
+			      </a>
+			    </div>
+			    <!-- 第一张 -->
+			    <div class="mui-slider-item">
+			      <a href="#">
+			        <img src="../img/detail/3.jpg">
+			      </a>
+			    </div>
+			    <!-- 第二张 -->
+			    <div class="mui-slider-item">
+			      <a href="#">
+			        <img src="../img/detail/2.jpg">
+			      </a>
+			    </div>
+			    <!-- 第三张 -->
+			    <div class="mui-slider-item">
+			      <a href="#">
+			        <img src="../img/detail/4.jpg">
+			      </a>
+			    </div>
+			    <!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+			    <div class="mui-slider-item mui-slider-item-duplicate">
+			      <a href="#">
+			        <img src="../img/detail/4.jpg">
+			      </a>
+			    </div>
+			  </div>
+			  <div class="mui-slider-indicator">
+			    <div class="mui-indicator mui-active"></div>
+			    <div class="mui-indicator"></div>
+			    <div class="mui-indicator"></div>
+			  </div>
+			</div>
 	
 			<!--下拉刷新容器-->
-				<div id="pullrefresh" class="mui-scroll-wrapper">
-					<div class="mui-scroll">
-						<!--数据列表-->
-						<ul id="shopUl" style="margin: 0;" class="mui-table-view">
-							
-						</ul>
-					</div>
-				</div>	
-		
-				<div id="recommend" class="mui-table-view mui-grid-view own-gray-color">
-
+			<div id="pullrefresh" class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<!--数据列表-->
+					<ul id="shopUl" style="margin: 0;" class="mui-table-view">
+						
+					</ul>
 				</div>
+			</div>	
+	
+			<div id="recommend" class="mui-table-view mui-grid-view own-gray-color">
+
 			</div>
 		</div>
 	</body>
@@ -166,208 +200,111 @@
 	<script src="../js/mui.min.js" charset="UTF-8"></script>
 	<script src="../js/own.js" charset="UTF-8"></script>
 	<script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/av.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
-//		mui.init({
-//			swipeBack: false
-//		});
 		mui.init({
-				swipeBack: false,
-				pullRefresh: {
-					container: '#pullrefresh',
-					down: {
-						callback: pulldownRefresh
-					},
-					up: {
-						contentrefresh: '正在加载...',
-						callback: pullupRefresh
-					}
+			preloadLimit:15,
+			swipeBack: false,
+			pullRefresh: {
+				container: '#pullrefresh',
+				down: {
+					callback: pulldownRefresh
+				},
+				up: {
+					contentrefresh: '正在加载...',
+					callback: pullupRefresh
 				}
-			});	
-//		mui.plusReady(function(){
-//			var springWeb=plus.webview.create('../spring.html','spring.html');
-//			mui.toast(springWeb);
-//		});
+			}
+		});	
+		var shopList = null;
+		var shopIndex = null;
+		var dialog=document.querySelector('#shopTemp');
+		
 		var currentWebview;
 		var homeDiv;
 		var marqueeArray = []; //跑马灯数据数组
 		var recommendArray = []; //推荐商品数组
 		mui.plusReady(function() {
-			currentWebview = plus.webview.currentWebview();
-			homeDiv = document.getElementById('homeDiv');
-			//初始化一些本地数据
-			initSomeData();
-			//设置跑马灯
-			setMarquee();
-			//设置推荐商品
-			setRecommend();
-			//添加每个item点击的监听事件
-			mui('#recommend').on('tap', 'a', function() {
-				var item = this;
-				var itemID = this.getAttribute('href');
-				var extendOptions = {
-					itemID: itemID
-				};
-				pushWebView({
-					webType: 'newWebview_First',
-					id: 'Home/product-detail-needtem.html',
-					href: 'Home/product-detail-needtem.html',
-					aniShow: getaniShow(),
-					title: "商品详情",
-					isBars: false,
-					barsIcon: '',
-					extendOptions: extendOptions
-				});
-			});
-		})
-
-		function initSomeData() {
-			for (var i = 0; i < 0; i++) {
-				var dataItem = {};
-				dataItem.product_price = {default_price:"20.00",list_price:"28.0"};
-				dataItem.product_name = "这都是些什么鬼东西啊有什么用啊啊啊 ";
-				dataItem.large_image_url = "../img/1.jpg";
-				dataItem.product_id = "13110";
-				recommendArray.push(dataItem);
-			}
-			for (var i = 0 ; i < 4;i++	) {
-				var marqueeItem  = {};
-				marqueeItem.contentId = i;
-				if (i == 3) {
-					marqueeItem.imagerpath = '../img/slider/slider4.png';
-				} else{
-					marqueeItem.imagerpath = '../img/slider/slider'+(i+1)+'.jpg';
-				}
-				marqueeArray.push(marqueeItem);
-			}
-		}
-
-		function setMarquee() {
-			var sliderMarquee = document.getElementById('productSlider');
-			var sliderGroup = document.createElement('div');
-			sliderGroup.className = 'mui-slider-group mui-slider-loop';
-			sliderMarquee.appendChild(sliderGroup);
-			var sliderIndicator = document.createElement('div');
-			sliderIndicator.className = 'mui-slider-indicator';
-			sliderMarquee.appendChild(sliderIndicator);
-			for (var i = 0; i < marqueeArray.length; i++) {
-				if (0 == i) {
-					var sliderItemDuplicate = document.createElement('div');
-					sliderItemDuplicate.className = 'mui-slider-item mui-slider-item-duplicate';
-					sliderItemDuplicate.innerHTML = '<a href="' + marqueeArray[marqueeArray.length - 1].contentId + '">\
-							<img src="' + marqueeArray[marqueeArray.length - 1].imagerpath + '" />\
-						</a>';
-					sliderGroup.appendChild(sliderItemDuplicate);
-				}
-				var sliderItem = document.createElement('div');
-				sliderItem.className = 'mui-slider-item';
-				sliderItem.innerHTML = '<a href="' + marqueeArray[i].contentId + '">\
-						<img src="' + marqueeArray[i].imagerpath + '" />\
-					</a>';
-				sliderGroup.appendChild(sliderItem);
-				var indicatorItme = document.createElement('div');
-				if (i == 0) {
-					indicatorItme.className = 'mui-indicator mui-active';
-				} else {
-					indicatorItme.className = 'mui-indicator';
-				}
-				sliderIndicator.appendChild(indicatorItme);
-				if (marqueeArray.length - 1 == i) {
-					var sliderItemDuplicate = document.createElement('div');
-					sliderItemDuplicate.className = 'mui-slider-item mui-slider-item-duplicate';
-					sliderItemDuplicate.innerHTML = '<a href="' + marqueeArray[0].contentId + '">\
-							<img src="' + marqueeArray[0].imagerpath + '" />\
-						</a>';
-					sliderGroup.appendChild(sliderItemDuplicate);
-				}
-				slider = mui('.mui-slider').slider({
-					interval:2000
-				});
-			}
-		}
-		//设置推荐商品
-		function setRecommend() {
-			var recommend = document.getElementById('recommend');
-			mui.each(recommendArray, function(index, item) {
-				var li = document.createElement('li');
-				li.className = 'mui-table-view-cell mui-media mui-col-xs-6';
-				li.innerHTML = '<a href="' + item.product_id + '">\
-					<div class= "bgDiv">\
-						<img class="mui-media-object" src="'+item.large_image_url+'"/>\
-						<div class="mui-media-body">\
-							<p class="mui-ellipsis-2">' + item.product_name + '</p>\
-							<p class="price-one">¥' + item.product_price.default_price + '</p>\
-							<p class="price-two">¥' + item.product_price.list_price + '</p>\
-						</div>\
-					</div>\
-				</a>';
-				recommend.appendChild(li);
-			});
-		}
-		
-//add later
-			var detailHead = null;
-			var shopIndex = null;
-			mui.plusReady(function(){
-				detailHead = mui.preload({
-				id:'detailHead.html',
-				url:'../shopList/detailHead.html',
+			console.log('home.html加载');
+			shopList = mui.preload({
+				id:'shopListMain.html',
+				url:'../shopList/shopListMain.html',
 				styles:{
 					top:'0px',
 					bottom:'0px'
 				}
 			});
+			currentWebview = plus.webview.currentWebview();
+			initShopLi();
+		});
+	
 //			点击商铺列表进详情
-				mui("ul").on('tap','li',function(){
-					shopIndex=$(this).data('id');
-//					mui.toast(shopIndex);
-					mui.fire(detailHead,'initDetail',{shopIndex:shopIndex});
-					detailHead.show();					
-				});	
-			});
-					 
-
-			//首次进入时加载第一个页面
-			document.addEventListener('scrollRefush',function(){
-//				mui('#pullrefresh').pullRefresh().pulldownLoading();
-			})
-			/**
-			 * 下拉刷新具体业务实现
-			 */
-//			var shopTemp = $("#shopTemp").clone(true);
-			var dialog=document.querySelector('#shopTemp');
-			var flag=1;
-			function pulldownRefresh() {
-				setTimeout(function() {					
-					var shopUl= document.body.querySelector('#shopUl');
-					shopTemp.content.querySelector('h5').innerText = '诚哥的店';
-					var cloneLi = dialog.content.cloneNode(true);
-					shopUl.appendChild(cloneLi);
-					$('#shopUl li').last().data('id',flag);
-					flag++;
-					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
-				}, 500);
-			}
-			var count = 0;
-			/**
-			 * 上拉加载具体业务实现
-			 */
-			function pullupRefresh() {
-				setTimeout(function() {
-						mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //refresh completed
-				}, 500);
-			}
-			if (mui.os.plus) {
-				mui.plusReady(function() {
-					setTimeout(function() {
-//						mui('#pullrefresh').pullRefresh().pullupLoading();
-					}, 1000);
-
+		mui("ul").on('tap','li',function(){
+			var dataId=$(this).data("id");
+			if(dataId==undefined)return false;
+			mui.fire(shopList,'initDetail',{shopId:dataId}); 
+//			shopList.show("slide-in-right",200,{shopId:dataId});
+			shopList.show();
+			shopList.evalJS("plus.webview.getWebviewById('menuList.html').show();");
+		});	
+		
+		function initShopLi(){
+			var queryShop = new AV.Query('Shop');
+			queryShop.find().then(
+				function(resp){
+					if(resp.length<=0){
+						mui.toast('哎呀，周边暂无开通的商铺'); 
+						return false;
+					}
+					for (var i=0;i<resp.length;i++) {
+						var shopInfo = resp[i];
+						var shopUl= document.body.querySelector('#shopUl');
+						dialog.content.querySelector('h5').innerText = shopInfo.get("shopName")+"("+shopInfo.get("shopType")+")";
+						var cloneLi = dialog.content.cloneNode(true);
+						$(cloneLi).children("li").data("id",shopInfo.get("objectId"));
+						shopUl.appendChild(cloneLi); 
+					}
+				},
+				function(err){
+					mui.toast(err);
 				});
-			} else {
-				mui.ready(function() {
-					mui('#pullrefresh').pullRefresh().pullupLoading();
-				});
-			}
+		}
+		//首次进入时加载第一个页面
+		mui.later(function(){
+//			mui('#pullrefresh').pullRefresh().pulldownLoading();
+		},200);
+		/**
+		 * 下拉刷新具体业务实现
+		 */
+		function pulldownRefresh() {
+			setTimeout(function() {					
+				var shopUl= document.body.querySelector('#shopUl');
+				shopTemp.content.querySelector('h5').innerText = '小店';
+				var cloneLi = dialog.content.cloneNode(true);
+				shopUl.appendChild(cloneLi);
+				mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+			}, 500);
+		}
+		var count = 0;
+		/**
+		 * 上拉加载具体业务实现
+		 */
+		function pullupRefresh() {
+			setTimeout(function() {
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //refresh completed
+			}, 500);
+		}
+//			if (mui.os.plus) {
+//				mui.plusReady(function() {
+//					setTimeout(function() {
+//					}, 1000);
+//
+//				});
+//			} else {
+//				mui.ready(function() {
+//					mui('#pullrefresh').pullRefresh().pullupLoading();
+//				});
+//			}
 	</script>
 
 </html>

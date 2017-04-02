@@ -79,6 +79,7 @@
 		var barItemWebviewArray = [];
 		var barItemArray = ['barItem/home.html','barItem/life.html','barItem/cart.html','barItem/mine.html'];
 		mui.plusReady(function(){
+			console.log('index.html load');
 			plus.geolocation.getCurrentPosition(displayLocation,displayError,option);
 			//获取当前title和当前webview
 //			navTitle = document.querySelector('.headIndex');
@@ -98,7 +99,8 @@
 			judgelogin();
 			
 			//预加载父子模版
-			initTemplate();
+//			initTemplate();
+			console.log('index.html over');
 		});
 		
 		
@@ -108,11 +110,11 @@
 			inittabitemWebviews();
 			//添加bar点击事件接受
 			tapBaritem();		
-			mui.later(function(){
-				if(plus.webview.getWebviewById('barItem/home.html')){
-					mui.fire(plus.webview.getWebviewById('barItem/home.html'),'scrollRefush');
-				}
-			},2000);
+//			mui.later(function(){
+//				if(plus.webview.getWebviewById('barItem/home.html')){
+//					mui.fire(plus.webview.getWebviewById('barItem/home.html'),'scrollRefush');
+//				}
+//			},2000);
 		}
 		
 		
@@ -148,7 +150,7 @@
 						waiting:{
 							autoShow:false
 						}
-					});
+					}); 
 				}
 				barItemWebviewArray[i].hide();
 				mainWebview.append(barItemWebviewArray[i]);
@@ -191,19 +193,17 @@
 				}
 			});
 		}
-		
-		
 		//预加载template
-		function initTemplate(){
-			var webview =  mui.preload({
-				id:'template',
-				url:'template.html',
-				styles:{
-					top: '-1000px',
-				}
-			});
-			webview.show();
-		};
+//		function initTemplate(){
+//			var webview =  mui.preload({
+//				id:'template',
+//				url:'template.html',
+//				styles:{
+//					top: '-1000px',
+//				}
+//			});
+//			webview.show();
+//		};
 		
 		function judgelogin() {
 			//测试语句

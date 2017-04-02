@@ -68,12 +68,9 @@
 				<ul class="mui-table-view">					
 					<li  class="mui-table-view-cell" >
 						<span class="mui-icon-extra mui-icon-extra-hotel" style="font-size: 100%;color: gray;margin-right: 4%;">
-						</span>徐泾东购物市场(剑川路店)
+						</span><span id="shopName">徐泾东购物市场(剑川路店)</span>
 					</li>					
 					<li id="shopUl" class="mui-table-view-cell">
-						<span class="mui-icon-extra mui-icon-extra-new" style="color: red;"></span>
-						<span style="margin-right: 10%;">新鲜五花肉</span>x<span style="font-size: 80%;">0.5斤</span>						
-						<span style="float: right;margin-top: 5px;">￥20</span>
 					</li>
 					
 					<li class="mui-table-view-cell" style="">
@@ -103,18 +100,20 @@
 		<script src="../../js/av.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 	mui.init();
+	var menuSum = null;
 	var foodList=null;
 	window.onload = function(){
 		mui.later(function(){
-			mui.plusReady(function(){
+			mui.plusReady(function(){ 
 				plus.nativeUI.closeWaiting();
 				plus.webview.getWebviewById('orderForm.html').show('slide-in-left',300,function(){
-				plus.webview.getWebviewById('menuList.html').evalJS('$("div").last().addClass("ownHidden")');
+//				plus.webview.getWebviewById('menuList.html').evalJS('$("div").last().addClass("ownHidden")');
 //				plus.webview.getWebviewById('menuList.html').evalJS("window.location.reload()");
 				});
-				var foodList = plus.webview.getWebviewById('orderForm.html').foodList;				
+				menuSum = plus.webview.getWebviewById('orderForm.html').menuSum;
+				setShopInfo();
 //				console.log(JSON.stringify(foodList));
-				var sum = addForm(foodList);				
+				var sum = addForm(menuSum.foodList);				
 				$(".ownSum").text(sum);
 				
 				/* 支付宝支付引用  */
@@ -127,21 +126,30 @@
 			//	});
 			//	pay('alipay');
 			//	pay('weixin');
-				addOrderList(foodList);
+				addOrderList();
 				plus.webview.open('orderReturn.html','orderReturn.html');
 				});
 			});
 		},50);
 	}
-	
+
+function setShopInfo(){
+	var shopQuery = new AV.Query('Shop');
+	shopQuery.equalTo('objectId',menuSum.shopId);
+	shopQuery.find().then(function(resp){
+		if(resp.length>=0){
+			$("#shopName").text(resp[0].get('shopName'));//菜单商铺名 
+		}
+	},function(err){mui.toast(err)});
+}
+
 function addForm(foodList){
-	alert(JSON.stringify(foodList));
-	var sum=20;
+	var sum=0;
 	for (var j=0;j<foodList.length;j++) {
 		var listLi = document.createElement("li");
 		listLi.setAttribute('class','mui-table-view-cell');
 		listLi.innerHTML = '<span class="mui-icon-extra mui-icon-extra-new" style="color: red;"></span>'
-		+'<span style="margin-left:1%;margin-right: 10%;">'+foodList[j].info.title+'</span>x'
+		+'<span style="margin-left:1%;margin-right: 10%;">'+foodList[j].info.name+'</span>x'
 		+'<span style="font-size: 80%;">'+foodList[j].info.count+'斤</span>'+'<span style="float: right;">￥'+foodList[j].info.count*foodList[j].info.price+'</span>';
 		$('#shopUl').after(listLi);	
 		sum+=foodList[j].info.count*foodList[j].info.price;
@@ -149,45 +157,17 @@ function addForm(foodList){
 	return sum;
 }
 
-function addOrderList(foodList){
-	var signalOrder={};
-	signalOrder.user = {name:'bowen',phone:'13764196371',address:'紫晶南苑210号'};
-	signalOrder.foodList = foodList;
-	signalOrder.dealData= Date();
-	signalOrder.shoper = {name:'徐泾东购物市场',phone:'15387649871',address:'徐泾东沧源路300号'};
-
-	var Query=new AV.Query("shopList");
-	Query.equalTo('shopname','诚哥的店');	
-	var resultFind = Query.find({
-	success:function(resp){
-		mui.toast('正在查找商户...'); 
-		if(!resp.length){
-			mui.toast('查询异常，无该商家!');
-			return false;
-		}
-		if(resp[0].get('orderList')===null){
-			var flag ={data:[]};
-			flag.data.push(signalOrder);
-			resp[0].save({orderList:flag}).then(function(){
-				mui.toast('商家第一单');
-			},function(error){
-				console.error(error);
-			});
-		}else{
-			var orderList =	resp[0].get('orderList');
-			orderList.data.push(signalOrder);
-//			alert(JSON.stringify(orderList));
-			resp[0].save({orderList:orderList}).then(function(){
-				mui.toast('订单更新成功');
-			},function(error){
-				console.error(error);
-			});
-		}		
-	},
-	error:function(error){
-		alert(JSON.stringify(error));
-	}				
-	});	
+function addOrderList(){
+	var MenuList = AV.Object.extend('MenuList');
+	var menuList = new MenuList();
+	menuList.set('user',menuSum.user);
+	menuList.set('shopId',menuSum.shopId);
+	menuList.set('foodList',menuSum.foodList);
+	menuList.set('dealData',Date());
+	menuList.save().then(function(){
+		mui.toast('菜单提交成功');
+		mui.fire(plus.webview.getWebviewById('orderReturn.html'),'sendMenuForm',{foodList:menuSum.foodList});
+	},function(err){mui.toast(err)});
 }
 ///* 支付宝支付引用  */
 //var channel =null;

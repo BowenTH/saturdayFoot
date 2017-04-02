@@ -213,7 +213,8 @@
 					"fonts/mui-icons-extra.ttf",
 					"js/location.js",
 					"js/common.js",
-					"js/immersed.js"
+					"js/immersed.js",
+					null
 				],
 				"refer": [
 					"barItem/category.html",
@@ -249,10 +250,14 @@
 					null,
 					"js/jquery.js",
 					"fonts/mui.ttf",
-					"img/detail/3.jpg"
+					"img/detail/3.jpg",
+					"img/detail/2.jpg",
+					"img/detail/4.jpg",
+					"js/av.js"
 				],
 				"refer": [
-					"shopList/detailHead.html"
+					"shopList/detailHead.html",
+					"shopList/shopListMain.html"
 				],
 				"priority": 0
 			},
@@ -373,11 +378,19 @@
 					"js/mui.min.js",
 					"css/mui.min.css",
 					"js/jquery.mobile.js",
-					"js/jquery.js"
+					"js/jquery.js",
+					"fonts/mui-icons-extra.ttf",
+					"shopList/detail/menuList.html",
+					"fonts/mui.ttf",
+					"img/1.jpg",
+					"css/icons-extra.css",
+					"shopList/shop-comment.html",
+					"js/av.js"
 				],
 				"refer": [
 					"shopList/movie.html",
-					null
+					null,
+					"shopList/shop-detail.html"
 				],
 				"priority": 0
 			},
@@ -508,7 +521,8 @@
 					"png/6.jpg",
 					"png/1.jpg",
 					"png/5.png",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"js/mui.min.js"
 				],
 				"refer": [
 					"life/book.html",
@@ -537,7 +551,8 @@
 				"resources": [
 					"css/mui.min.css",
 					"js/mui.js",
-					"js/jquery.js"
+					"js/jquery.js",
+					"js/av.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -647,6 +662,40 @@
 			"template-main-second.html": {
 				"resources": [
 					"fonts/mui.ttf"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"shopList/detail/menuDetail.html": {
+				"resources": [
+					"img/1.jpg",
+					"png/4.jpg",
+					"png/3.jpg",
+					"fonts/mui.ttf",
+					"css/icons-extra.css",
+					"js/av.js",
+					"fonts/mui-icons-extra.ttf",
+					"img/2.jpg",
+					"png/2.jpg",
+					"css/app.css",
+					"css/mui.min.css",
+					"js/mui.js",
+					"js/jquery.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"shopList/shop-comment.html": {
+				"resources": [
+					"img/detail/3.jpg"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"shopList/shop-detail.html": {
+				"resources": [
+					"css/mui.min.css",
+					"css/icons-extra.css"
 				],
 				"refer": [],
 				"priority": 0

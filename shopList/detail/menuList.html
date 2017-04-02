@@ -6,13 +6,6 @@
 		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
 		<link rel="stylesheet" type="text/css" href="../../css/app.css"/>
 		<link rel="stylesheet" type="text/css" href="../../css/icons-extra.css"/>
-		
-		<header class="mui-bar mui-bar-nav" style="display: block;">
-		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title">诚哥的店(蔬菜)</h1>
-		    <a style="margin: 10px;z-index: 999;"  class="mui-icon-extra mui-icon-extra-share mui-pull-right"></a>
-			<a  class="mui-icon mui-icon-search mui-pull-right"></a>  	
-		</header>
 		<style>
 			.mui-row.mui-fullscreen>[class*="mui-col-"] {
 				height: 100%;
@@ -82,11 +75,19 @@
 				font-size: 30px;
 			}
 			.u-flyer{display: block;width: 50px;height: 50px;border-radius: 50px;position: fixed;z-index: 9999;}
+			#ownMask{
+				position: absolute;
+				top: 0px;
+				bottom: 50px;
+				width: 100%;
+				background: black;
+				opacity: 0.2;
+			}
 		</style>
 	</head>
 	<body>		
 		<!--加侧栏-->
-		<div  class="mui-content mui-row mui-fullscreen" style="margin-top: 50px;">
+		<div  class="mui-content mui-row mui-fullscreen" style="margin-top: 5px;">
 			<div class="mui-col-xs-3">
 				<div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical">
 
@@ -97,24 +98,26 @@
 		</div>
 		<!--end-->
 		<!--menu list关闭开启-->
-		<div id="menu-list"style="display: none;width: 100%;bottom: 45px;position: fixed;">
+		<div id="menu-list"class="ownHidden" style="z-index: 998;width: 100%;bottom: 45px;position: fixed;">
 			<div class="menu-buttom">已选菜单<span class="mui-icon mui-icon-trash">清空购物车</span></div>
 			<ul class="mui-table-view" style="line-height: 30px;">
 				
 			</ul>
 		</div>
-		<div id="">			
+		<div id="" style="z-index: 998;">			
 			<!--<i class="end"></i>-->
 			<button id="menu" type="button" data-id='1' class="mui-btn-grey"style="height: 50px;border-radius: 0;;width: 60%;position: fixed;bottom: 0px;">
 				<span>菜单<span id="count-list" style="margin: -10px;" class="mui-badge mui-badge-red mui-btn-red mui-pull-right ">0</span></span>
 			</button>
-		        <button id="listSubmit" style="height: 50px;width: 40%;right: 0;background:lightblue;bottom: 0px;position: fixed;">
-		         	<span id="" >
-						提交订单：<span id='sum-finally'>0</span>元
-					</span>					
-		        </button>			
+	        <button id="listSubmit" style="height: 50px;width: 40%;right: 0;background:lightblue;bottom: 0px;position: fixed;">
+	         	<span id="" >
+					提交订单：<span id='sum-finally'>0</span>元
+				</span>					
+	        </button>			
 		</div>
-		
+		<div id="ownMask" class="ownHidden">
+			
+		</div>
 		<div class="ownHidden" style="position: fixed;margin: 50%;">
 			<img src="../../img/jump.gif"/>
 		</div>
@@ -134,7 +137,12 @@
 			function stringToInt(flag){
 				return parseInt(flag);
 			}
+			document.addEventListener('sendShopId',function(event){
+				shopId = event.detail.shopId;
+			});
 			/*处理按钮操作事件*/
+			var menuSum = {}//菜单存储商户，用户及菜单信息
+			var shopId = null;
 			var foodList = [];	//本地订单	
 //			foodList.list = []; //本地单个订单
 			var sumMoney = 0;
@@ -146,8 +154,38 @@
 				$("#menu-list ul").empty();
 				$(".mui-numbox-owner").addClass("ownHidden");
 				$(".plus-owner").removeClass("ownHidden");
+				$(".num-owner").text("1");
 				$('#sum-finally').text("0");
 				$('#count-list').text("0");
+			});
+			/**处理详情页添加菜单的事件**/
+			document.addEventListener('addSigMenu',function(event){
+				console.log(event.detail.liId);
+				var listIndex = event.detail.listIndex;
+				var liId = event.detail.liId;
+				var addCount = event.detail.foodList[listIndex].info.count-foodList[listIndex].info.count;
+				//判断是否添加listCount
+				if(event.detail.listIndex==-1){
+//					listCount++;
+					alert('新增菜单');
+				}
+				mui.toast("新增数目:"+addCount);
+				foodList=event.detail.foodList;
+				var sigInfo = foodList[listIndex].info;//当前菜的info
+				sumMoney+=sigInfo.price*addCount;
+				listCount+=addCount;
+				//修改liBody的菜的数目
+				$('#sum-finally').text(sumMoney);
+				$('#count-list').text(listCount);
+				var liBody = $("#"+liId.substr(0,4));
+				var flag=parseInt(liBody.find('.num-owner').text());
+				flag+=addCount;			
+				liBody.find('.num-owner').text(flag);
+				//修改menuList的菜的金额及数目
+				var li= $("#"+liId+"btm");
+				$(li).find(".num-owner").text(sigInfo.count);
+				$(li).find(".sigleMoney").text(sigInfo.count*sigInfo.price);
+				
 			});
 			
 			function dealPlus(param){
@@ -197,22 +235,20 @@
 					var flag=parseInt($(this).siblings('.num-owner').text());
 					flag--;			
 					$(this).siblings('.num-owner').text(flag);
-					if ($(this).siblings('.num-owner').val()<0) {//numbox值不能小于0
-						$(this).siblings('.num-owner').val(0);
-						return; 
-					}
 					var liId = $(this).parents('li').attr('id');
 				
 				}else{
 					//通过Id查找Id，然后做转换
-					var liId = $(param).parents('li').attr('id').substr(0,4);
+					var liId = $(param).parents('li').attr('id').substr(0,4); 
 					var liBody = $("#"+liId.substr(0,4));
 					var flag=parseInt(liBody.find('.num-owner').text());
-					flag--;			
-					liBody.find('.num-owner').text(flag);
-					if (liBody.find('.num-owner').val()<0) {//numbox值不能小于0
-						liBody.find('.num-owner').val(0);
-						return; 
+					flag--;
+					if (flag==0) {
+						liBody.find('.num-owner').text(1);
+						liBody.find('.mui-numbox-owner').addClass('ownHidden');
+						liBody.find('.plus-owner').removeClass('ownHidden');
+					}else{
+							liBody.find('.num-owner').text(flag);
 					}
 				}
 				var Index =[];
@@ -239,7 +275,7 @@
 				$(li).find(".num-owner").text(sigleList.info.count);
 				$(li).find(".sigleMoney").text(sigleList.info.count*sigleList.info.price);
 				if(flag==0){
-					$(this).siblings('.num-owner').text(1);
+					$(this).siblings('.num-owner').text("1");
 					$(this).parent().addClass("ownHidden");
 					$(this).parent().next().removeClass("ownHidden");
 					foodList.splice(i,1);
@@ -256,7 +292,7 @@
 				
 				var sigleList = {};  //定义单个订单,要添加新的菜单
 				var info ={}; 
-				var Index=[],count,InputPrice,name,detail,img,price;
+				var Index=[],count,InputPrice,name,img,price;
 				var liId = $(this).parents('li').attr('id');
 				
 				Index[0] = stringToInt(liId.substr(0,2));//左栏;肉类，蔬菜...
@@ -555,52 +591,61 @@
 //3 0+
 		mui('.mui-control-content').on('tap','.plus-owner',dealPlusFirst);
 		
-		
+		document.getElementById('ownMask').addEventListener('tap',function(){
+			if(!$('#ownMask').hasClass('ownHidden')){
+				$('#menu-list').addClass('ownHidden');
+				$('#ownMask').addClass('ownHidden');
+			}
+		});
+		//显示菜单
 		document.getElementById('menu').addEventListener('tap',function(){
 			if($(this).data('id')==1){
-				$('#menu-list').css("display","block");
+				$('#menu-list').removeClass('ownHidden');
+				$('#ownMask').removeClass('ownHidden');
 				$(this).data('id','0');
 			}else{
-				$('#menu-list').css("display","none");
+				$('#menu-list').addClass('ownHidden');
+				$('#ownMask').addClass('ownHidden');
 				$(this).data('id','1');
 			}
 		});	
 		$("#segmentedControlContents").on('tap','img',function(){
+			if(!$(this).parent().find(".plus-owner").hasClass("ownHidden"))
+			{mui.toast('功能完善中，还请先添加菜单');return false;}
 			var productId = $(this).parent("li").data("productid");
 			var liId = $(this).parent("li").attr('id');
-			alert(JSON.stringify(foodList));
+			console.log('open detail webview');
 			mui.openWindow({url:'menuDetail.html',
 			id:'menuDetail.html',
 			extras:{foodList:foodList,liId:liId,productId:productId},
 			show:{
-				autoShow:false,
-//				aniShow:'slide-in-left',duration:200
+				aniShow:'slide-in-left',duration:200
 			},waiting:{
 				autoShow:false,
 				title:'拼命加载...',
 				options:{
-			       }
+			    }
 			}			
-			});
+			}); 
 		});
-		document.getElementById('listSubmit').addEventListener('tap',function(){			
-			$("div").last().removeClass('ownHidden');
-//			mui.later(function(){
-//				$("div").last().addClass('ownHidden');		
-//			},2000);
+		document.getElementById('listSubmit').addEventListener('tap',function(){
+			var userId = AV.User.current().get('objectId');
+			menuSum.shopId = shopId;
+			menuSum.user = userId;
+			if(foodList.length<=0){
+				mui.toast('客官买点吧');
+				return false;
+			}
+			menuSum.foodList = foodList;//菜单所有信息
+//			$("div").last().removeClass('ownHidden');
 			mui.openWindow({url:'orderForm.html',
 			id:'orderForm.html',
-			extras:{foodList:foodList},
+			extras:{menuSum:menuSum},
 			show:{
-				autoShow:false,
+//				autoShow:false,
 //				aniShow:'slide-in-left',duration:200
 			},waiting:{
 				autoShow:false,
-				title:'拼命加载...',
-				options:{
-//			        width:waiting-dialog-widht,//等待框背景区域宽度，默认根据内容自动计算合适宽度
-//			        height:waiting-dialog-height
-			       }
 			}			
 			});
 			
