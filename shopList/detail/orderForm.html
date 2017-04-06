@@ -102,9 +102,21 @@
 	mui.init();
 	var menuSum = null;
 	var foodList=null;
+	var resultWin = null;
 	window.onload = function(){
 		mui.later(function(){
 			mui.plusReady(function(){ 
+				// 监听在线消息事件
+				plus.push.addEventListener( "receive", function( msg ) {
+					if ( msg.aps ) {  // Apple APNS message
+						mui.toast( "接收到在线APNS消息：" );
+					} else {
+						mui.toast( "接收到在线透传消息：" );
+						mui.toast(msg.payload);
+					}
+					logoutPushMsg( msg );
+				}, false );
+				resultWin = plus.webview.create('orderReturn.html','orderReturn.html');
 				plus.nativeUI.closeWaiting();
 				plus.webview.getWebviewById('orderForm.html').show('slide-in-left',300,function(){
 //				plus.webview.getWebviewById('menuList.html').evalJS('$("div").last().addClass("ownHidden")');
@@ -119,15 +131,14 @@
 				/* 支付宝支付引用  */
 				var channel =null;
 				document.getElementById('go').addEventListener('tap',function(){
-			//	plus.payment.getChannels(function(channels){
-			//	channel=channels[0];
-			//	},function(e){
-			//		alert('获取支付通道失败:'+e.message);
-			//	});
-			//	pay('alipay');
-			//	pay('weixin');
-				addOrderList();
-				plus.webview.open('orderReturn.html','orderReturn.html');
+				//	plus.payment.getChannels(function(channels){
+				//	channel=channels[0];
+				//	},function(e){
+				//		alert('获取支付通道失败:'+e.message);
+				//	});
+				//	pay('alipay');
+				//	pay('weixin');
+					addOrderList();
 				});
 			});
 		},50);
@@ -158,16 +169,54 @@ function addForm(foodList){
 }
 
 function addOrderList(){
+	var cid = null;
 	var MenuList = AV.Object.extend('MenuList');
 	var menuList = new MenuList();
-	menuList.set('user',menuSum.user);
-	menuList.set('shopId',menuSum.shopId);
-	menuList.set('foodList',menuSum.foodList);
-	menuList.set('dealData',Date());
-	menuList.save().then(function(){
-		mui.toast('菜单提交成功');
-		mui.fire(plus.webview.getWebviewById('orderReturn.html'),'sendMenuForm',{foodList:menuSum.foodList});
+	//查找商户的pushInfo.clientid
+	var shopQuery =new AV.Query('Shop');
+	shopQuery.equalTo('objectId',menuSum.shopId);
+	shopQuery.include('owner');
+	shopQuery.find().then(function(result){
+		cid = result[0].get('owner').get('pushInfo').clientid;
+		mui.toast('finded cid:'+cid);
+		menuList.set('user',menuSum.user);
+		menuList.set('shopId',menuSum.shopId);
+		menuList.set('foodList',menuSum.foodList);
+		menuList.set('dealDate',Date());
+		menuList.set('dealStatue','未接单');
+		
+		menuList.save().then(function(){
+			mui.toast('菜单提交成功');
+			pushOnline(cid);//给商户发订单提示消息
+			mui.fire(resultWin,'sendMenuForm',{foodList:menuSum.foodList});
+			mui.later(function(){
+				resultWin.show();
+			},200);
+		},function(err){mui.toast(err)});
 	},function(err){mui.toast(err)});
+}
+
+//给商户发订单提示消息
+function pushOnline(cid){
+	mui.ajax('http://demo.dcloud.net.cn/push/getui.HBuilder/push.php',{
+		data:{
+			pushtype:'noti',
+			cid:cid,
+			token:'',
+			title:'新订单提示',
+			content:'你有新的订单，请注意查收',
+			payload:''
+		},
+		dataType:'json',
+		type:'post',
+		timeout:5000,
+		success:function(data){
+			console.log(JSON.stringify(data));
+		},
+		error:function(xhr,type,errorThrown){
+			console.log(type);
+		}
+	});
 }
 ///* 支付宝支付引用  */
 //var channel =null;

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../css/mui.min.css"/>
+		<style type="text/css">
+			.half-tab{
+				padding: 10px;
+				width: 50%;
+				float: left; 
+				text-align: center;
+			}
+			.tab-active{
+				background: gray;
+				color: white;
+			}
+			li{
+				list-style: none;
+			}
+			.shop-title{padding-top: 10px;margin-bottom: 30px;}
+			.shop-title img{
+				width: 50px;border-radius: 50%;
+				float: left;
+				margin: 10px 10px 20px 20px;
+			}
+			.shopName{
+				float: left;
+				font-size: 20px;
+			}
+			.mui-icon-arrowright{
+				/*float: right;*/
+				margin-left: 20px;
+				color: gray;
+			}
+			.statue{
+				color: gray;
+				font-size: 15px;
+				float: right;
+			}
+			.food-title{
+				font-size: 12px;
+				padding: 5px 10px 0 20%;
+			}
+			.food-count{
+				float: right;
+			}
+			.food-sum{
+				font-size: 20px;
+			}
+			.food-button{
+				text-align: right;
+				padding-right: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<template id='menuLi'  style="background: white;">
+			<li>
+				<ul style="padding-left: 0!important;padding-bottom: 10px;">
+					<li class="shop-title">
+						<img src="../img/1.jpg"/>
+						<div style="padding: 30px 10px 0px 10px;">
+							<span class="shopName"><span>一家人</span>
+								<i class="mui-icon mui-icon-arrowright"></i>
+							</span>
+							<span class="statue">未接单</span>
+						</div>
+						<div class="thin-line" style="float: right;width: 80%;margin-bottom: 10px;">									
+						</div>
+					</li>
+					<li class="food-list"></li>
+					<li style="text-align: right;padding: 10px 10px 10px 0;">
+						<span>小结:</span>
+						<span class="food-sum">￥6</span>
+					</li>
+					<li class="food-button" data-id = "1">
+						<button type="button" data-id = "again-menu" class="mui-btn mui-btn-blue mui-btn-outlined">再来一单</button>
+						<button type="button" data-id = "comment-menu" class="mui-btn mui-btn-blue mui-btn-outlined">评价一下</button>
+					</li>
+				</ul>
+				<div class="thin-line">
+					
+				</div>
+			</li>
+		</template>
+		<!--下拉刷新容器-->
+		<div id="must-login" style="margin-top: 30%;">
+			<h4 style="text-align: center;color: grey">请登录后查看</h4>
+		</div>
+	
+		<div id="pullrefresh" class="mui-scroll-wrapper">
+			<div class="tab-title mui-hidden" style="height: 50px;margin-bottom: -8px!important;">
+				<div data-id = "menu-dealing" class="half-tab tab-active">
+					进行中
+				</div>
+				<div data-id = "menu-over" class="half-tab">
+					已完成
+				</div>
+			</div>
+			<div class="mui-scroll mui-hidden">
+				<!--数据列表-->
+				<ul class="mui-table-view menu-dealing mui-table-view-chevron">
+					
+				</ul>
+				<ul class="mui-table-view menu-over mui-table-view-chevron mui-hidden">
+					
+				</ul>
+			</div>
+		</div> 
+		
+		<script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/av.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+	<script type="text/javascript">
+		mui.init({
+			pullRefresh: {
+				container: '#pullrefresh',
+				down: {
+					callback: pulldownRefresh
+				}
+			}
+		});
+		
+		$('#pullrefresh').on('tap','.half-tab',function(){
+			$(this).addClass('tab-active');
+			var ulClass = $(this).data('id');
+			$('.'+ulClass).removeClass('mui-hidden');
+			$('.'+ulClass).siblings().addClass('mui-hidden');
+			$(this).siblings().removeClass('tab-active');
+		});
+		$(".menu-over").on('tap','button',function(){
+			if($(this).data('id')=='again-menu'){
+				mui.toast('再来一单');
+			}else if($(this).data('id')=='comment-menu'){
+				mui.toast('评价');
+			}
+		})
+		window.addEventListener('load',function(){
+			if(AV.User.current()!=null){
+				$('.tab-title').removeClass('mui-hidden');
+				$('#must-login').addClass('mui-hidden');
+				$('.mui-scroll').removeClass('mui-hidden');
+				refreshMenu();
+			}
+		});
+		function refreshMenu(){
+			var menuQuery=new AV.Query("MenuList");
+			var currentUser = AV.User.current();
+			var listData;
+			if (currentUser==null) {
+				mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+				mui.toast('请登录');
+				return false;
+			}
+			menuQuery.equalTo('user',currentUser.get('objectId'));
+			console.log(currentUser.get('objectId'));
+			menuQuery.find().then(function(result){
+				if(result<=0){
+					mui.toast('暂无订单');
+					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+					return false;
+				}
+				listData = result;
+				setTimeout(function() {
+					var table = document.body.querySelector('.menu-dealing');
+					var tableOver = document.body.querySelector('.menu-over');
+					
+//					var menuLi=document.querySelector('#menuLi');
+					table.innerHTML='';
+					tableOver.innerHTML='';
+					var i=0;
+//					for (var i = 0; i <listData.length; i++) {
+					
+					setInterval(function(){
+						if(i<listData.length){
+						var listSignal = listData[i];
+						var shopLi;//当前li的shop信息
+						var shopQuery = new AV.Query('Shop');
+						shopQuery.equalTo('objectId',listSignal.get('shopId'));
+						
+						shopQuery.find().then( 
+						function(resp){
+							if(resp.length<=0)return false;
+							shopLi = resp[0];
+							menuLi.content.querySelector('.shopName').innerText=shopLi.get('shopName');
+							menuLi.content.querySelector('.statue').innerText=listSignal.get('dealStatue');
+							var liText='';
+							var foodSum=0;
+							var foodList = listSignal.get('foodList');
+							for(var j=0;j<foodList.length;j++)
+							{
+								liText +='<li class="food-title"><span>'+foodList[j].info.name+'</span>'
+								+'<div class="food-count">'+'<span>￥'+foodList[j].info.price+'</span><span style="margin: 0 5px 0 10px;">x</span>'
+								+'<span>'+foodList[j].info.count+'</span></li>';
+								foodSum+=foodList[j].info.price*foodList[j].info.count;
+							}
+							menuLi.content.querySelector('.food-list').innerHTML = liText;
+							menuLi.content.querySelector('.food-sum').innerText='￥'+foodSum;
+							
+							//下拉刷新，新纪录插到最前面；
+							if(listSignal.get('dealStatue')!='已完成'){
+								menuLi.content.querySelector('.food-button').setAttribute('class','food-button mui-hidden');
+								console.log('data-id:'+listSignal.get('shopId'));
+								menuLi.content.querySelector('.food-button').setAttribute('data-id',listSignal.get('shopId'));
+								var cloneLi = menuLi.content.cloneNode(true);
+								table.insertBefore(cloneLi, table.firstChild);
+							}else{
+								menuLi.content.querySelector('.food-button').setAttribute('class','food-button');
+								menuLi.content.querySelector('.food-button').setAttribute('data-id',listSignal.get('shopId'));
+								var cloneLi = menuLi.content.cloneNode(true);
+								tableOver.insertBefore(cloneLi, tableOver.firstChild);
+							}
+						},function(err){mui.toast('err')});
+						i++;
+					}else{
+						return false;
+					}},2);
+					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+				}, 1500);
+			},function(err){mui.toast(err)});
+		}
+		function pulldownRefresh() {
+			refreshMenu();
+		}
+		
+		function againMenu(param){
+		}
+		function commentMenu(param){
+			mui.toast('comment'+$(param).data('id'));
+		}
+	</script>
+</html>

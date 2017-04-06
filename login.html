@@ -7,7 +7,8 @@
     <link href="css/mui.min.css" rel="stylesheet"/> 
     <style type="text/css">
     	body{
-    		background-image:url(img/bg.jpg);
+    		/*background-image:url(img/bg.jpg);*/
+    		background-color: black;
     	}
 		#mainContent{
 			margin: 0 auto;
@@ -40,7 +41,7 @@
 			<img src="img/666.png"style="margin: 5px;width: 50px;"/>
 		</div>
 		<div >
-			<input style="color: white;background-color: transparent;border: none;border-bottom: 1px solid white;"placeholder="手机号" type="text" name="phone"/>
+			<input style="color: white;background-color: transparent;border: none;border-bottom: 1px solid white;"placeholder="手机号或昵称" type="text" name="phone"/>
 			<input style="color: white;background-color: transparent;border: none;border-bottom: 1px solid white;"placeholder="密码" type="password" name="password"/>
 			<button id="login" style="margin-top: 50px;border-radius: 20px 20px 20px 20px;height: 50px;width: 100%;" type="button" class="mui-btn mui-btn-green">登录</button>
 		</div>
@@ -67,12 +68,29 @@
       			return;
       		}
       		AV.User.logIn(mobilePhoneNumber,password).then(
-      			function(loginedUser){      				
-      				plus.webview.getLaunchWebview().show("slide-in-right",400);
+      			function(loginedUser){
+      				mui.toast(loginedUser.get('username')+'登录成功');
+      				loginedUser.set('pushInfo',getPushInfo());
+					loginedUser.save().then(function(){mui.toast('pushInfo保存成功')},
+					function(err){mui.toast(err)});
+      				plus.webview.getWebviewById('barItem/mine.html').evalJS('window.location.reload();');
+      				mui.later(function(){
+      					plus.webview.getLaunchWebview().show("slide-in-right",200);
+      				},1000);   
       			},
       		function(error){
       			alert(JSON.stringify(error));
       		});
       	});
+      	
+      	
+/**
+ * 获取本地推送标识信息
+ */
+function getPushInfo(){
+	var info = plus.push.getClientInfo();
+	console.log("saturdayfoot"+JSON.stringify(info));
+	return info;
+}
 </script>
 </html>

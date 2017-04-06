@@ -13,16 +13,14 @@
 		.mui-active .mui-tab-label {
 			color: #41cea9;
 		}
-		.headIndex{
-			
-		}
+		.logo{margin-top: 10px;width: 45px;height: auto;}
    	</style>
 </head>
 <body class="own-gray-color">
 	<header id="head1" class="headIndex mui-bar mui-bar-nav own-main-background-color headStyle">
 		<div class=""> 
-			<img class="logo" src="img/666.png"/>		
-			<h1 id="nav-title" class="mui-title" style="margin-left: 35px;">
+			<img class="logo" src="img/font-logo.png"/>	
+			<h1 id="nav-title" class="mui-title" style="">
 				<span style="font-size: 15px;" class="mui-icon mui-icon-location">玉兰清苑13号...
 					<span class="mui-icon mui-icon-arrowdown"></span>
 					<!--<a style="margin-left: 35px;" href="#"><span class="mui-icon mui-pull-right mui-icon-search"></span></a>-->
@@ -34,27 +32,27 @@
 			诗意远方
 			<span class="mui-icon-extra mui-icon-extra-share mui-pull-right"></span>
 		</div>-->
-		<div id="head3" style="margin: 20px;" class="headIndex own-header-hidden"> 
-			收藏
-		</div>
+		<header id="head3" class="headIndex own-header-hidden mui-bar mui-bar-nav own-main-background-color headStyle"> 
+			<img class="logo" src="img/font-logo.png"/>	
+		</header>
 	<!--<header id="head4" class="headIndex own-header-hidden mui-bar mui-bar-nav own-main-background-color headStyle">
 		<div>
 			<span class="mui-icon mui-icon-settings mui-pull-right"></span>
 		</div>
 	</header>-->
 
-	<nav class="mui-bar mui-bar-tab">
+	<nav class="mui-bar mui-bar-tab" style="border-top: 1px solid lightgray!important;">
 		<a class="mui-tab-item mui-active" data-id='head1' href="barItem/home.html">
 			<span class="mui-icon mui-icon-home"></span>
 			<span class="mui-tab-label">首页</span>
 		</a>
 		<a class="mui-tab-item" data-id='head2' href="barItem/life.html">
-			<span class="mui-icon mui-icon-extra mui-icon-extra-holiday"></span>
+			<span class="mui-icon mui-icon-extra mui-icon-extra-cold"></span>
 			<span class="mui-tab-label">生活</span>
 		</a>
 		<a class="mui-tab-item" data-id='head3' href="barItem/cart.html">
 			<span class="mui-icon mui-icon-extra mui-icon-extra-cart"></span>
-			<span class="mui-tab-label">购物车</span>
+			<span class="mui-tab-label">订单</span>
 		</a>
 		<a class="mui-tab-item" data-id='head4' href="barItem/mine.html">
 			<span class="mui-icon mui-icon-person"></span>
@@ -86,7 +84,7 @@
 			navTitle = $('.headIndex');
 			mainWebview = plus.webview.currentWebview();
 			
-			plus.navigator.setStatusBarBackground( "#41cea9" );
+			plus.navigator.setStatusBarBackground('black');
 			
 			//设置只支持竖屏幕显示
 			plus.screen.lockOrientation("portrait-primary");
@@ -96,7 +94,7 @@
 			//检测是否需要显示导航页面todo
 			
 			//判断是否已经登陆,若没有登陆将预加载登陆页面
-			judgelogin();
+//			judgelogin();
 			
 			//预加载父子模版
 //			initTemplate();
@@ -110,11 +108,11 @@
 			inittabitemWebviews();
 			//添加bar点击事件接受
 			tapBaritem();		
-//			mui.later(function(){
-//				if(plus.webview.getWebviewById('barItem/home.html')){
-//					mui.fire(plus.webview.getWebviewById('barItem/home.html'),'scrollRefush');
-//				}
-//			},2000);
+			mui.later(function(){
+				if(plus.webview.getWebviewById('barItem/home.html')){
+					mui.fire(plus.webview.getWebviewById('barItem/home.html'),'scrollRefush');
+				}
+			},2000);
 		}
 		
 		
@@ -127,10 +125,10 @@
 					url:barItemArray[i],
 					styles:{
 						top:'0px',
-						bottom: '50px',
+						bottom: '51px',
 						left: '0px',
 						bounce: 'vertical',
-						bounceBackground: '#f8f8f8'
+						bounceBackground: 'black'
 						},
 						waiting:{
 							autoShow:false
@@ -142,10 +140,10 @@
 						url:barItemArray[i],
 						styles:{
 							top:'44px',
-							bottom: '50px',
+							bottom: '51px',
 							left: '0px',
 							bounce: 'vertical',
-							bounceBackground: '#f8f8f8'
+							bounceBackground: 'black'
 						},
 						waiting:{
 							autoShow:false
@@ -183,7 +181,7 @@
 ////								plus.webview.getWebviewById('shopList.html').evalJS("mui('#pullrefresh').pullRefresh().scrollTo(0,100,0)");
 //								mui.fire(plus.webview.getWebviewById('shopList.html'),'scrollRefush');
 								var clientHeight=document.documentElement.clientHeight;
-								var flag = (clientHeight-50)/3 +'px';
+								var flag = (clientHeight-49)/3 +'px';
 								plus.webview.getWebviewById('barItem/life.html').evalJS("$('.list-1-1').css('height','"+flag+"');");
 							}
 							curBarItemWebview = barItemWebviewArray[i];
@@ -193,17 +191,17 @@
 				}
 			});
 		}
-		//预加载template
-//		function initTemplate(){
-//			var webview =  mui.preload({
-//				id:'template',
-//				url:'template.html',
-//				styles:{
-//					top: '-1000px',
-//				}
-//			});
-//			webview.show();
-//		};
+//		预加载template
+		function initTemplate(){
+			var webview =  mui.preload({
+				id:'template',
+				url:'template.html',
+				styles:{
+					top: '-1000px',
+				}
+			});
+			webview.show();
+		};
 		
 		function judgelogin() {
 			//测试语句

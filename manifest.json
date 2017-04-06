@@ -99,7 +99,8 @@
         },
         "NativeObj":{
         	"description": "原生对象"
-        }
+        },"Push":{},
+        "Share":{}
 	},
 	"plus": {
 		"splashscreen": {
@@ -109,7 +110,7 @@
 		},
 		"runmode": "liberate",/*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
 		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
-		"distribute": {
+		"distribute": {"plugins":{"push":{"igexin":{"appid":"9VVDmeoY0kA65ZGnumrSS8","appkey":"rCyKCyJtfd9h7nJ7lZr3e7","appsecret":"sLBjZKjh0N7uHrlvEVCx31"}}},
 			"apple": {
 				"appid": "",/*iOS应用标识，苹果开发网站申请的appid，如io.dcloud.HelloH5*/
 				"mobileprovision": "",/*iOS应用打包配置文件*/
@@ -123,7 +124,7 @@
 				"keystore": "",/*Android应用打包使用的密钥库文件*/
 				"password": "",/*Android应用打包使用密钥库中证书的密码*/
 				"aliasname": "",/*Android应用打包使用密钥库中证书的别名*/
-				"permissions": ["<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>","<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.READ_LOGS\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-feature android:name=\"android.hardware.camera.autofocus\"/>","<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.CAMERA\"/>","<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>","<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>","<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>","<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>","<uses-feature android:name=\"android.hardware.camera\"/>","<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>","<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"]
+				"permissions": ["<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>","<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>","<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>","<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>","<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>","<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>","<uses-permission android:name=\"android.permission.GET_TASKS\"/>","<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.READ_LOGS\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>","<uses-feature android:name=\"android.hardware.camera.autofocus\"/>","<uses-feature android:name=\"android.hardware.camera\"/>","<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>","<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>","<uses-permission android:name=\"android.permission.RECEIVE_USER_PRESENT\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>","<uses-permission android:name=\"android.permission.RECEIVE_BOOT_COMPLETED\"/>","<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.CAMERA\"/>"]
 			},
 			"orientation": ["portrait-primary", "portrait-secondary"],/*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
 			"icons": {
@@ -158,7 +159,7 @@
 					"ldpi": "unpackage/res/icons/48x48.png", /*大屏程序图标，分辨率：48x48*/
 					"hdpi": "unpackage/res/icons/72x72.png", /*高分屏程序图标，分辨率：72x72*/
 					"xhdpi": "unpackage/res/icons/96x96.png",/*720P高分屏程序图标，分辨率：96x96*/
-					"xxhdpi": "unpackage/res/icons/144x144.png"
+					"xxhdpi": "unpackage/res/icons/144x144.png","xxxhdpi":"unpackage/res/icons/192x192.png"
 				}
 			},
 			"splashscreen": {
@@ -214,14 +215,15 @@
 					"js/location.js",
 					"js/common.js",
 					"js/immersed.js",
-					null
+					null,
+					"barItem/cart.html",
+					"img/font-logo.png"
 				],
 				"refer": [
 					"barItem/category.html",
 					"barItem/wishList.html",
 					"barItem/mine.html",
 					"template.html",
-					"barItem/cart.html",
 					"mine/login.html",
 					"template-main-first.html",
 					"template-main-third.html",
@@ -273,7 +275,18 @@
 					"css/mui.min.css",
 					"js/jquery.js",
 					"css/iconfont.ttf",
-					"js/av.js"
+					"js/av.js",
+					"mine/change-address-needtem.html",
+					"mine/feedback-needtem.html",
+					"css/feedback.css",
+					"js/common.js",
+					"css/app.css",
+					"js/feedback.js",
+					"js/immersed.js",
+					"js/mui.view.js",
+					"data/foodImg/0.png",
+					"img/bg.png",
+					"img/3.jpg"
 				],
 				"refer": [
 					"regist.html",
@@ -311,9 +324,20 @@
 					"css/own.css",
 					"js/mui.min.js",
 					"css/iconfont.css",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"fonts/mui.ttf",
+					"js/jquery.js",
+					"fonts/mui-icons-extra.ttf",
+					"css/icons-extra.css"
 				],
-				"refer": [],
+				"refer": [
+					"shopList/detail/orderForm.html",
+					"shopList/detail/orderReturn.html",
+					"collect/collectShop.html",
+					"collect/menuList.html",
+					"collect/menuList_main.html",
+					"collect/pullrefresh_main.html"
+				],
 				"priority": 0
 			},
 			"mine/change-address-needtem.html": {
@@ -352,7 +376,11 @@
 				"resources": [
 					"fonts/mui.ttf",
 					"fonts/iconfont.ttf",
-					"js/own.js"
+					"js/own.js",
+					"css/own.css",
+					"js/mui.min.js",
+					"css/iconfont.css",
+					"css/mui.min.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -481,11 +509,13 @@
 					"js/menuList.js",
 					"js/av.js",
 					"js/require.js",
-					"js/jquery.fly.min.js"
+					"js/jquery.fly.min.js",
+					null
 				],
 				"refer": [
 					"shopList/detail/orderForm.html",
-					"shopList/detail/menuDetail.html"
+					"shopList/detail/menuDetail.html",
+					"login.html"
 				],
 				"priority": 0
 			},
@@ -522,12 +552,16 @@
 					"png/1.jpg",
 					"png/5.png",
 					"css/mui.min.css",
-					"js/mui.min.js"
+					"js/mui.min.js",
+					null
 				],
 				"refer": [
 					"life/book.html",
 					"life/music.html",
-					"life/move.html"
+					"life/move.html",
+					"life/push.html",
+					"life/offcanvas-drag-left-plus-main.html",
+					"life/offcanvas-drag-right-plus-main.html"
 				],
 				"priority": 0
 			},
@@ -641,7 +675,8 @@
 					"js/mui.js",
 					"js/av.js",
 					"js/jquery.js",
-					"img/666.png"
+					"img/666.png",
+					"js/mui.min.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -687,7 +722,9 @@
 			},
 			"shopList/shop-comment.html": {
 				"resources": [
-					"img/detail/3.jpg"
+					"img/detail/3.jpg",
+					"fonts/mui-icons-extra.ttf",
+					"fonts/mui.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -696,6 +733,97 @@
 				"resources": [
 					"css/mui.min.css",
 					"css/icons-extra.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"life/push.html": {
+				"resources": [
+					"js/common.js",
+					"css/common.css",
+					"js/immersed.js",
+					"js/mui.min.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"life/offcanvas-drag-left-plus-main.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
+				],
+				"refer": [
+					"life/offcanvas-drag-left-plus-menu.html"
+				],
+				"priority": 0
+			},
+			"life/offcanvas-drag-right-plus-main.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
+				],
+				"refer": [
+					"life/offcanvas-drag-right-plus-menu.html"
+				],
+				"priority": 0
+			},
+			"collect/collectShop.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"js/jquery.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"collect/menuList.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"js/jquery.js",
+					"js/av.js",
+					"js/mui.js",
+					"img/1.jpg"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"collect/menuList_main.html": {
+				"resources": [
+					"css/mui.min.css",
+					"js/mui.js",
+					"fonts/mui.ttf",
+					"collect/menuList.html",
+					"js/mui.min.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"collect/pullrefresh_main.html": {
+				"resources": [
+					"collect/pullrefresh_sub.html",
+					"js/mui.min.js",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"collect/pullrefresh_sub.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"template-main-first.html": {
+				"resources": [
+					"fonts/mui.ttf"
 				],
 				"refer": [],
 				"priority": 0

@@ -31,13 +31,16 @@
 			$('button').on('tap',function(){
 //				plus.webview.getWebviewById('barItem/cart.html').show();
 				plus.webview.getWebviewById('shopListMain.html').reload();
-				plus.webview.getWebviewById('orderForm.html').close();
+				if(plus.webview.getWebviewById('orderForm.html')){
+					plus.webview.getWebviewById('orderForm.html').close();
+				}
 				plus.webview.getWebviewById('menuList.html').close();
 				plus.webview.getLaunchWebview().show();
 				plus.webview.currentWebview().close();
 			});
 		});
 		document.addEventListener('sendMenuForm',function(event){
+			console.log('recieve orderForm');
 			var foodList = event.detail.foodList;
 			if(foodList==undefined){
 				return false;

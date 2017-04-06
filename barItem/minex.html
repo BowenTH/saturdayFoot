@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>Mine</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="../css/own.css" />
+		<style type="text/css">
+			.headImg {
+				padding: 8% 0px 13% 0px;
+				/*background: url(../img/bg.jpeg);*/
+				background-color: black;
+				background-position: center center;
+				background-size: 100% auto;
+			}
+			
+			.touxiang {
+				text-align: center;
+			}
+			
+			.touxiang div {
+				width: 4em;
+				height: 4em;
+				padding: 0px;
+				border-radius: 50%;
+				border: 2px solid white;
+				color: gray;
+				margin: 0px auto;
+				margin-bottom: 5px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="he1" class="mui-content">
+			<div class="headImg">
+				<!--<button id="testLogin">登录</button>-->
+				<div class="touxiang">
+					<div>
+						<span id="loginImg" class="mui-icon mui-icon-person" style="font-size: 3.8em; color: white;"></span>						
+						<img id="trueimg" src="../img/bg.jpeg" style="display: none;width: 100%; height: 100%; border-radius: 50%;" />
+					</div>
+					<span id="lginSpan" style="color: yellow">请登录</span>
+				</div>
+			</div>
+			<ul class="" style="padding:0px;margin-top:0px;list-style: none;height: 50px;line-height: 50px;border-bottom: 1px solid lightgray;background-color: white;">
+				<li class="icon iconfont icon-yue" style="padding:0px;color: black;float: left;height: 50px;text-align: center;font-size: 130%;width: 50%;">
+					<span style="font-size: 70%;">余额</span> 
+					<span class="icon iconfont icon-shuxian" style="float: right;color: lightgray;font-size: 150%;"></span>
+				</li>
+			
+				<li class="icon iconfont icon-jifen" style="padding:0px;color: black;text-align: center;font-size: 130%;width: 50%;float: left;height: 50px;">
+						<span style="font-size: 70%;">积分</span> 
+				</li>
+			</ul>
+			<ul class="mui-table-view" style="margin-top: 10px;">
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="../mine/my-order-needtem.html">
+						<span class="mui-icon iconfont icon-wodedingdan"></span> 我的订单
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a id="changeaddress" class="mui-navigate-right" href="../mine/change-address-needtem.html">
+						<span class="mui-icon iconfont icon-dizhi"></span> 修改地址
+					</a>
+				</li>
+			</ul>
+			
+			<ul class="mui-table-view" style="margin-top: 20px;">
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="../mine/change-email-needtem.html">
+						<span class="mui-icon mui-icon-email"></span> 修改邮箱
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="../mine/change-psd-needtem.html">
+						<span class="mui-icon mui-icon-locked"></span> 修改密码
+					</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view" style="margin-top: 20px;">
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="../mine/feedback-needtem.html">
+						<span class="mui-icon iconfont icon-xiaolian"></span> 用户反馈
+					</a>
+				</li>
+			</ul>
+
+			<ul id="logoutBtn" class="mui-table-view" style="margin-top: 20px;margin-bottom: 20px;">
+				<li class="mui-table-view-cell" style="text-align: center;">
+					<span style="color: indianred;">退出登录</span>
+				</li>
+			</ul>
+		</div>
+		<script type="text/javascript" src="../js/mui.min.js"></script>
+		<script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/av.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../js/own.js"></script>
+		<script type="text/javascript" charset="UTF-8">
+			mui.init({
+				swipeBack: false
+			});		
+			mui.plusReady(function() {
+					parentWebView = plus.webview.currentWebview().parent();
+					
+				});
+				$('#loginImg').on('tap',function(){					
+					mui.openWindow({
+					url:'../login.html',id:'login.html',
+					show:{
+						aniShow:'slide-in-right',duration:400
+					}});
+				});
+				//点击头像事件
+				$('#lginSpan').on('tap',function(){					
+					mui.openWindow({
+					url:'../login.html',id:'login.html', 
+					show:{
+						aniShow:'slide-in-right',duration:400
+					}});
+				});
+				$(document).on('loginSuccess',function(){
+					var currentUser = AV.User.current();
+      				alert(JSON.stringify(currentUser));
+				})
+		</script>
+	</body>
+
+</html>

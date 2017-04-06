@@ -113,7 +113,12 @@
 	 		user.set('password',password);
 	 		user.setMobilePhoneNumber(mobilePhoneNumber);
 	 		user.signUp().then(function(loginerUser){
-	 			mui.toast('登录成功');
+	 			mui.toast(loginerUser.get('username')+'登录成功');
+	 			//保存pushInfo
+	 			loginedUser.set('pushInfo',getPushInfo());
+				loginedUser.save().then(function(){mui.toast('pushInfo保存成功')},
+				function(err){mui.toast(err)});
+				
 				plus.webview.getLaunchWebview().show("slide-in-right",400);				
 				},function(error){
 					mui.toast('登录失败');
@@ -124,5 +129,13 @@
 			alert(JSON.stringify(error));
 		});
      });
+/**
+ * 获取本地推送标识信息
+ */
+function getPushInfo(){
+	var info = plus.push.getClientInfo();
+	console.log(JSON.stringify(info));
+	return info;
+}
 </script>
 </html>

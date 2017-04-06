@@ -5,6 +5,7 @@
 		margin: 0;
 		padding: 0;
 		height: 45px;
+		color: white;
 	}
 	.logo{
 		width: 40px;
@@ -21,7 +22,7 @@
 	}
 	
 	body {
-		background-color: #F8F8F8;
+		background-color: #f8f8f8;
 	}
 	/*将返回按钮和导航条标题设置为白色*/
 	
@@ -41,7 +42,7 @@
 	}
 	
 	.own-main-background-color {
-		background-color: #41cea9;
+		background-color:  #333333;
 	}
 	
 	.own-header-hidden {

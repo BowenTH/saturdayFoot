@@ -393,54 +393,8 @@
 					}
 				}
 				leftMenu=result;
-				console.log(JSON.stringify(leftMenu));
 			},function(err){console.log(err)});
 //			mui.later();
-		}
-//			封装商户信息上传
-		function upShopList(){
-			$.getJSON('../../data/dataList.json',function(result){
-				leftMenu=result;				
-//				alert("本地获取店铺信息"+JSON.stringify(leftMenu));
-			});
-			var Product=AV.Object.extend('shopList');
-			var product = new Product();
-
-			mui.later(function(){
-				var Query=new AV.Query("shopList");
-				Query.equalTo('shopname','诚哥的店');	
-				var resultFind = Query.find({
-				success:function(resp){
-					return;//注释掉，可实现上传功能
-					mui.toast('正在查找商户...'); 
-					if(resp.length){
-//						alert('服务器查询结果'+JSON.stringify(resp));
-						if(!confirm("该商户已存在，上传会覆盖原商户信息，是否继续")){
-							return; 
-						}else{
-							resp[0].destroy().then(  
-								function(){},function(error){alert(JSON.stringify(error));}
-							); 
-						} 
-					}
-					product.save({
-						shopname:'诚哥的店',
-						product:{'data':leftMenu},
-						position:localStorage.getItem('shopPosition'),
-						orderList:null
-						}
-					).then(function() {
-					    //  发布成功，跳转到商品 list 页面			    
-					    alert('开始上传'+JSON.stringify(leftMenu));  
-					}, function(error) {
-					    alert('上传出错  '+JSON.stringify(error));
-					});
-				},
-				error:function(error){
-					alert(JSON.stringify(error));
-				}				
-				});				
-			},100);
 		}
 		
 		var controls = document.getElementById("segmentedControls");
@@ -629,6 +583,11 @@
 			}); 
 		});
 		document.getElementById('listSubmit').addEventListener('tap',function(){
+			if(AV.User.current()==null){
+				mui.toast('请先登录');
+				mui.openWindow('../../login.html','login.html');
+				return false;
+			}
 			var userId = AV.User.current().get('objectId');
 			menuSum.shopId = shopId;
 			menuSum.user = userId;
