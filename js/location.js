@@ -35,8 +35,6 @@ function displayError(error){
         if(error.code==0 || error.code==2){
 	 errorMessage=errorMessage+" "+error.message;		  
         }
-     myDiv.innerHTML=errorMessage; 
- 
      option.timeout += 10000;
      navigator.geolocation.getCurrentPosition(displayLocation,displayError,option);
    }

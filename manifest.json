@@ -100,7 +100,7 @@
         "NativeObj":{
         	"description": "原生对象"
         },"Push":{},
-        "Share":{}
+        "Payment":{},"Share":{}
 	},
 	"plus": {
 		"splashscreen": {
@@ -110,7 +110,7 @@
 		},
 		"runmode": "liberate",/*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
 		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
-		"distribute": {"plugins":{"push":{"igexin":{"appid":"9VVDmeoY0kA65ZGnumrSS8","appkey":"rCyKCyJtfd9h7nJ7lZr3e7","appsecret":"sLBjZKjh0N7uHrlvEVCx31"}}},
+		"distribute": {"plugins":{"share":{"weixin":{"appid":"wxa5e2f750c10399a8","appsecret":"fc56f0989434bfd57a579941bea62be4","description":"可选，微信分享"}},"payment":{"alipay":{"description":"阿里支付","scheme":""}},"push":{"igexin":{"appid":"9VVDmeoY0kA65ZGnumrSS8","appkey":"rCyKCyJtfd9h7nJ7lZr3e7","appsecret":"sLBjZKjh0N7uHrlvEVCx31"}}},
 			"apple": {
 				"appid": "",/*iOS应用标识，苹果开发网站申请的appid，如io.dcloud.HelloH5*/
 				"mobileprovision": "",/*iOS应用打包配置文件*/
@@ -286,7 +286,8 @@
 					"js/mui.view.js",
 					"data/foodImg/0.png",
 					"img/bg.png",
-					"img/3.jpg"
+					"img/3.jpg",
+					"img/logo.png"
 				],
 				"refer": [
 					"regist.html",
@@ -561,7 +562,9 @@
 					"life/move.html",
 					"life/push.html",
 					"life/offcanvas-drag-left-plus-main.html",
-					"life/offcanvas-drag-right-plus-main.html"
+					"life/offcanvas-drag-right-plus-main.html",
+					"life/goshopping.html",
+					"life/recipe.html"
 				],
 				"priority": 0
 			},
@@ -607,7 +610,8 @@
 					"img/book/buy.png",
 					"img/book/read.png",
 					"img/book/talk.png",
-					"img/book/loading.gif"
+					"img/book/loading.gif",
+					"img/category.png"
 				],
 				"refer": [
 					"life/book-comment.html"
@@ -630,9 +634,12 @@
 					"css/icons-extra.css",
 					"img/music/900.jpg",
 					"img/music/800.png",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"js/mui.js"
 				],
-				"refer": [],
+				"refer": [
+					"life/music-cloud.html"
+				],
 				"priority": 0
 			},
 			"life/move.html": {
@@ -660,10 +667,12 @@
 					"js/mui.js",
 					"js/av.js",
 					"js/jquery.js",
-					"img/666.png"
+					"img/666.png",
+					"img/logo.png"
 				],
 				"refer": [
-					"login.html"
+					"login.html",
+					"againMobilePhone.html"
 				],
 				"priority": 0
 			},
@@ -676,9 +685,13 @@
 					"js/av.js",
 					"js/jquery.js",
 					"img/666.png",
-					"js/mui.min.js"
+					"js/mui.min.js",
+					"img/logo.png"
 				],
-				"refer": [],
+				"refer": [
+					"regist.html",
+					"forgetPassword.html"
+				],
 				"priority": 0
 			},
 			"life/book-comment.html": {
@@ -762,7 +775,9 @@
 				"resources": [
 					"js/mui.min.js",
 					"fonts/mui.ttf",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"css/iconfont.ttf",
+					"css/iconfont.css"
 				],
 				"refer": [
 					"life/offcanvas-drag-right-plus-menu.html"
@@ -824,6 +839,88 @@
 			"template-main-first.html": {
 				"resources": [
 					"fonts/mui.ttf"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"uptest.html": {
+				"resources": [
+					"js/mui.js",
+					"js/av.js",
+					"js/jquery.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"forgetPassword.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"img/logo.png",
+					"js/av.js",
+					"js/jquery.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"againMobilePhone.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"img/logo.png",
+					"js/av.js",
+					"js/jquery.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"life/offcanvas-drag-right-plus-menu.html": {
+				"resources": [
+					"js/jquery.js"
+				],
+				"refer": [
+					"life/appointment.html",
+					"life/help.html",
+					"life/gossip.html",
+					"life/recommend.html",
+					"life/solve.html",
+					"life/article.html",
+					"life/live.html"
+				],
+				"priority": 0
+			},
+			"life/goshopping.html": {
+				"resources": [
+					"fonts/mui-icons-extra.ttf",
+					"css/iconfont.ttf",
+					"fonts/mui.ttf",
+					"css/iconfont.css",
+					"css/mui.min.css",
+					"js/mui.js",
+					"css/icons-extra.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"life/recipe.html": {
+				"resources": [
+					"fonts/mui-icons-extra.ttf",
+					"js/mui.js",
+					"css/icons-extra.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"life/music-cloud.html": {
+				"resources": [
+					"fonts/mui.ttf",
+					"js/mui.js",
+					"css/mui.min.css",
+					"js/jquery.js"
 				],
 				"refer": [],
 				"priority": 0

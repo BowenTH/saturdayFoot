@@ -7,6 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" type="text/css" href="../css/iconfont.css"/>
 
 		<link rel="stylesheet" href="../css/mui.min.css">
 		<style>
@@ -23,18 +24,37 @@
 				margin-left: -15px;
 				padding-right: 10px;
 			}
+			.hpic{
+				line-height: 66px;
+				height: 66px;
+				border-radius: 50%;
+				border: 1px solid lightgray;
+				
+				
+			}
+			#nickname{
+				padding: 10px 5px;
+			}
+			.plf div{
+				text-align: center;
+			}
+			div.pinglun i{
+				font-size: 150%; 
+				color: gray;
+			}
 		</style>
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav">
-			<a class="mui-action-menu mui-icon mui-icon-bars mui-pull-left"></a>
-			<a class="mui-action-back mui-btn mui-btn-link mui-pull-right">关闭</a>
-			<h1 class="mui-title">off canvas（侧滑导航）</h1>
+		<header class="mui-bar mui-bar-nav" style="background-color: black;">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="font-size:120% ;color: white;"></a>
+		    <a class=" mui-icon mui-icon-plusempty mui-pull-right" style="font-size: 150%;color: white;"></a>
+		    <h1 class="mui-title" style="color: white;">一方八卦</h1>
 		</header>
-		<div class="mui-content">
-			<div class="mui-content-padded">
-				<p>这是webview模式右滑导航示例，主页面和菜单在不同的webview中，
+		
+		<!--<div class="mui-content">
+			<div class="mui-content-padded">-->
+				<!--<p>这是webview模式右滑导航示例，主页面和菜单在不同的webview中，
 					优点是支持菜单内容在多页面的复用，缺点是不支持拖动手势（跟手）；
 					当前页面为主界面，你可以在主界面放置任何内容；
 					 打开侧滑菜单有多种方式：
@@ -43,16 +63,16 @@
 					<span class="mui-icon mui-icon-bars"></span> 图标；
 					 3、通过JS API触发（例如点击如下蓝色按钮体验）；
 					 <span class="android-only">4、Android手机按menu键；</span>
-				</p>
-				<p style="padding: 5px 20px;margin-bottom: 5px;">
+				</p>-->
+				<!--<p style="padding: 5px 20px;margin-bottom: 5px;">
 					<button id="show-btn" type="button" class="mui-btn mui-btn-primary mui-btn-block" style="padding: 10px;">
 						显示侧滑菜单
 					</button>
 				</p>
 				<p >侧滑菜单的移动动画，支持多种效果，切换如下选项体验不同动画效果：</p>
 
-			</div>
-			<form class="mui-input-group" style="margin-bottom: 15px;">
+			</div>-->
+			<!--<form class="mui-input-group" style="margin-bottom: 15px;">
 				<div class="mui-input-row mui-radio">
 					<label>主界面移动、菜单不动</label>
 					<input name="style" type="radio" checked="" value="main-move">
@@ -65,7 +85,169 @@
 					<label>整体移动</label>
 					<input name="style" type="radio" value="all-move">
 				</div>
-			</form>
+			</form>-->
+		<!--</div>-->
+		<!--<div  style="margin-top: 45px;">
+			<ul class="mui-table-view">
+				<li class=" mui-media" style="margin-left: 4px;">
+					<img class="mui-media-object mui-pull-left hpic" src="pic/2.jpg" />
+					<div id="nickname"><span>呢称</span>
+						<div style="color: lightgray;">2017-3-28</div>
+						<div class="mui-card-content">
+					<div class="mui-card-content-inner">
+					
+						<p style="color: #333;">这里显示文章摘要，让读者对文章内容有个粗略的概念...</p>
+					</div>
+				</div>
+						<div style="width: 400px;">
+							<img src="http://onemx0fwv.bkt.clouddn.com/backbagt1.jpg" style="width: 100px;height: 100px;" />
+							<img src="pic/17326.jpg" style="width: 100px;height: 100px;" />
+							<img src="pic/17326.jpg" style="width: 100px;height: 100px;" />
+								<img src="pic/17326.jpg" style="width: 100px;height: 100px;" />
+								<img src="pic/17326.jpg" style="width: 100px;height: 100px;" />
+							<img src="pic/17326.jpg" style="width: 100px;height: 100px;" />
+							<img src="pic/17326.jpg" style="width: 100px;height: 100px;" />
+								<img src="pic/17326.jpg" style="width: 100px;height: 100px;" />
+								<img src="pic/17326.jpg" style="width: 100px;height: 100px;" />
+						</div>
+						
+						<div class="mui-row plf" style="margin: 3% 5% 5% 5%;">
+			<div class="mui-col-xs-4 pinglun" >
+				<i class="icon iconfont icon-dianzan bigFont" ></i>
+			</div>
+			
+			<div class="mui-col-xs-4 pinglun" >
+				<i class="icon iconfont icon-pinglun01-copy bigFont" ></i>
+				
+			</div>
+			<div class="mui-col-xs-4 pinglun" >
+				<i  class="icon iconfont icon-caibishi bigFont" ></i>	
+				
+			</div>
+		</div>	
+		
+		<!--<div style="border-bottom: 1px solid lightgray;height: 1px;width: 100%;"></div>-->
+							
+							
+							
+							
+						<!--</div>
+						 
+					
+					
+					
+				</li>
+				
+				
+			</ul>
+			
+			
+		</div>-->
+		<div  style="margin-top: 45px;">
+			<ul class="mui-table-view">
+				<li class=" mui-media" style="margin-left: 4px;">
+					<img class="mui-media-object mui-pull-left hpic" src="../img/ltouxiang.jpg" />
+					<div id="nickname"><span>呢称</span>
+						<p>2017-3-28</p>
+						<div class="mui-card-content">
+					<div class="mui-card-content-inner">
+					
+						<p style="color: #333;">这里显示文章摘要，让读者对文章内容有个粗略的概念..6.</p>
+					</div>
+				</div>
+						<div style="width: 400px;">
+							<img src="http://onemx0fwv.bkt.clouddn.com/backbagt1.jpg" style="width: 100px;height: 100px;" />
+							<img src="../img/lpic.jpg" style="width: 100px;height: 100px;" />
+							<img src="../img/lpic.jpg" style="width: 100px;height: 100px;" />
+								<img src="../img/lpic.jpg" style="width: 100px;height: 100px;" />
+								<img src="../img/lpic.jpg" style="width: 100px;height: 100px;" />
+							<img src="../img/lpic.jpg" style="width: 100px;height: 100px;" />
+							<img src="../img/lpic.jpg" style="width: 100px;height: 100px;" />
+								<img src="../img/lpic.jpg" style="width: 100px;height: 100px;" />
+								<img src="../img/lpic.jpg" style="width: 100px;height: 100px;" />
+						</div>
+						
+						<div class="mui-row plf" style="margin: 3% 5% 5% 5%;">
+			<div class="mui-col-xs-4 pinglun" >
+				<i class="icon iconfont icon-dianzan bigFont" ></i>
+			</div>
+			
+			<div class="mui-col-xs-4 pinglun" >
+				<i class="icon iconfont icon-pinglun01-copy bigFont" ></i>
+				
+			</div>
+			<div class="mui-col-xs-4 pinglun" >
+				<i  class="icon iconfont icon-caibishi bigFont" ></i>	
+				
+			</div>
+		</div>	
+		
+		<!--<div style="border-bottom: 1px solid lightgray;height: 1px;width: 100%;"></div>-->
+							
+							
+							
+							
+						</div>
+						 
+					
+					
+					
+				</li>
+				
+				
+			</ul>
+			
+			
+		</div>
+		<div  style="">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-media" style="margin-left: 4px;">
+					<img class="mui-media-object mui-pull-left hpic" src="../img/ltouxiang.jpg" />
+					<div id="nickname"><span>呢称</span>
+						<p>2017-3-28</p>
+						<div style="width: 400px;">
+							<img src="http://onemx0fwv.bkt.clouddn.com/17326.jpg" style="width: 100px;height: 100px;" />
+							<img src="../img/lpic.jpg" style="width: 100px;height: 100px;" />
+							<img src="../img/lpic.jpg" style="width: 100px;height: 100px;" />
+								<img src="../img/lpic.jpg" style="width: 100px;height: 100px;" />
+								<img src="../img/lpic.jpg" style="width: 100px;height: 100px;" />
+							<img src="../img/lpic.jpg" style="width: 100px;height: 100px;" />
+							<img src="../img/lpic.jpg" style="width: 100px;height: 100px;" />
+								<img src="../img/lpic.jpg" style="width: 100px;height: 100px;" />
+								<img src="../img/lpic.jpg" style="width: 100px;height: 100px;" />
+						</div>
+						
+						<div class="mui-row plf" style="margin: 3% 5% 5% 5%;">
+			<div class="mui-col-xs-4 pinglun" >
+				<i class="icon iconfont icon-dianzan bigFont" ></i>
+			</div>
+			
+			<div class="mui-col-xs-4 pinglun" >
+				<i class="icon iconfont icon-pinglun01-copy bigFont" ></i>
+				
+			</div>
+			<div class="mui-col-xs-4 pinglun" >
+				<i  class="icon iconfont icon-caibishi bigFont" ></i>	
+				
+			</div>
+		</div>	
+		
+		<!--<div style="border-bottom: 1px solid lightgray;height: 1px;width: 100%;"></div>-->
+							
+							
+							
+							
+						</div>
+						 
+					
+					
+					
+				</li>
+				
+				
+			</ul>
+			
+			
 		</div>
 	</body>
 	<script src="../js/mui.min.js"></script>
@@ -73,14 +255,14 @@
 		var main,menu, mask = mui.createMask(_closeMenu);
 		var showMenu = false,mode = 'menu-move';
 		 
-		if (!mui.os.android) {
-			//整体滑动暂不支持android手机，因为两个页面的移动动画，无法保证同步性；
-			document.getElementById("move-togger").classList.remove('mui-hidden');
-			var spans = document.querySelectorAll('.android-only');
-			for (var i=0,len=spans.length;i<len;i++) {
-				spans[i].style.display = "none";
-			}
-		}
+//		if (!mui.os.android) {
+//			//整体滑动暂不支持android手机，因为两个页面的移动动画，无法保证同步性；
+//			document.getElementById("move-togger").classList.remove('mui-hidden');
+//			var spans = document.querySelectorAll('.android-only');
+//			for (var i=0,len=spans.length;i<len;i++) {
+//				spans[i].style.display = "none";
+//			}
+//		}
 
 		mui.init({
 			swipeBack: false,
@@ -105,7 +287,7 @@
 			setTimeout(function () {
 				//侧滑菜单默认隐藏，这样可以节省内存；
 				menu = mui.preload({
-					id: 'offcanvas-drag-right-plus-menu',
+					id: 'offcanvas-drag-right-plus-menu.html',
 					url: 'offcanvas-drag-right-plus-menu.html',
 					styles: {
 						left: 0,
@@ -140,7 +322,7 @@
 		 * 关闭侧滑菜单
 		 */
 		function closeMenu () {
-			_closeMenu();
+			console.log('close menu');
 			//关闭遮罩
 			mask.close();
 		}
@@ -168,8 +350,8 @@
 		}
 		
 		 //点击左上角图标，打开侧滑菜单；
-		document.querySelector('.mui-icon-bars').addEventListener('tap', openMenu);
-		document.getElementById("show-btn").addEventListener('tap',openMenu);
+		//document.querySelector('.mui-icon-bars').addEventListener('tap', openMenu);
+		//document.getElementById("show-btn").addEventListener('tap',openMenu);
 		 //在android4.4中的swipe事件，需要preventDefault一下，否则触发不正常
 		 //故，在dragleft，dragright中preventDefault
 		window.addEventListener('dragright', function(e) {
@@ -179,11 +361,29 @@
 			e.detail.gesture.preventDefault();
 		});
 		 //主界面向右滑动，若菜单未显示，则显示菜单；否则不做任何操作；
+	
 		window.addEventListener("swiperight", openMenu);
 		 //主界面向左滑动，若菜单已显示，则关闭菜单；否则，不做任何操作；
 		window.addEventListener("swipeleft", closeMenu);
-		 //menu页面向左滑动，关闭菜单；
-		window.addEventListener("menu:swipeleft", closeMenu);
+		 //menu页面向左滑动，关闭菜单；articleMenu
+		 window.addEventListener("menu:swiperight",openMenu);
+		 window.addEventListener("menu:swipeleft",closeMenu);
+//		 window.addEventListener("menu:swiperight",openMenu);
+//		 window.addEventListener("gossipMenu:swipeleft",closeMenu);
+//		 window.addEventListener("appointMenu:swiperight",openMenu);
+//		 window.addEventListener("appointMenu:swipeleft",closeMenu);
+//		window.addEventListener("recommendMenu:swiperight",openMenu);
+//		window.addEventListener("recommendMenu:swipeleft",closeMenu);
+//		 	 
+//		 window.addEventListener("helpMenu:swiperight",openMenu);		 
+//		 window.addEventListener("helpMenu:swipeleft",closeMenu);
+//		 window.addEventListener("solveMenu:swiperight",openMenu);
+//		 window.addEventListener("solveMenu:swipeleft",closeMenu);
+//		 window.addEventListener("articleMenu:swiperight", openMenu);
+//		 window.addEventListener("articleMenu:swipeleft", closeMenu);
+//		 window.addEventListener("foodMenu:swiperight", openMenu);
+//		 window.addEventListener("foodMenu:swipeleft", closeMenu);
+//		window.addEventListener("menu:swipeleft", closeMenu);
 
 		//重写mui.menu方法，Android版本menu按键按下可自动打开、关闭侧滑菜单；
 		mui.menu = function() {

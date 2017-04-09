@@ -2,7 +2,8 @@
 	"barItem/category.html": {
 		"resources": [
 			"img/category.png"
-		]
+		],
+		"refer": []
 	},
 	"index.html": {
 		"resources": [
@@ -19,7 +20,9 @@
 			"fonts/mui-icons-extra.ttf",
 			"js/location.js",
 			"js/common.js",
-			"js/immersed.js"
+			"js/immersed.js",
+			"barItem/cart.html",
+			"img/font-logo.png"
 		],
 		"refer": [
 			"barItem/category.html",
@@ -77,11 +80,25 @@
 			"css/mui.min.css",
 			"js/jquery.js",
 			"css/iconfont.ttf",
-			"js/av.js"
+			"js/av.js",
+			"mine/change-address-needtem.html",
+			"mine/feedback-needtem.html",
+			"css/feedback.css",
+			"js/common.js",
+			"css/app.css",
+			"js/feedback.js",
+			"js/immersed.js",
+			"js/mui.view.js",
+			"data/foodImg/0.png",
+			"img/bg.png",
+			"img/3.jpg",
+			"img/logo.png"
 		],
 		"refer": [
 			"regist.html",
-			"login.html"
+			"login.html",
+			"mine/change-address-needtem.html",
+			"mine/feedback-needtem.html"
 		]
 	},
 	"template.html": {
@@ -113,7 +130,19 @@
 			"css/own.css",
 			"js/mui.min.js",
 			"css/iconfont.css",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"fonts/mui.ttf",
+			"js/jquery.js",
+			"fonts/mui-icons-extra.ttf",
+			"css/icons-extra.css"
+		],
+		"refer": [
+			"shopList/detail/orderForm.html",
+			"shopList/detail/orderReturn.html",
+			"collect/collectShop.html",
+			"collect/menuList.html",
+			"collect/menuList_main.html",
+			"collect/pullrefresh_main.html"
 		]
 	},
 	"mine/change-address-needtem.html": {
@@ -124,14 +153,16 @@
 			"css/iconfont.css",
 			"css/mui.min.css",
 			"fonts/iconfont.ttf"
-		]
+		],
+		"refer": []
 	},
 	"mine/address-needtem.html": {
 		"resources": [
 			"js/mui.picker.min.js",
 			"css/mui.picker.min.css",
 			"js/city.data-3.js"
-		]
+		],
+		"refer": []
 	},
 	"template-main-third.html": {
 		"resources": [
@@ -140,25 +171,33 @@
 			"js/mui.min.js",
 			"css/iconfont.css",
 			"css/mui.min.css"
-		]
+		],
+		"refer": []
 	},
 	"mine/login.html": {
 		"resources": [
 			"fonts/mui.ttf",
 			"fonts/iconfont.ttf",
-			"js/own.js"
-		]
+			"js/own.js",
+			"css/own.css",
+			"js/mui.min.js",
+			"css/iconfont.css",
+			"css/mui.min.css"
+		],
+		"refer": []
 	},
 	"spring.html": {
 		"resources": [
 			"img/50.jpg"
-		]
+		],
+		"refer": []
 	},
 	"barItem/shopList.html": {
 		"resources": [
 			"css/style.css",
 			"css/tab.css"
-		]
+		],
+		"refer": []
 	},
 	"shopList/shopListMain.html": {
 		"resources": [
@@ -204,7 +243,8 @@
 		"resources": [
 			"js/mui.min.js",
 			"css/mui.min.css"
-		]
+		],
+		"refer": []
 	},
 	"mine/change-psd-needtem.html": {
 		"resources": [
@@ -213,7 +253,8 @@
 			"fonts/mui.ttf",
 			"css/iconfont.css",
 			"fonts/iconfont.ttf"
-		]
+		],
+		"refer": []
 	},
 	"shopList/movie.html": {
 		"resources": [
@@ -224,7 +265,8 @@
 			"fonts/mui-icons-extra.ttf",
 			"fonts/mui.ttf",
 			"img/detail/3.jpg"
-		]
+		],
+		"refer": []
 	},
 	"shopList/detailHead.html": {
 		"resources": [
@@ -267,7 +309,8 @@
 		],
 		"refer": [
 			"shopList/detail/orderForm.html",
-			"shopList/detail/menuDetail.html"
+			"shopList/detail/menuDetail.html",
+			"login.html"
 		]
 	},
 	"Home/product-detail-needtem.html": {
@@ -280,7 +323,8 @@
 			"img/detail/1.jpg",
 			"img/detail/4.jpg",
 			"img/3.jpg"
-		]
+		],
+		"refer": []
 	},
 	"barItem/life.html": {
 		"resources": [
@@ -306,7 +350,12 @@
 		"refer": [
 			"life/book.html",
 			"life/music.html",
-			"life/move.html"
+			"life/move.html",
+			"life/push.html",
+			"life/offcanvas-drag-left-plus-main.html",
+			"life/offcanvas-drag-right-plus-main.html",
+			"life/goshopping.html",
+			"life/recipe.html"
 		]
 	},
 	"shopList/detail/orderForm.html": {
@@ -330,7 +379,8 @@
 			"js/mui.js",
 			"js/jquery.js",
 			"js/av.js"
-		]
+		],
+		"refer": []
 	},
 	"life/book.html": {
 		"resources": [
@@ -348,7 +398,8 @@
 			"img/book/buy.png",
 			"img/book/read.png",
 			"img/book/talk.png",
-			"img/book/loading.gif"
+			"img/book/loading.gif",
+			"img/category.png"
 		],
 		"refer": [
 			"life/book-comment.html"
@@ -370,7 +421,11 @@
 			"css/icons-extra.css",
 			"img/music/900.jpg",
 			"img/music/800.png",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"js/mui.js"
+		],
+		"refer": [
+			"life/music-cloud.html"
 		]
 	},
 	"life/move.html": {
@@ -386,7 +441,8 @@
 			"img/music/xiyou-0.jpg",
 			"css/iconfont.ttf",
 			"css/iconfont.css"
-		]
+		],
+		"refer": []
 	},
 	"regist.html": {
 		"resources": [
@@ -396,10 +452,12 @@
 			"js/mui.js",
 			"js/av.js",
 			"js/jquery.js",
-			"img/666.png"
+			"img/666.png",
+			"img/logo.png"
 		],
 		"refer": [
-			"login.html"
+			"login.html",
+			"againMobilePhone.html"
 		]
 	},
 	"login.html": {
@@ -410,7 +468,13 @@
 			"js/mui.js",
 			"js/av.js",
 			"js/jquery.js",
-			"img/666.png"
+			"img/666.png",
+			"js/mui.min.js",
+			"img/logo.png"
+		],
+		"refer": [
+			"regist.html",
+			"forgetPassword.html"
 		]
 	},
 	"life/book-comment.html": {
@@ -422,12 +486,14 @@
 			"img/book/shu.jpg",
 			"js/av.js",
 			"js/jquery.js"
-		]
+		],
+		"refer": []
 	},
 	"template-main-second.html": {
 		"resources": [
 			"fonts/mui.ttf"
-		]
+		],
+		"refer": []
 	},
 	"shopList/detail/menuDetail.html": {
 		"resources": [
@@ -444,17 +510,180 @@
 			"css/mui.min.css",
 			"js/mui.js",
 			"js/jquery.js"
-		]
+		],
+		"refer": []
 	},
 	"shopList/shop-comment.html": {
 		"resources": [
-			"img/detail/3.jpg"
-		]
+			"img/detail/3.jpg",
+			"fonts/mui-icons-extra.ttf",
+			"fonts/mui.ttf"
+		],
+		"refer": []
 	},
 	"shopList/shop-detail.html": {
 		"resources": [
 			"css/mui.min.css",
 			"css/icons-extra.css"
+		],
+		"refer": []
+	},
+	"life/push.html": {
+		"resources": [
+			"js/common.js",
+			"css/common.css",
+			"js/immersed.js",
+			"js/mui.min.js"
+		],
+		"refer": []
+	},
+	"life/offcanvas-drag-left-plus-main.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"life/offcanvas-drag-left-plus-menu.html"
+		]
+	},
+	"life/offcanvas-drag-right-plus-main.html": {
+		"refer": [
+			"life/offcanvas-drag-right-plus-menu.html"
+		],
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/iconfont.ttf",
+			"css/iconfont.css"
+		]
+	},
+	"collect/collectShop.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/jquery.js"
+		],
+		"refer": []
+	},
+	"collect/menuList.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/jquery.js",
+			"js/av.js",
+			"js/mui.js",
+			"img/1.jpg"
+		],
+		"refer": []
+	},
+	"collect/menuList_main.html": {
+		"resources": [
+			"css/mui.min.css",
+			"js/mui.js",
+			"fonts/mui.ttf",
+			"collect/menuList.html",
+			"js/mui.min.js"
+		],
+		"refer": [
+			"collect/menuList.html"
+		]
+	},
+	"collect/pullrefresh_main.html": {
+		"resources": [
+			"collect/pullrefresh_sub.html",
+			"js/mui.min.js",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"collect/pullrefresh_sub.html"
+		]
+	},
+	"collect/pullrefresh_sub.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": []
+	},
+	"template-main-first.html": {
+		"resources": [
+			"fonts/mui.ttf"
+		],
+		"refer": []
+	},
+	"uptest.html": {
+		"resources": [
+			"js/mui.js",
+			"js/av.js",
+			"js/jquery.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": []
+	},
+	"forgetPassword.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"img/logo.png",
+			"js/av.js",
+			"js/jquery.js"
+		]
+	},
+	"againMobilePhone.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"img/logo.png",
+			"js/av.js",
+			"js/jquery.js"
+		]
+	},
+	"life/offcanvas-drag-right-plus-menu.html": {
+		"resources": [
+			"js/jquery.js"
+		],
+		"refer": [
+			"life/appointment.html",
+			"life/help.html",
+			"life/gossip.html",
+			"life/recommend.html",
+			"life/solve.html",
+			"life/article.html",
+			"life/live.html"
+		]
+	},
+	"life/goshopping.html": {
+		"resources": [
+			"fonts/mui-icons-extra.ttf",
+			"css/iconfont.ttf",
+			"fonts/mui.ttf",
+			"css/iconfont.css",
+			"css/mui.min.css",
+			"js/mui.js",
+			"css/icons-extra.css"
+		]
+	},
+	"life/recipe.html": {
+		"resources": [
+			"fonts/mui-icons-extra.ttf",
+			"js/mui.js",
+			"css/icons-extra.css"
+		]
+	},
+	"life/music-cloud.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"js/mui.js",
+			"css/mui.min.css",
+			"js/jquery.js"
 		]
 	}
 }

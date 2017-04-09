@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../css/mui.min.css"/>
+		<style type="text/css">
+		</style>
+	</head>
+	<body>
+	<header class="mui-bar mui-bar-nav">
+	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	    <h1 class="mui-title">网易</h1>
+	</header>
+	<div class="mui-content">
+		 <div class="mui-fullscreen" id="main">
+		   <iframe src="http://music.163.com/#/song?id=470736426" width="100%" height="600px" frameborder="0">
+		        您的浏览器不支持iframe，请升级
+		   </iframe>
+			<!--<iframe frameborder="frameborder" border="2" marginwidth="10" marginheight="10" width=330 height=86 
+				src="http://music.163.com/outchain/player?type=2&id=448157798&auto=1&height=66">
+			</iframe>-->
+		</div>
+	</div>
+	</body>
+	<script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/mui.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		mui.init();
+		mui.plusReady(function(){});
+		var oldback = mui.back;
+		mui.back=function(){
+			plus.webview.getWebviewById('music.html').evalJS('continuePlay()');
+			oldback();
+		}
+		$('#main iframe').attr('height',window.screen.height-10);
+	</script>
+</html>

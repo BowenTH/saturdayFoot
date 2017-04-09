@@ -172,18 +172,15 @@
 //							navTitle.innerText = baritem.children[baritem.children.length-1].innerText;
 							navTitle.addClass('own-header-hidden');
 							$('#'+headIndex).removeClass('own-header-hidden');
+							
+//							if(baritemurl=='barItem/life.html'){
+//								var clientHeight=document.documentElement.clientHeight;
+//								var flag = (clientHeight-49)/3 +'px';
+//								plus.webview.getWebviewById('barItem/life.html').evalJS("$('.list-1-1').css('height','"+flag+"');");
+//							}
 							//切换baritemwebview
-							curBarItemWebview.hide(); 
-							mui.later(function(){barItemWebviewArray[i].show();},100);
-							if(baritemurl=='barItem/life.html'){
-//								if(plus.webview.getWebviewById('movie.html'))
-//								plus.webview.getWebviewById('movie.html').hide();
-////								plus.webview.getWebviewById('shopList.html').evalJS("mui('#pullrefresh').pullRefresh().scrollTo(0,100,0)");
-//								mui.fire(plus.webview.getWebviewById('shopList.html'),'scrollRefush');
-								var clientHeight=document.documentElement.clientHeight;
-								var flag = (clientHeight-49)/3 +'px';
-								plus.webview.getWebviewById('barItem/life.html').evalJS("$('.list-1-1').css('height','"+flag+"');");
-							}
+							barItemWebviewArray[i].show();
+							curBarItemWebview.hide();
 							curBarItemWebview = barItemWebviewArray[i];
 							break;
 						}

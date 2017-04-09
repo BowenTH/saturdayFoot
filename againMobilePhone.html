@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link href="css/mui.min.css" rel="stylesheet"/> 
+    <style type="text/css">
+    	body{
+    		/*background-image:url(img/bg.jpg);*/
+    		background-color: black;
+    	}
+		#mainContent{
+			margin: 0 auto;
+			padding: 10px;
+			margin-top: 50px;
+			width: 90%;
+			height: 350px;
+			/*border: 1px solid white;*/
+			border-radius: 20px 20px 20px 20px;
+		}
+   </style>
+</head>
+<body>
+	
+	<h4 style="color: white;text-align: center;margin-top: 20px!important;">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		验证</h4>
+	<div id="mainContent">
+		<div style="width: 60px;height:60px;border-radius: 50% 50% 50% 50%;margin: 0 auto;background-color: lightgoldenrodyellow;">
+			<img src="img/logo.png"style="margin: 5px;width: 50px;"/>
+		</div>
+		<div >
+		<div class="mui-input-group" style="margin-top: 50px;background-color: transparent;color: white;">
+			<div class="mui-input-row">
+		        <label>验证码</label>
+				<input placeholder="验证码" type="text" name="smscode"/>
+		    </div>
+		</div>
+		<p style="margin-top: 20px;">尊敬的用户，为了给您提供更好的服务，请输入注册后收到的验证码，再次验证</p>
+			<button id="login" style="margin-top: 30px;border-radius: 20px 20px 20px 20px;height: 50px;width: 100%;" type="button" class="mui-btn mui-btn-outlined mui-btn-green">确认验证</button>
+		</div>
+	</div>
+	<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/av.js" type="text/javascript" charset="utf-8"></script>
+</body>
+<script type="text/javascript" charset="utf-8">
+      	mui.init();
+      	mui.plusReady(function(){
+      		
+      	});
+      	$('#login').on('tap',function(){
+      		var smsCode = $("input[name=smscode]").val();
+      		AV.User.verifyMobilePhone(smsCode).then(function(){
+			    //验证成功
+			    mui.toast('手机号码验证成功');
+			    plus.webview.getLaunchWebview().reload();
+			    plus.webview.getLaunchWebview().show("slide-in-right",400);	
+			}, function(err){
+			    //验证失败
+			    mui.toast('手机号码验证失败'+JSON.stringify(err));
+			});
+  	});
+      	     	
+</script>
+</html>

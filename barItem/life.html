@@ -9,6 +9,7 @@
 		<link rel="stylesheet" type="text/css" href="../png/iconfont.css"/>
 		<style type="text/css">
 		body{			
+			background-color: black;
 		}
 		button div{
 			margin-top: 80%;
@@ -56,27 +57,30 @@
 		</style>
 	</head>
 	<body>
-		<button class="list-1-1" data-id='offcanvas-drag-right-plus-main.html' style="background:url(../png/1.jpg)" href="javascript:;"><div>朋友圈</div></button>
+		<button class="list-1-1" data-id='goshopping.html' style="background:url(../png/1.jpg)" href="javascript:;"><div>购物</div></button>
 		<button class="list-1-1" data-id='move.html' style="background:url(../png/2.jpg)" href="javascript:;"><div>一部电影</div></button>
-		<button class="list-1-1" data-id='' style="background:url(../png/3.jpg)" href="javascript:;"><div>一本书</div></button>
+		<button class="list-1-1" data-id='recipe.html' style="background:url(../png/3.jpg)" href="javascript:;"><div>一道菜</div></button>
 		<button class="list-1-1" data-id='book.html' style="background:url(../png/4.jpg)" href="javascript:;"><div>一本书</div></button>
-		<button class="list-1-1" data-id='push.html' style="background:url(../png/5.png)" href="javascript:;"><div>个推</div></button>
+		<button class="list-1-1" data-id='offcanvas-drag-right-plus-main.html' style="background:url(../png/5.png)" href="javascript:;"><div>方圆几里</div></button>
 		<button class="list-1-1"data-id='music.html' style="background:url(../png/6.jpg)" href="javascript:;"><div>一首歌</div></button>
 			
 		<script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/mui.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../png/iconfont.js" type="text/javascript" charset="utf-8"></script>
-		<script type="text/javascript">	
+		<script type="text/javascript">	 
 		
 		mui.init();			
 		
 		$(document).ready(function(){
-//		mui.plusReady(function(){
-//			var clientHeight=document.documentElement.clientHeight;
-//			var flag = clientHeight/3 +'px';
-//			var flag = $(window).height()/3 +'px';
-//			$('.list-1-1').css('height',flag);  
+			imgInit();
 		});
+		function imgInit(){
+//			var clientHeight=document.documentElement.clientHeight;
+			var clientHeight=window.screen.height-75;
+			var flag = (clientHeight)/3 +'px';
+			console.log('life:'+flag);
+			$('.list-1-1').css('height',flag);
+		}
 		
 		$('body').on('tap','.list-1-1',function(){
 			mui.openWindow('../life/'+$(this).data('id'),$(this).data('id'));

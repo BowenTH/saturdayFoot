@@ -29,6 +29,10 @@
 			margin-left: 15px;
 			font-size: 50px!important;
 		}
+		#button-group button{
+			width: 49%;
+			margin-top: 20px!important;
+		}
    </style>
 </head>
 <body>
@@ -38,12 +42,25 @@
 		登录</h4>
 	<div id="mainContent">
 		<div style="width: 60px;height:60px;border-radius: 50% 50% 50% 50%;margin: 0 auto;background-color: lightgoldenrodyellow;">
-			<img src="img/666.png"style="margin: 5px;width: 50px;"/>
+			<img src="img/logo.png"style="margin: 5px;width: 50px;"/>
 		</div>
 		<div >
-			<input style="color: white;background-color: transparent;border: none;border-bottom: 1px solid white;"placeholder="手机号或昵称" type="text" name="phone"/>
-			<input style="color: white;background-color: transparent;border: none;border-bottom: 1px solid white;"placeholder="密码" type="password" name="password"/>
-			<button id="login" style="margin-top: 50px;border-radius: 20px 20px 20px 20px;height: 50px;width: 100%;" type="button" class="mui-btn mui-btn-green">登录</button>
+		<div class="mui-input-group" style="margin-top: 50px;background-color: transparent;color: white;">
+			<div class="mui-input-row">
+		        <label>名称</label>
+				<input placeholder="手机号或昵称" type="text" name="phone"/>
+		    </div>
+			<div class="mui-input-row">
+		        <label>密码</label>
+		        <input type="password" class="mui-input-password" name="password" placeholder="请输入密码">
+		    </div>
+		</div>
+			<button id="login" style="margin-top: 50px;border-radius: 20px 20px 20px 20px;height: 50px;width: 100%;" type="button" class="mui-btn mui-btn-outlined mui-btn-green">登录</button>
+		</div>
+		
+		<div id="button-group">
+			<button type="button" onclick="register()" class="mui-btn mui-btn-grey mui-btn-outlined">快速注册</button>
+			<button type="button" onclick="forgetPW()" class="mui-btn mui-btn-outlined mui-btn-grey">忘记密码</button>
 		</div>
 	</div>
 	<div id="foot" style="color: white;margin-top: 20%;">
@@ -60,6 +77,12 @@
       	mui.plusReady(function(){
       		
       	});
+      	function register(){
+      		mui.openWindow('regist.html','regist.html');
+      	}
+      	function forgetPW(){
+      		mui.openWindow('forgetPassword.html','forgetPassword.html');
+      	}
       	$('#login').on('tap',function(){
       		var mobilePhoneNumber = $('input[name=phone]').val();
       		var password = $('input[name=password]').val();
@@ -76,10 +99,19 @@
       				plus.webview.getWebviewById('barItem/mine.html').evalJS('window.location.reload();');
       				mui.later(function(){
       					plus.webview.getLaunchWebview().show("slide-in-right",200);
-      				},1000);   
+      				},200);   
       			},
       		function(error){
-      			alert(JSON.stringify(error));
+      			AV.User.logInWithMobilePhone(mobilePhoneNumber,password).then(function(loginedUser){
+      				mui.toast(loginedUser.get('username')+'登录成功');
+      				loginedUser.set('pushInfo',getPushInfo());
+					loginedUser.save().then(function(){mui.toast('pushInfo保存成功')},
+					function(err){mui.toast(err)});
+      				plus.webview.getWebviewById('barItem/mine.html').evalJS('window.location.reload();');
+      				mui.later(function(){
+      					plus.webview.getLaunchWebview().show("slide-in-right",200);
+      				},200);
+      			},function(err){mui.toast(JSON.stringify(err));});
       		});
       	});
       	

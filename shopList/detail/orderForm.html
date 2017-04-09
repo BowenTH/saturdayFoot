@@ -130,16 +130,16 @@
 				
 				/* 支付宝支付引用  */
 				var channel =null;
-				document.getElementById('go').addEventListener('tap',function(){
-				//	plus.payment.getChannels(function(channels){
-				//	channel=channels[0];
-				//	},function(e){
-				//		alert('获取支付通道失败:'+e.message);
-				//	});
-				//	pay('alipay');
-				//	pay('weixin');
-					addOrderList();
-				});
+//				document.getElementById('go').addEventListener('tap',function(){
+//					plus.payment.getChannels(function(channels){
+//					channel=channels[0];
+//					},function(e){
+//						alert('获取支付通道失败:'+e.message);
+//					});
+//					pay('alipay');
+//					pay('weixin');
+//					addOrderList();
+//				});
 			});
 		},50);
 	}
@@ -177,14 +177,16 @@ function addOrderList(){
 	shopQuery.equalTo('objectId',menuSum.shopId);
 	shopQuery.include('owner');
 	shopQuery.find().then(function(result){
+		alert(JSON.stringify(result[0].get('owner').get('pushInfo')));
 		cid = result[0].get('owner').get('pushInfo').clientid;
 		mui.toast('finded cid:'+cid);
 		menuList.set('user',menuSum.user);
 		menuList.set('shopId',menuSum.shopId);
+		
 		menuList.set('foodList',menuSum.foodList);
 		menuList.set('dealDate',Date());
 		menuList.set('dealStatue','未接单');
-		
+		alert(JSON.stringify(menuList));
 		menuList.save().then(function(){
 			mui.toast('菜单提交成功');
 			pushOnline(cid);//给商户发订单提示消息
@@ -220,28 +222,27 @@ function pushOnline(cid){
 }
 ///* 支付宝支付引用  */
 //var channel =null;
-//function plusReady(){ 
-//	document.getElementById('go').addEventListener('tap',function(){
-////	plus.payment.getChannels(function(channels){
-////	channel=channels[0];
-////	},function(e){
-////		alert('获取支付通道失败:'+e.message);
-////	});
-////	pay('alipay');
-////	pay('weixin');
-//	addOrderList(foodList);
-//	plus.webview.open('orderReturn.html','orderReturn.html');
-//});
-//}
-//document.addEventListener('plusready',plusReady,false);
+function plusReady(){ 
+	document.getElementById('go').addEventListener('tap',function(){
+//	plus.payment.getChannels(function(channels){
+//	channel=channels[0];
+//	},function(e){
+//		alert('获取支付通道失败:'+e.message);
+//	});
+//	pay('alipay');
+//	pay('weixin');
+	addOrderList();
+	plus.webview.open('orderReturn.html','orderReturn.html');
+});
+}
+document.addEventListener('plusready',plusReady,false);
 var ALLPAYSERVER='http://demo.dcloud.net.cn/helloh5/payment/alipay.php?total=';
 //var ALLPAYSERVER='https://bowenth.github.io/';
 var WXPAYSERVER='http://demo.dcloud.net.cn/helloh5/payment/wxpay.php?total=';
 
-
-
 //2.发起支付请求
 function pay(id){
+	alert('pay');
  var PAYSERVER='';
     if(id=='alipay'){
         PAYSERVER=ALLPAYSERVER;

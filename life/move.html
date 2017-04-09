@@ -8,9 +8,9 @@
 		<link rel="stylesheet" type="text/css" href="../css/iconfont.css"/>
 		<style type="text/css">
 			body{
-				background: white;				
+				background: black;				
 			}
-			li{
+			#tabMove li{
 				list-style: none;
 				width: 33%; 			
 				text-align: center;
@@ -19,7 +19,7 @@
 				color: white;
 			}
 			
-			h4,h5{
+			h5{
 				text-align: center;
 				color: red;
 			}
@@ -50,34 +50,32 @@
 				/*height: 1px;width: 1px;*/
 				/*color: transparent;*/
 			}
-			li span{
+			/*li span{
 				padding: 5px;
 				border: 1px solid gray;
 				border-radius: 10px 10px 10px 10px;
-			}
+			}*/
 			#videoList{padding: 0;}
 			#videoList li{width: 25%;}
+			.plf div{
+				text-align: center;
+			}
+			div.pinglun i{
+				font-size: 150%; 
+				color: gray;
+			}
 		</style>
 	</head>
 	<body>
 		<div style="position: fixed;top: 0!important;height: 50px;background: black;width: 100%;">
-			<a style="margin-top: 10px;" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<div class="ownIcon">
-				<img width="50px" src="../img/book/icon.jpg" style="border-radius:50% 50% 50% 50% ;"/>
-			</div>
-			<a style="position: absolute;top: 0;right: 10px;top: 10px;" class="mui-icon-extra mui-icon-extra-share mui-pull-right"></a>
+			<a style="margin-top: 10px;font-size: 160%;" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<a style="position: absolute;top: 0;right: 10px;top: 12px;font-size: 110%;" class="mui-icon-extra mui-icon-extra-share mui-pull-right" ></a>
 		</div>
-		<div style="margin-top: 50px;background: radial-gradient(green,grey);padding: 5px;">
-			<h4>大话西游</h4>
-			<h5 id="star"><span><i class="mui-icon mui-icon-star-filled"></i>
-				<i class="mui-icon mui-icon-star-filled"></i>
-				<i class="mui-icon mui-icon-star-filled"></i>
-				<i class="mui-icon mui-icon-star-filled"></i>
-				<i class="mui-icon mui-icon-starhalf"></i>
-			</span><span>9.9</span></h5>
+		<div style="margin-top: 50px;background: radial-gradient(green,black);padding: 5px;">
+			<h4 style="text-align: center;color: white;">大话西游</h4>
 			<!--<div style="">-->
-				<iframe id="youku" style="position: fixed;left: 0px;top: 50px;" width=100% height="200" src='http://player.youku.com/embed/XMjQ4MTc0ODMyOA==' frameborder=0 allowfullscreen='true' >
-				</iframe>				
+				<!--<iframe id="youku" style="position: fixed;left: 0px;top: 50px;" width=100% height="200" src='http://player.youku.com/embed/XMjQ4MTc0ODMyOA==' frameborder=0 allowfullscreen='true' >
+				</iframe>				-->
 				<img id="img" src="../img/music/xiyou-0.jpg" style="width: 100%;margin-bottom: 8px;"/>
 				<div id="playIcon"><i class="icon iconfont icon-bofang-copy"></i></div>
 			<!--</div>--> 
@@ -87,33 +85,40 @@
 				当前浏览器不支持 video直接播放，点击这里下载视频： <a href="myvideo.webm">下载视频</a>
 			</video>
 		</div>
-		<div style="background: lightgray!important; height: 50px;">
-			<ul style="padding-top: 12px!important;">
-				<li style="float: left;"><span>99+</span><i class="icon iconfont icon-iconfontzan"></i></li>
-				<li style="float: left;"><i class="mui-icon mui-icon-chatboxes"></i></li>
-				<li style="float: right;"><span>99+</span><i class="icon iconfont icon-caibishi"></i></li>
-			</ul>
+		<div style="width: 100%;margin-top: 20px;">
+			<ul class="mui-table-view">
+			<li class=" mui-media"  >
+				<div class="mui-row plf" style="margin: 3% 5% 2% 5%;width: 100%;">
+					<div class="pinglun mui-col-xs-4" style="" >
+						<i class="icon iconfont icon-dianzan bigFont" style="font-size: 80%;" ></i>
+						<span style="font-size: 80%;color: lightgray;margin-left: 3px;">99</span>
+						<span class="icon iconfont icon-shuxian" style="float: right;color: lightgray;padding-right: 0;"></span>
+					</div>
+					
+					<div class="mui-col-xs-4 pinglun" >
+						<i class="icon iconfont icon-pinglun01-copy bigFont" style="font-size: 80%;" ></i>
+						<span style="font-size: 80%;color: lightgray;margin-left: 3px;">99</span>
+						<span class="icon iconfont icon-shuxian" style="float: right;color: lightgray;padding-right: 0;"></span>
+					</div>
+					<div class="mui-col-xs-4 pinglun" >
+						<i  class="icon iconfont icon-caibishi bigFont" style="font-size: 80%;" ></i>
+						<span style="font-size: 80%;color: lightgray;margin-left: 3px;">99</span>
+					</div>
+				</div>	
+			</li>
+		</ul>
 		</div>
-		
 		<div>
-			<ul id="tabMove" style="background: lightgrey;padding-top: 12px!important;padding-left: 0;height:40px;">
+			<!--<ul id="tabMove" style="background: lightgrey;padding-top: 12px!important;padding-left: 0;height:40px;">
 				<li style="float: left;">简介</li>
 				<li style="float: left;">演员</li>
 				<li style="float: right;">图片</li>
-			</ul>
-			<p style="margin-top: 20px!important;font-size: 15px;">孙悟空（周星驰）护送唐三藏（罗家英）去西天取经路上，与牛魔王合谋
+			</ul>-->
+			<h4 style="color:gray;margin-top: 20px;" style="margin: 25px 0 10px 30px!important;">简介</h4>		
+			<div style="border-top: 1px solid lightgray;height: 1px;"></div>
+			<p style="font-size: 15px;">孙悟空（周星驰）护送唐三藏（罗家英）去西天取经路上，与牛魔王合谋
 				杀害唐三藏，被观音发现打入五指山成为至尊宝历经白骨精和给他三个...
 			</p>
-		</div>
-		<div style="margin-bottom: 100px;">
-			<i>猜你喜欢</i>
-			<hr />
-			<ul id="videoList">
-				<li data-id = "XMjQ4MTc0ODMyOA==" style="float: left;"><span>第一集</span></li>
-				<li data-id = "XMjQ5MDQ0NzIxMg==" style="float: left;"><span>第二集</span></li>
-				<li data-id = "XMjQ5MTYzNDY5Ng==" style="float: left;"><span>第三集</span></li>
-				<li data-id = "XMjQ5MTQzMDQyOA==" style="float: right;"><span>第四集</span></li>
-			</ul>
 		</div>
 	</body>
 	<script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>

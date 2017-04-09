@@ -11,7 +11,7 @@
 		<link rel="stylesheet" type="text/css" href="../css/iconfont.css"/>
 		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
 		<style type="text/css">
-			body{background: url(../img/music/800.jpg) fixed top;background-size: 100% 150%;}
+			body{background: url(../img/music/800.jpg) ;background-size: 100% 150%;}
 			.ownHead{
 				height: 40px;
 				margin: 20px 10px 0 10px;				
@@ -27,13 +27,14 @@
 			#ownCircle{
 				height: 250px;width: 250px;
 				margin: 20% auto;
+				margin-top: 150px;
 				border: 35px solid black;
 				border-radius: 50% 50% 50% 50%;
 			}
 			#ownCircle img{
-				-webkit-animation:play 10s linear infinite;
-				-moz-animation:play 10s linear infinite;
-				animation:play 10s linear infinite;
+				-webkit-animation:play 35s linear infinite;
+				-moz-animation:play 35s linear infinite;
+				animation:play 35s linear infinite;
 				
 				margin: 0 auto;
 				/*height: 180px;*/
@@ -122,75 +123,137 @@
 				top: -10px;
 				left: 0px;				
 			}
+			.article{
+			text-indent: 2em;
+			line-height: 1.5em;
+		  	letter-spacing: 2px;
+		}
+		.mui-bar{
+			border: none!important;
+			background-color:transparent!important;
+		}
 		</style>
 	</head>
 	<body>
-		<div class="ownHead" style="margin:15px 0px;">
-			<i class="mui-action-back icon iconfont icon-fanhui smallFont" style="margin: 5px;float: left;font-size: 150%;"></i>
-			<div style="float: left;">
-				<span class="iconfont" style="font-size: 16px;margin: 0 0 0px 10px;">天才白痴梦</span>
-			<div style="float: none;margin: 3px 5px 0 10px!important;">
-				<span style="color: gray;font-size: 15px;">许冠杰</span>
-			</div>
-			</div>
-			<i class="mui-icon-extra mui-icon-extra-share smallFont" style="margin: 5px 10px 0 0;float: right;color: white;"></i>
-		</div>
-		<div id=""> 
-			sss 
-			<audio style="background-color: transparent;" controls="controls" src="http://oi7xjum3c.bkt.clouddn.com/1.mp3">不支持</audio>
-		</div>
-		<div style="border-top: 1px solid gray;height: 1px;"></div>
+		<header class="mui-bar" style="height: 75px;">
+		   <span class="mui-action-back icon iconfont icon-fanhui smallFont" style="display: inline-block;margin-top: 10px;font-size: 150%;"></span>
+		    <span class="mui-icon-extra mui-icon-extra-share smallFont mui-pull-right" style="padding: 15px;"></span>
+		    <span style="margin-top: 5px;">天才白痴梦</span>
+		    <p style="margin-top: 5px;margin-left: 11%;margin-bottom: 2px;">许冠杰</p>
+		</header>
+		<div style="border-top: 1px solid transparent;height: 1px;margin-top: 0;"></div>
+		<div id="fsb">
+			<div id="sb1">
 		<div id="ownCircle">
 			<img class="pauseImg" src="../img/music/900.jpg"/>
 		</div>
-		<div  style="width: 33%;float: left;height: 30px;" >
-			<span class="icon iconfont icon-dianzan smallFont "style="float: left;margin-left: 50%;" >
-			</span>
-			<div style="margin-top: -5%;float: left;">
-				<span style="font-size: 12px;">+99</span>
-			</div>
-		</div> 
-
-		<div style="width:33%;float: left;height: 30px;margin-left: -5px;" >
-			<span  class="icon iconfont icon-caibishi smallFont" style="float: left;margin-left: 50%;" ></span>	
-		<div style="margin-top: -5%;float: left;">
-				<span style="font-size: 12px;">99+</span>
-			</div>
-		</div>
-		<div style="width: 33%;float: left;">
-			<i class="icon iconfont icon-zifuwuicon- smallFont"></i>
-		</div>
-		<div id="progressbarDiv" style="height: 20px;margin: 0 20px 0 20px;position: absolute;top: 80%;width: 90%;">
+		<!--<div id="progressbarDiv" style="height: 20px;margin: 0 20px 0 20px;position: absolute;top: 80%;width: 90%;">
 			<span style="margin-right: 5%;">00:00</span>
 			<div id="progressbar">
 				<p class="mui-progressbar mui-progressbar-in" data-progress="20"><span></span></p>
 			</div>
 			<span id="" style="margin-left: 5%;float: right;">00:00</span>
+		</div>-->
 		</div>
-		<div class="mui-row"style="position: absolute;top: 90%;width: 100%;">
-			<div  style="width: 33%;float: left;" >
-				<i class="icon iconfont icon-shoucang1 bigFont" style="font-size: 150%;color: red;"></i>
-			</div>
-			<div style="width: 33%;float: left;" >
-				<i  class="icon iconfont icon-bofang3-copy bigFont" style="font-size: 30px;"></i>	
-				<i  class="icon iconfont icon-bofang4 bigFont ownHidden" style="font-size: 30px;"></i>		
+		<div class="mui-scroll-wrapper" id="sb2" hidden="hidden" style="top: 100px;bottom: 100px;">
+			<div class="mui-scroll">
+				<div  style="margin-left: 5%;margin-right: 5%;">
+				<p >
+			　　<p class="article">哈耶克在《通往奴役之路》中指出，对社会的人为控制开始以后，控制会越来越多、越来越广，直到彻底奴役整个社会。
+			　　</p><p class="article">中国的户籍制度正是这方面的典型案例。从一个看似和户籍无关的目标开始，中国一步步变成了一个被国家严密控制的社会。户籍制度则是这种控制的核心工具之一。
+			　　</p><p>一、本质是强制
 			
+			　　</p><p class="article">户籍制度并不必然带有强制的色彩，而是完全可以仅有管理、统计等服务性社会职能。但在中国，户籍制度的本质就是强制。国家用户籍规定了每个公民“应当”居住、生活的地区，强制取消了公民的迁徙自由，将公民置于国家严密掌控之下。
+			　　</p><p class="article">要想全面地了解户籍制度产生的原因，必须把这个问题放在更大的背景——国家对社会生活的全面掌控——之下进行考察。
+			　　</p><p class="article">1949年后，中国社会先后出现了一系列强制措施。其中许多延续至今。种种强制措施结合在一起，构成了以计划经济为核心的国家对社会生活的全面控制。户籍制度是这个全面控制的组成部分，和其他强制措施互相支撑、互为因果。户籍制度今天仍然存在，只能表明，国家对社会的全面控制虽然趋于削弱，但还在顽强地发挥作用。
+			　　</p><p class="article">国家的正当职能是为公民实现自己目标提供外部环境。国家本身不应有目标。如果国家有了目标，并动员全体社会成员奔向这个目标，强制就会大量出现。这是人类最重要的经验之一。
+			　　</p><p class="article">在中国，这个目标，这个促使以后无数政治强制相继出台的第一张多米诺骨牌是重工业优先发展战略。
+			　　</p><p >二、最初用于治安
+			
+			　　</p><p class="article">新政权建立以后的首要任务是恢复、稳定社会秩序，控制、消灭各种敌对势力。为此，1950年8月，公安部制订了《关于特种人口管理的暂行办法（草案）》。
+			　　</p><p class="article">与国民政府时期的《户籍法》相比，新政权户籍管理的重点是社会治安。户籍过去归内政部及地方政府管理，现在，转而由公安部门管理。
+			　　</p><p class="article">1951年7月，公安部颁布了《城市户口管理暂行条例》，明确指出了“维护社会治安、保障人民安全”的宗旨，强调了户籍制度对治安的作用。这个条例在全社会范围内建立起了严密的治安防范体系，在镇压反革命运动中发挥了重要作用。
+			　　</p><p class="article">制定《条例》的一个重要原因是新政权缺乏管理城市的经验和足够信息，需要依靠户籍对城市的人口现状进行了解。因此，户籍制度的建立是从城市首先展开的。
+			　　</p><p class="article">当时，城市失业现象严重。仅上海一地，失业工人就有15万左右。全国9个主要城市大约有失业人口166万。建立户籍制度也包含着为缓解失业做准备的意思。但在当时，政府并不像后来那样采取强制手段控制城市的人口。《条例》第一条就申明人民具有迁徙自由。现实中，政府也确实没有采用行政命令的方式，而是采用了宣传和说服的形式。
+			　　</p><p class="article">1950年起，为了缓解城市失业，各地方政府开始动员和说服城市中的失业人员回到农村。同时，农村地方政府也设法劝阻农民进入城市。动员和说服的效果不错。那些人之所以愿意回到或者留在农村，和当时的土地改革有密切关系。他们被告知可以在农村得到土地。相比在城市失业，在家务农是个不错的选择。
+			　　</p><p class="article">在农村，随着土改，户籍制度也同步建立起来。1954年，内政部、公安部和国家统计局联合通告，建立农村户口登记制度。农村户籍制度的重点是进行阶级划分，区分了地主、富农、中农、贫农和雇农。
+			　　</p><p class="article">到1954年，城市失业问题基本上得到了妥善解决。这个过程看起来比以后的人口控制要温和、有效得多，但是，这种解决办法中已包含了城乡分治的思路。从此以后，一旦城市就业或物资供应出现紧张形势，决策者首先想到的就是把一部分人口转移到农村，同时禁止农村人口进入城市，而不是从发展经济、增加就业数量方面寻求解决办法。
+			　　</p><p class="article">1953年，进行了1949年以来的第一次人口普查。这为全国户口登记制度的建立创造了有利条件。1955年6月9日，国务院通过了《关于建立经常户口登记制度的指示》，规定在全国范围内建立经常性的户口统计制度。1956年3月，公安部召开了首次全国户口工作会议。会议明确了户口管理的性质，研究确定了统一的户口簿册证件样式。
+			　　</p><p >三、优先发展重工业战略
+			</p>
+		</div>
+				
 			</div>
-			<div style="width: 33%;float: left;">
+			
+		</div>
+		</div>
+		
+		<div class="mui-row"style="position: absolute;top: 90%;width: 100%;height: 60px;">
+			<div style="width: 20%;float: left;padding-left: 0%;">
+				<i class="icon iconfont icon-zifuwuicon- smallFont"></i>
+			</div>
+			<div  style="width: 20%;float: left;height: 30px;" >
+				
+				<span class="icon iconfont icon-dianzan smallFont "style="float: left;" >
+					<span style="font-size: 12px;">+99</span>
+				</span>
+			</div> 
+			<div style="width: 20%;float: left;" >
+				<i  class="icon iconfont icon-bofang3-copy bigFont" style="font-size: 50px;"></i>	
+				<i  class="icon iconfont icon-bofang4 bigFont ownHidden" style="font-size: 50px;"></i>		
+			</div>
+			<div style="width:20%;float: left;height: 30px;padding-left: 5%;" >
+				<span  class="icon iconfont icon-caibishi smallFont" style="float: left;" >
+					<span style="font-size: 12px;">99+</span>
+				</span>	
+			</div>
+			<div style="width: 20%;float: left;">
 				<i class="icon iconfont icon-pinglun bigFont"style="font-size: 160%;"></i>
 			</div>
-		</div>		
+		</div>	
 		<script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
 	</body>
 	<script type="text/javascript">
 	mui.init();
-	var progressbar1 = mui('#progressbar');
-	var flagProgressbar = 0;
-	mui(progressbar1).progressbar().setProgress(flagProgressbar);	
-	$('.icon-bofang3-copy').on('tap',startPlay);
-	$('.icon-bofang4').on('tap',pausePlay);
+	mui('.mui-scroll-wrapper').scroll({
+		scrollY:true,
+		scrollX:false,
+		startX:0,
+		startY:0,
+		indicators:false,
+		deceleration:0.0006,
+		bounce:true,
+		
+	})
+	$("#fsb").click(function(){
+				$("#sb1").toggle();
+				$("#sb2").toggle();
+			})
+
+	$('.icon-bofang3-copy').on('tap',beginPlay);
+	$('.icon-bofang4').on('tap',continuePlay);
+	function beginPlay(){
+		$('#ownCircle img').removeClass('pauseImg');
+		$('#ownCircle img').addClass('playImg');
+		$(this).addClass('ownHidden');
+		$(this).siblings('i').removeClass('ownHidden');	
+		var cloudPage = plus.webview.getWebviewById('music-cloud.html');
+		if(cloudPage!=null){
+			cloudPage.show('slide-in-right',1000);
+		}else{
+			mui.openWindow('music-cloud.html','music-cloud.html');
+		}
+		
+	}
+	
+	function continuePlay(){
+		$('#ownCircle img').addClass('pauseImg');
+		$('#ownCircle img').removeClass('playImg');
+		$('.icon-bofang4').addClass('ownHidden');
+		$('.icon-bofang4').siblings('i').removeClass('ownHidden');
+	}
 	function ownTimetoStr(ts){
 		var m=parseInt((ts%3600)/60);
 		var s=parseInt(ts%60);
@@ -199,75 +262,83 @@
 	document.addEventListener( "plusready", onPlusReady, false );
 	// 扩展API加载完毕，现在可以正常调用扩展API 
 	function onPlusReady() { 
+		mui.preload({url:'music-cloud.html',id:'music-cloud.html'});
 	}	
-	var p = null; 
-	var d=null;	
-	var flagTimer = null;
-	var plusPre = 0;
-	function startPlay() {	
-		if(p){
-			mui.toast('go play');
-			$('#ownCircle img').removeClass('pauseImg');
-			$('#ownCircle img').addClass('playImg');
-			$(this).addClass('ownHidden');
-			$(this).siblings('i').removeClass('ownHidden');	
-			
-			p.resume( function () {
-				mui(progressbar1).progressbar().setProgress(0);
-				clearInterval(flagTimer);
-				}, function ( e ) {
-					alert( "Audio play error:2- " + e.message ); 
-			});			
-			flagTimer = setInterval(function(){
-				flagProgressbar+=plusPre;
-				$('#progressbar').prev('span').text(ownTimetoStr(p.getPosition()));
-				$('#progressbar').next('span').text(ownTimetoStr(p.getDuration()));
-				mui(progressbar1).progressbar().setProgress(flagProgressbar);
-				clearInterval(flagTimer);
-			},1000);
-			return;
-		}
-		$(this).addClass('ownHidden');
-		$(this).siblings('i').removeClass('ownHidden');		
-		if ( plus.audio == undefined ) {
-			alert( "Device not ready!" );
-		}
-//		p = plus.audio.createPlayer( "_doc/2.mp3");	  
-		p = plus.audio.createPlayer( "http://oi7xjum3c.bkt.clouddn.com/1.mp3");
-		$('#ownCircle img').removeClass('pauseImg');
-		$('#ownCircle img').addClass('playImg');
-		p.play( function () {			
-			flagProgressbar=0;			
-			mui(progressbar1).progressbar().setProgress(0);
-		}, function ( e ) {
-			alert( "Audio play error: 1-" + e.message ); 
-			console.log(JSON.stringify(e));
-		} );
+	
+//$('.icon-bofang3-copy').on('tap',startPlay);
+//$('.icon-bofang4').on('tap',pausePlay);
+	//进度条
+//	var progressbar1 = mui('#progressbar');
+//	var flagProgressbar = 0;
+//	mui(progressbar1).progressbar().setProgress(flagProgressbar);	
+
+//	var p = null; 
+//	var d=null;	
+//	var flagTimer = null;
+//	var plusPre = 0;
+//	function startPlay() {	
+//		if(p){
+//			mui.toast('go play');
+//			$('#ownCircle img').removeClass('pauseImg');
+//			$('#ownCircle img').addClass('playImg');
+//			$(this).addClass('ownHidden');
+//			$(this).siblings('i').removeClass('ownHidden');	
+//			
+//			p.resume( function () {
+//				mui(progressbar1).progressbar().setProgress(0);
+//				clearInterval(flagTimer);
+//				}, function ( e ) {
+//					alert( "Audio play error:2- " + e.message ); 
+//			});			
+//			flagTimer = setInterval(function(){
+//				flagProgressbar+=plusPre;
+//				$('#progressbar').prev('span').text(ownTimetoStr(p.getPosition()));
+//				$('#progressbar').next('span').text(ownTimetoStr(p.getDuration()));
+//				mui(progressbar1).progressbar().setProgress(flagProgressbar);
+//				clearInterval(flagTimer);
+//			},1000);
+//			return;
+//		}
+//		$(this).addClass('ownHidden');
+//		$(this).siblings('i').removeClass('ownHidden');		
+//		if ( plus.audio == undefined ) {
+//			alert( "Device not ready!" );
+//		}
+//		p = plus.audio.createPlayer( "http://oi7xjum3c.bkt.clouddn.com/1.mp3");
+//		$('#ownCircle img').removeClass('pauseImg');
+//		$('#ownCircle img').addClass('playImg');
+//		p.play( function () {			
+//			flagProgressbar=0;			
+//			mui(progressbar1).progressbar().setProgress(0);
+//		}, function ( e ) {
+//			alert( "Audio play error: 1-" + e.message ); 
+//			console.log(JSON.stringify(e));
+//		} );
 		
 		//延时设置进度条每秒前进的数值
-		mui.later(function(){
-			plusPre=parseFloat(100/p.getDuration()); 
-			flagTimer = setInterval(function(){			
-				flagProgressbar+=plusPre;
-				$('#progressbar').prev('span').text(ownTimetoStr(p.getPosition()));
-				$('#progressbar').next('span').text(ownTimetoStr(p.getDuration()));
-				mui(progressbar1).progressbar().setProgress(flagProgressbar);			
-				console.log("当前长度:"+ownTimetoStr(p.getDuration())+':'+ownTimetoStr(p.getPosition())); 
-			},1000);
-		},5000);				
-	}
-	function pausePlay() { 
-		mui.toast('stop');
-		$('#ownCircle img').addClass('pauseImg');
-		$('#ownCircle img').removeClass('playImg');
-		clearInterval(flagTimer);
-		$(this).addClass('ownHidden');
-		$(this).siblings('i').removeClass('ownHidden');
-		p.pause(function () {
-		}, function ( e ) {
-			alert( "Audio play error: " + e.message ); 
-		} );
-	}
+//		mui.later(function(){
+//			plusPre=parseFloat(100/p.getDuration()); 
+//			flagTimer = setInterval(function(){			
+//				flagProgressbar+=plusPre;
+//				$('#progressbar').prev('span').text(ownTimetoStr(p.getPosition()));
+//				$('#progressbar').next('span').text(ownTimetoStr(p.getDuration()));
+//				mui(progressbar1).progressbar().setProgress(flagProgressbar);			
+//				console.log("当前长度:"+ownTimetoStr(p.getDuration())+':'+ownTimetoStr(p.getPosition())); 
+//			},1000);
+//		},5000);				
+//	}
+//	function pausePlay() { 
+//		mui.toast('stop');
+//		$('#ownCircle img').addClass('pauseImg');
+//		$('#ownCircle img').removeClass('playImg');
+//		clearInterval(flagTimer);
+//		$(this).addClass('ownHidden');
+//		$(this).siblings('i').removeClass('ownHidden');
+//		p.pause(function () {
+//		}, function ( e ) {
+//			alert( "Audio play error: " + e.message ); 
+//		} );
+//	}
 	
 	
 	</script>

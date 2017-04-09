@@ -7,7 +7,7 @@
     <link href="css/mui.min.css" rel="stylesheet"/> 
     <style type="text/css">
     	body{
-    		background-image:url(img/bg.jpg);
+    		background-color: black;
     	}
 		#mainContent{
 			margin: 0 auto;
@@ -37,15 +37,15 @@
 		注册</h4>
 	<div id="mainContent">
 		<div style="width: 60px;height:60px;border-radius: 50% 50% 50% 50%;margin: 0 auto;background-color: lightgoldenrodyellow;">
-			<img src="img/666.png"style="margin: 5px;width: 50px;"/>
+			<img src="img/logo.png"style="margin: 5px;width: 50px;"/>
 		</div>
 		<div>
 			<input style="color: white;background-color: transparent;border: none;border-bottom: 1px solid white;"placeholder="手机号" type="text" name="phone"/>
 			<input style="width: 50%;color: white;background-color: transparent;border: none;border-bottom: 1px solid white;"placeholder="验证码" type="text" name="check"/>
-			<button id="getCode" style="width: 40%;" >获取验证码</button>
+			<button type="button" id="getCode" style="width: 45%;height: 40px;" class="mui-btn mui-btn-grey mui-btn-outlined">获取验证码</button>
 			<input style="color: white;background-color: transparent;border: none;border-bottom: 1px solid white;"placeholder="密码" type="password" name="password"/>
 			<!--<div style="text-align: center;">-->
-				<button id="reg" style="margin-top: 40px;border-radius: 20px 20px 20px 20px;height: 50px;width: 100%;" type="button" class="mui-btn mui-btn-green">注册</button>
+				<button id="reg" style="margin-top: 40px;border-radius: 20px 20px 20px 20px;height: 50px;width: 100%;" type="button" class="mui-btn mui-btn-outlined mui-btn-green">注册</button>
 			<!--</div>-->
 			<div style="margin-top: 50px;width: 100%;text-align: center;color: lightgray;">已注册过，<span id="login" style="color: #4cd964;">登录</span></div>
 		</div>
@@ -97,7 +97,7 @@
 			}
 			});		
 	});
-
+	
 	$('#reg').on('tap',function(){		
 		var mobilePhoneNumber = $('input[name=phone]').val();
 		var smsCode = $('input[name=check]').val();
@@ -114,12 +114,12 @@
 	 		user.setMobilePhoneNumber(mobilePhoneNumber);
 	 		user.signUp().then(function(loginerUser){
 	 			mui.toast(loginerUser.get('username')+'登录成功');
+	 			mui.openWindow('againMobilePhone.html','aginMobilePhone.html');
 	 			//保存pushInfo
 	 			loginedUser.set('pushInfo',getPushInfo());
 				loginedUser.save().then(function(){mui.toast('pushInfo保存成功')},
 				function(err){mui.toast(err)});
-				
-				plus.webview.getLaunchWebview().show("slide-in-right",400);				
+//				plus.webview.getLaunchWebview().show("slide-in-right",400);				
 				},function(error){
 					mui.toast('登录失败');
 		   			alert(JSON.stringify(error)); 

@@ -6,9 +6,10 @@
 		<link rel="stylesheet" type="text/css" href="../css/mui.min.css"/>
 		<style type="text/css">
 			.half-tab{
+				position: fixed;z-index: 999;
 				padding: 10px;
 				width: 50%;
-				float: left; 
+				background-color: lightgray;
 				text-align: center;
 			}
 			.tab-active{
@@ -18,15 +19,15 @@
 			li{
 				list-style: none;
 			}
-			.shop-title{padding-top: 10px;margin-bottom: 30px;}
+			.shop-title{margin-bottom: 30px;}
 			.shop-title img{
 				width: 50px;border-radius: 50%;
 				float: left;
-				margin: 10px 10px 20px 20px;
+				margin: 10px 10px 0px 20px;
 			}
 			.shopName{
 				float: left;
-				font-size: 20px;
+				font-size: 18px;
 			}
 			.mui-icon-arrowright{
 				/*float: right;*/
@@ -47,20 +48,29 @@
 			}
 			.food-sum{
 				font-size: 20px;
+				color: red;
 			}
 			.food-button{
 				text-align: right;
 				padding-right: 10px;
 			}
+			/*.mui-table-view:first-child {
+				margin-top: 15px;
+			}*/
+			
+			.mui-table-view:last-child {
+				margin-bottom: 10px;
+			}
+					
 		</style>
 	</head>
 	<body>
-		<template id='menuLi'  style="background: white;">
-			<li>
+		<template id='menuLi'>
+			<li style="margin-bottom: 20px;">
 				<ul style="padding-left: 0!important;padding-bottom: 10px;">
 					<li class="shop-title">
 						<img src="../img/1.jpg"/>
-						<div style="padding: 30px 10px 0px 10px;">
+						<div style="padding: 25px 10px 0px 10px;">
 							<span class="shopName"><span>一家人</span>
 								<i class="mui-icon mui-icon-arrowright"></i>
 							</span>
@@ -70,7 +80,7 @@
 						</div>
 					</li>
 					<li class="food-list"></li>
-					<li style="text-align: right;padding: 10px 10px 10px 0;">
+					<li style="text-align: right;padding: 10px 10px 5px 0;">
 						<span>小结:</span>
 						<span class="food-sum">￥6</span>
 					</li>
@@ -79,7 +89,7 @@
 						<button type="button" data-id = "comment-menu" class="mui-btn mui-btn-blue mui-btn-outlined">评价一下</button>
 					</li>
 				</ul>
-				<div class="thin-line">
+				<div style="width: 100%;height: 10px;background-color: lightgray;">
 					
 				</div>
 			</li>
@@ -88,22 +98,21 @@
 		<div id="must-login" style="margin-top: 30%;">
 			<h4 style="text-align: center;color: grey">请登录后查看</h4>
 		</div>
-	
 		<div id="pullrefresh" class="mui-scroll-wrapper">
 			<div class="tab-title mui-hidden" style="height: 50px;margin-bottom: -8px!important;">
 				<div data-id = "menu-dealing" class="half-tab tab-active">
 					进行中
 				</div>
-				<div data-id = "menu-over" class="half-tab">
+				<div style="left: 50%;" data-id = "menu-over" class="half-tab">
 					已完成
 				</div>
 			</div>
 			<div class="mui-scroll mui-hidden">
 				<!--数据列表-->
-				<ul class="mui-table-view menu-dealing mui-table-view-chevron">
+				<ul class="mui-table-view menu-dealing" style="margin-top: 0!important;">
 					
 				</ul>
-				<ul class="mui-table-view menu-over mui-table-view-chevron mui-hidden">
+				<ul class="mui-table-view menu-over mui-hidden" style="margin-top: 0!important;">
 					
 				</ul>
 			</div>
@@ -157,22 +166,19 @@
 			menuQuery.equalTo('user',currentUser.get('objectId'));
 			console.log(currentUser.get('objectId'));
 			menuQuery.find().then(function(result){
-				if(result<=0){
+				if(result.length<=0){
 					mui.toast('暂无订单');
 					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
 					return false;
 				}
+				console.log(JSON.stringify(result));
 				listData = result;
 				setTimeout(function() {
 					var table = document.body.querySelector('.menu-dealing');
 					var tableOver = document.body.querySelector('.menu-over');
-					
-//					var menuLi=document.querySelector('#menuLi');
 					table.innerHTML='';
 					tableOver.innerHTML='';
 					var i=0;
-//					for (var i = 0; i <listData.length; i++) {
-					
 					setInterval(function(){
 						if(i<listData.length){
 						var listSignal = listData[i];
@@ -194,6 +200,7 @@
 								liText +='<li class="food-title"><span>'+foodList[j].info.name+'</span>'
 								+'<div class="food-count">'+'<span>￥'+foodList[j].info.price+'</span><span style="margin: 0 5px 0 10px;">x</span>'
 								+'<span>'+foodList[j].info.count+'</span></li>';
+								liText+='<p>'+listSignal.get('dealDate')+'</p>'
 								foodSum+=foodList[j].info.price*foodList[j].info.count;
 							}
 							menuLi.content.querySelector('.food-list').innerHTML = liText;
@@ -202,7 +209,7 @@
 							//下拉刷新，新纪录插到最前面；
 							if(listSignal.get('dealStatue')!='已完成'){
 								menuLi.content.querySelector('.food-button').setAttribute('class','food-button mui-hidden');
-								console.log('data-id:'+listSignal.get('shopId'));
+//								console.log('data-id:'+listSignal.get('shopId'));
 								menuLi.content.querySelector('.food-button').setAttribute('data-id',listSignal.get('shopId'));
 								var cloneLi = menuLi.content.cloneNode(true);
 								table.insertBefore(cloneLi, table.firstChild);
@@ -219,7 +226,11 @@
 					}},2);
 					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
 				}, 1500);
-			},function(err){mui.toast(err)});
+			},function(err){
+				mui.toast(err);
+				mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+				return false;
+			});
 		}
 		function pulldownRefresh() {
 			refreshMenu();
