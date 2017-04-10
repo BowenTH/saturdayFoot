@@ -1,7 +1,7 @@
 {
 	"@platforms": ["android", "iPhone", "iPad"],
 	"id": "H56F64C4A",/*应用的标识，创建应用时自动生成，勿手动修改*/
-	"name": "E3-demo",/*应用名称，程序桌面图标名称*/
+	"name": "一方",/*应用名称，程序桌面图标名称*/
 	"version": {
 		"name": "1.0.0",/*应用版本名称*/
 		"code": "83"
@@ -849,7 +849,9 @@
 					"js/av.js",
 					"js/jquery.js",
 					"fonts/mui.ttf",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"js/common.js",
+					"css/common.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -880,7 +882,8 @@
 			},
 			"life/offcanvas-drag-right-plus-menu.html": {
 				"resources": [
-					"js/jquery.js"
+					"js/jquery.js",
+					"js/mui.min.js"
 				],
 				"refer": [
 					"life/appointment.html",
@@ -921,6 +924,31 @@
 					"js/mui.js",
 					"css/mui.min.css",
 					"js/jquery.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"life/article.html": {
+				"resources": [
+					"js/mui.min.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"life/live.html": {
+				"resources": [
+					"css/iconfont.ttf",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/iconfont.css",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"life/solve.html": {
+				"resources": [
+					"js/mui.min.js"
 				],
 				"refer": [],
 				"priority": 0

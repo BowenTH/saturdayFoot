@@ -1016,41 +1016,9 @@
 				plus.io.resolveLocalFileSystemURL(e, function(entry) {
 					var s = entry.toLocalURL() + "?version=" + new Date().getTime();
 					console.log(s);
-//					document.getElementById("head-img").src = s;
 					document.getElementById("head-img1").src = s;
 					//变更大图预览的src
-					//上传头像
-					var bitmap = new plus.nativeObj.Bitmap("test"); //test标识谁便取
-				    // 从本地加载Bitmap图片
-				    bitmap.load(s,function(){
-				        var base4=bitmap.toBase64Data();
-				        var datastr=base4.split(',',3)
-				        var pics = [];
-				        if(datastr.length>1)
-				        {
-				           pics.push(datastr[1]);
-				        }else
-				        {
-				           pics.push(datastr[0]);
-				        }
-				        console.log(pics[0]);
-				        var data_base = pics[0];
-				        var data = {};
-				        data.base64 = data_base;
-				        var avFile =new AV.File('head.jpg', data);
-						try{
-							currentUser.set('img',avFile);
-							currentUser.save().then(function(){
-								mui.toast('头像上传绑定成功');
-								window.location.reload();
-							},function(err){alert(JSON.stringify(err))});
-						}catch(e){
-							console.log(JSON.stringify(e));
-						}
-						
-				    },function(e){
-				        console.log('加载图片失败：'+JSON.stringify(e));
-				    });
+					compressImage();
 					//目前仅有一张图片，暂时如此处理，后续需要通过标准组件实现
 					document.querySelector("#__mui-imageview__group .mui-slider-item img").src = s + "?version=" + new Date().getTime();;;
 				}, function(e) {
@@ -1065,48 +1033,7 @@
 		
 		function galleryImg() {
 			plus.gallery.pick(function(a) { 
-			
-			    var bitmap = new plus.nativeObj.Bitmap("test"); //test标识谁便取
-			    // 从本地加载Bitmap图片
-			    bitmap.load(a,function(){
-			        var base4=bitmap.toBase64Data();
-			        var datastr=base4.split(',',3)
-			        var pics = [];
-			        if(datastr.length>1)
-			        {
-			           pics.push(datastr[1]);
-			        }else
-			        {
-			           pics.push(datastr[0]);
-			        }
-			        console.log(pics[0]);
-			        var data_base = pics[0];
-			        var data = {};
-			        data.base64 = data_base;
-			        var avFile =new AV.File('head.jpg', data);
-					try{
-						currentUser.set('img',avFile);
-						currentUser.save().then(function(){
-							mui.toast('头像上传绑定成功');
-							window.location.reload();
-						},function(err){alert(JSON.stringify(err))});
-					}catch(e){
-						console.log(JSON.stringify(e));
-					}
-					
-			    },function(e){
-			        console.log('加载图片失败：'+JSON.stringify(e));
-			    });
-			
-//				var avFile =new AV.File('head.jpg', a);
-//				try{
-//					avFile.save().then(function(){
-//						mui.toast('头像上传绑定成功');
-//					},function(err){alert(JSON.stringify(err))});
-//				}catch(e){
-//					alert(JSON.stringify(e));
-//				}
-				
+			    
 				plus.io.resolveLocalFileSystemURL(a, function(entry) {
 					plus.io.resolveLocalFileSystemURL("_doc/", function(root) {
 						root.getFile("head.jpg", {}, function(file) {
@@ -1114,8 +1041,8 @@
 							file.remove(function() {
 								console.log("file remove success");
 								entry.copyTo(root, 'head.jpg', function(e) {
+									compressImage();
 									var e = e.fullPath + "?version=" + new Date().getTime();
-//										document.getElementById("head-img").src = e;
 									document.getElementById("head-img1").src = e;
 									//变更大图预览的src
 									//目前仅有一张图片，暂时如此处理，后续需要通过标准组件实现
@@ -1130,16 +1057,16 @@
 						}, function() {
 							//文件不存在
 							entry.copyTo(root, 'head.jpg', function(e) {
-									var path = e.fullPath + "?version=" + new Date().getTime();
-//									document.getElementById("head-img").src = path;
-									document.getElementById("head-img1").src = path;
-									//变更大图预览的src
-									//目前仅有一张图片，暂时如此处理，后续需要通过标准组件实现
-									document.querySelector("#__mui-imageview__group .mui-slider-item img").src = path;
-								},
-								function(e) {
-									console.log('copy image fail:' + e.message);
-								});
+								compressImage();
+								var path = e.fullPath + "?version=" + new Date().getTime();
+								document.getElementById("head-img1").src = path;
+								//变更大图预览的src
+								//目前仅有一张图片，暂时如此处理，后续需要通过标准组件实现
+								document.querySelector("#__mui-imageview__group .mui-slider-item img").src = path;
+							},
+							function(e) {
+								console.log('copy image fail:' + e.message);
+							});
 						});
 					}, function(e) {
 						console.log("get _www folder fail");
@@ -1159,7 +1086,6 @@
 					var s = entry.fullPath + "?version=" + new Date().getTime();;
 					if(currentUser==null)
 						return false;
-					console.log('get Img');
 					if(typeof(currentUser.get('img'))=='undefined')
 						return false;
 					trueImgUrl = currentUser.get('img').get('url');
@@ -1179,21 +1105,79 @@
 		document.getElementById("head-img1").addEventListener('tap', function(e) {
 			e.stopPropagation();
 		});
-		//		document.getElementById("welcome").addEventListener('tap', function(e) {
-		//			//显示启动导航
-		//			mui.openWindow({
-		//				id: 'guide',
-		//				url: 'guide.html',
-		//				show: {
-		//					aniShow: 'fade-in',
-		//					duration: 300
-		//				},
-		//				waiting: {
-		//					autoShow: false
-		//				}
-		//			});
-		//		});
-
+		
+		// 压缩图片
+		function compressImage(){
+			console.log("开始压缩图片：");
+			var dstName = Date().toLocaleString()+'.jpg';
+			plus.nativeUI.showWaiting();
+			plus.zip.compressImage({
+				src:"_doc/head.jpg", 
+				dst:"_doc/"+dstName,
+				overwrite:true,
+				width:'10%'
+			},
+			function(i){
+				plus.nativeUI.closeWaiting();
+				console.log('show:'+i.target);
+				var resPath = i.target;
+				
+				mui.later(function(){
+					deleteImg(dstName);
+				},200);
+				var bitmap = new plus.nativeObj.Bitmap("test"); //test标识谁便取
+			    // 从本地加载Bitmap图片
+			    bitmap.load(resPath,function(){ 
+			        var base4=bitmap.toBase64Data();
+			        var datastr=base4.split(',',3);
+			        var pics = [];
+			        if(datastr.length>1){
+			           pics.push(datastr[1]);
+			        }else{
+			           pics.push(datastr[0]);
+			        }
+			        console.log(pics[0]);
+			        var data_base = pics[0];
+			        var data = {};
+			        data.base64 = data_base;
+			        var avFile =new AV.File('head_'+currentUser.get('username')+'.jpg', data);
+					try{
+						var oldImgUrl='';
+						console.log(JSON.stringify(currentUser.get('img')));
+						/***********绑定新的头像************/
+						currentUser.set('img',avFile);
+						currentUser.save().then(function(){
+							mui.toast('头像上传成功');
+							window.location.reload();
+						},function(err){alert(JSON.stringify(err))});
+					}catch(e){
+						console.log(JSON.stringify(e));
+					}
+			    },function(e){
+			        console.log('加载图片失败：'+JSON.stringify(e));
+			    });
+			},function(e){
+				plus.nativeUI.closeWaiting();
+				alert("压缩图片失败: "+JSON.stringify(e));
+			});
+			//上传结束
+		}
+		
+		//上传完以后，删除头像缓存
+		function deleteImg(dstName){
+			plus.io.resolveLocalFileSystemURL("_doc/", function(root) {
+			var rootPath=root.fullPath; 
+			root.getFile(dstName,{}, function(file) {
+					file.remove(function(){alert('made delete');});
+				},function(e){
+					alert(e.message);
+				});
+			},function(e){
+					alert(e.message);
+				}
+			);
+		}
+		
 		function initImgPreview() {
 			var imgs = document.querySelectorAll("img.mui-action-preview");
 			imgs = mui.slice.call(imgs);
